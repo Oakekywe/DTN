@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Check Orders</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+      table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+      }
+
+      td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+      }
+
+      tr:nth-child(even) {
+        background-color: #dddddd;
+      }
+    </style>
+ </head>
+
+  <body style="background-color:white">
+  <h1 style="color:#7CBDD2">Orders</h1>
+
+ 
+  
+  <table cellspacing="1" cellpadding="5" border="1">
+    <tr>
+    
+    <th>Name</th>
+    <th>Phone</th>
+    <th>EMail</th>    
+    <th>Date</th>
+    <th>Type</th>
+    <th>Sanwin Makin</th>
+    <th>Quantity</th>    
+    <th>Pickup</th>
+    <th>Message</th>
+    <th>Reference</th>
+    <th>Status</th>
+    <th>Action</th>
+  </tr>
+
+
+  <% data.forEach(function(order){ %>
+     <tr>
+      
+       <td><%= order.name %></td>
+       <td><%= order.phone %></td>
+       <td><%= order.email %></td>
+       <td><%= order.date %></td>
+       <td><%= order.type %></td>
+       <td><%= order.SanwinMakin %></td>
+       <td><%= order.quantity %></td>
+       <td><%= order.pickup %></td>
+       <td><%= order.message %></td>
+       <td><%= order.ref %></td>
+       <td><%= order.status %></td>
+       <td><a href="updateappointment/<%= order.doc_id %>">Edit</a> | Delete</td>
+     </tr>
+  <% }); %>
+
+	</table>
+
+ 
+ 
+
+  </body>
+
+</html>
