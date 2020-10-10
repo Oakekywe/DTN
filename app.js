@@ -24,33 +24,6 @@ app.use(body_parser.json());
 app.use(body_parser.urlencoded());
 
 
-const bot_questions = {
-  "q1": "please enter date (yyyy-mm-dd)",
-  "q2": "please enter time (hh:mm)",
-  "q3": "please enter full name",
-  "q4": "please enter gender",
-  "q5": "please enter phone number",
-  "q6": "please enter email",
-  "q7": "please leave a message"
-}
-
-const questions = {
-  "q1": "What date do you want to order? (yyyy-mm-dd)",
-  "q2": "What is your full name?",
-  "q3": "What is your Phone number?",
-  "q4": "What email do you use?",
-  "q5": "Anything to say?"
-}
-
-let currentuser = {};
-
-let current_question = '';
-
-let user_id = ''; 
-
-let userInputs = [];
-
-
 /*
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -146,13 +119,6 @@ app.get('/',function(req,res){
     res.send('your app is up and running');
 });
 
-app.get('/test',function(req,res){    
-    res.render('test.ejs');
-});
-
-app.get('/test1',function(req,res){    
-    res.render('test1.ejs');
-});
 app.get('/register/:sender_id',function(req,res){ 
     const sender_id = req.params.sender_id;   
     res.render('register.ejs',{title:"register user", sender_id:sender_id});
@@ -185,11 +151,6 @@ app.post('/register',function(req,res){
            
 });
 
-app.post('/test',function(req,res){
-    const sender_psid = req.body.sender_id;     
-    let response = {"text": "You  click delete button"};
-    callSend(sender_psid, response);
-});
 
 /*********************************************
 Admin Check Order
@@ -481,50 +442,24 @@ function handleQuickReply(sender_psid, received_message) {
     
     current_question = 'q1';
     botQuestions(current_question, sender_psid);
-  }else if(received_message.startsWith("department:")){
-    let dept = received_message.slice(11);
-    userInputs[user_id].department = dept;
-    showDoctor(sender_psid);
-  }
-  else if(received_message.startsWith("quantity:")){
-    let quan = received_message.slice(9);
-    console.log ('SELECTED QUANTITY:',quan)
-    userInputs[user_id].quantity = quan;
-
-    current_question = 'q1';
-    Questions(current_question, sender_psid);
   }
   
   else{
 
       switch(received_message) {     
-        case "pickup": 
-          userInputs[user_id].pickup = "pickup";       
-          confirmOrder(current_question, sender_psid);
-          break; 
-        case "delivery":
-          userInputs[user_id].delivery = "delivery";       
-          confirmOrder(current_question, sender_psid);
-          break;  
-        case "confirmorder":
-            saveOrder(userInputs[user_id], sender_psid);
-          break;             
+                     
         case "on":
             showQuickReplyOn(sender_psid);
           break;
         case "off":
             showQuickReplyOff(sender_psid);
           break; 
-        case "confirm-appointment":
-              saveAppointment(userInputs[user_id], sender_psid);
-          break;                      
+                              
         default:
             defaultReply(sender_psid);
     } 
 
-  }
-  
-  
+  }  
  
 }
 
@@ -538,75 +473,13 @@ const handleMessage = (sender_psid, received_message) => {
   //let message;
 
   let response;
-/*
-  if(received_message.attachments){
-     handleAttachments(sender_psid, received_message.attachments);
-  }else if(current_question == 'q1'){
-     console.log('DATE ENTERED',received_message.text);
-     userInputs[user_id].date = received_message.text;
-     current_question = 'q2';
-     botQuestions(current_question, sender_psid);
-  }else if(current_question == 'q2'){
-     console.log('TIME ENTERED',received_message.text);
-     userInputs[user_id].time = received_message.text;
-     current_question = 'q3';
-     botQuestions(current_question, sender_psid);
-  }else if(current_question == 'q3'){
-     console.log('FULL NAME ENTERED',received_message.text);
-     userInputs[user_id].name = received_message.text;
-     current_question = 'q4';
-     botQuestions(current_question, sender_psid);
-  }else if(current_question == 'q4'){
-     console.log('GENDER ENTERED',received_message.text);
-     userInputs[user_id].gender = received_message.text;
-     current_question = 'q5';
-     botQuestions(current_question, sender_psid);
-  }else if(current_question == 'q5'){
-     console.log('PHONE NUMBER ENTERED',received_message.text);
-     userInputs[user_id].phone = received_message.text;
-     current_question = 'q6';
-     botQuestions(current_question, sender_psid);
-  }else if(current_question == 'q6'){
-     console.log('EMAIL ENTERED',received_message.text);
-     userInputs[user_id].email = received_message.text;
-     current_question = 'q7';
-     botQuestions(current_question, sender_psid);
-  }else if(current_question == 'q7'){
-     console.log('MESSAGE ENTERED',received_message.text);
-     userInputs[user_id].message = received_message.text;
-     current_question = '';
-     
-     confirmAppointment(sender_psid);
-  }
-
-  else
-  */ if(received_message.attachments){
+ if(received_message.attachments){
      handleAttachments(sender_psid, received_message.attachments);
   }else if(current_question == 'q1'){
      console.log('DATE ENTERED',received_message.text);
      userInputs[user_id].date = received_message.text;
      current_question = 'q2';
      Questions(current_question, sender_psid);
-  }else if(current_question == 'q2'){
-     console.log('FULL NAME ENTERED',received_message.text);
-     userInputs[user_id].name = received_message.text;
-     current_question = 'q3';
-     Questions(current_question, sender_psid);
-  }else if(current_question == 'q3'){
-     console.log('PHONE ENTERED',received_message.text);
-     userInputs[user_id].phone = received_message.text;
-     current_question = 'q4';
-     Questions(current_question, sender_psid);
-  }else if(current_question == 'q4'){
-     console.log('EMAIL ENTERED',received_message.text);
-     userInputs[user_id].email = received_message.text;
-     current_question = 'q5';
-     Questions(current_question, sender_psid);
-  }else if(current_question == 'q5'){
-     console.log('MESSAGE ENTERED',received_message.text);
-     userInputs[user_id].message = received_message.text;
-     current_question = '';
-     pickupordelivery(sender_psid);
   }
 
   else {
@@ -618,13 +491,7 @@ const handleMessage = (sender_psid, received_message) => {
       switch(user_message) { 
       case "hi":
           hiReply(sender_psid);
-        break;
-      case "hospital":
-          hospitalAppointment(sender_psid);
-        break;  
-      case "start":
-          startReply(sender_psid);
-        break;              
+        break;                    
       case "text":
         textReply(sender_psid);
         break;
@@ -642,8 +509,7 @@ const handleMessage = (sender_psid, received_message) => {
         break;               
       default:
           defaultReply(sender_psid);
-      }       
-          
+      }            
       
     }
 
@@ -652,7 +518,6 @@ const handleMessage = (sender_psid, received_message) => {
 /*********************************************
 Function to handle when user send attachment
 **********************************************/
-
 
 const handleAttachments = (sender_psid, attachments) => {
   
@@ -693,9 +558,7 @@ const handleAttachments = (sender_psid, attachments) => {
 /*********************************************
 Function to handle when user click button
 **********************************************/
-const handlePostback = (sender_psid, received_postback) => { 
-
-  
+const handlePostback = (sender_psid, received_postback) => {  
 
   let payload = received_postback.payload;
 
@@ -709,37 +572,10 @@ const handlePostback = (sender_psid, received_postback) => {
     console.log('TEST', userInputs);
     firstOrFollowUp(sender_psid);
   }
-  else if(payload.startsWith("SanwinMakin:")){
-    let sanwinmakin_name = payload.slice(12);
-    console.log('SELECTED SANWIN MAKIN IS: ', sanwinmakin_name);
-    userInputs[user_id].SanwinMakin = sanwinmakin_name;
-    console.log('TEST', userInputs);
-    quantity(sender_psid);
-  }
   else{
 
-      switch(payload) {  
-      case "sanwinMakin":
-      userInputs[user_id].type = "sanwinMakin";
-      console.log('TEST',userInputs);
-          showSanwinmakin(sender_psid);
-        break;
-      case "pudding":
-      userInputs[user_id].type = "pudding";
-          showPudding(sender_psid);
-        break;
-      case "orderPudding":
-          quantity(sender_psid);
-        break;  
-      case "order":
-          showOrder(sender_psid);
-        break; 
-      case "donate":
-          showDonate(sender_psid);
-        break;  
-      case "loyalty":
-          showLoyalty(sender_psid);
-        break;      
+      switch(payload) { 
+      
       case "yes":
           showButtonReplyYes(sender_psid);
         break;
@@ -826,189 +662,6 @@ function webviewTest(sender_psid){
     }
   callSendAPI(sender_psid, response);
 }
-
-
-/**************
-start hospital
-**************/
-const hospitalAppointment = (sender_psid) => {
-   let response1 = {"text": "Welcome to ABC Hospital"};
-   let response2 = {
-    "text": "Please select department",
-    "quick_replies":[
-            {
-              "content_type":"text",
-              "title":"General Surgery",
-              "payload":"department:General Surgery",              
-            },{
-              "content_type":"text",
-              "title":"ENT",
-              "payload":"department:ENT",             
-            },{
-              "content_type":"text",
-              "title":"Dermatology",
-              "payload":"department:Dermatology", 
-            }
-
-    ]
-  };
-
-  callSend(sender_psid, response1).then(()=>{
-    return callSend(sender_psid, response2);
-  });
-}
-
-
-const showDoctor = (sender_psid) => {
-    let response = {
-      "attachment": {
-        "type": "template",
-        "payload": {
-          "template_type": "generic",
-          "elements": [{
-            "title": "James Smith",
-            "subtitle": "General Surgeon",
-            "image_url":"https://image.freepik.com/free-vector/doctor-icon-avatar-white_136162-58.jpg",                       
-            "buttons": [
-                {
-                  "type": "postback",
-                  "title": "James Smith",
-                  "payload": "Doctor:James Smith",
-                },               
-              ],
-          },{
-            "title": "Sanwin Makin",
-            "subtitle": "Dessert",
-            "image_url":"https://i.pinimg.com/originals/be/57/2a/be572a9298292d0f009b288c1827749e.jpg",                       
-            "buttons": [
-                {
-                  "type": "postback",
-                  "title": "Sanwin Makin",
-                  "payload": "Doctor:Sanwin Makin",
-                },               
-              ],
-          },{
-            "title": "Barbara Young",
-            "subtitle": "General Surgeon",
-            "image_url":"https://cdn.iconscout.com/icon/free/png-512/doctor-567-1118047.png",                       
-            "buttons": [
-                {
-                  "type": "postback",
-                  "title": "Barbara Young",
-                  "payload": "Doctor:Barbara Young",
-                },               
-              ],
-          }
-
-          ]
-        }
-      }
-    }
-
-  
-  callSend(sender_psid, response);
-
-}
-
-const firstOrFollowUp = (sender_psid) => {
-
-  let response = {
-    "text": "First Time Visit or Follow Up",
-    "quick_replies":[
-            {
-              "content_type":"text",
-              "title":"First Time",
-              "payload":"visit:first time",              
-            },{
-              "content_type":"text",
-              "title":"Follow Up",
-              "payload":"visit:follow up",             
-            }
-    ]
-  };
-  callSend(sender_psid, response);
-
-}
-
-const botQuestions = (current_question, sender_psid) => {
-  if(current_question == 'q1'){
-    let response = {"text": bot_questions.q1};
-    callSend(sender_psid, response);
-  }else if(current_question == 'q2'){
-    let response = {"text": bot_questions.q2};
-    callSend(sender_psid, response);
-  }else if(current_question == 'q3'){
-    let response = {"text": bot_questions.q3};
-    callSend(sender_psid, response);
-  }else if(current_question == 'q4'){
-    let response = {"text": bot_questions.q4};
-    callSend(sender_psid, response);
-  }else if(current_question == 'q5'){
-    let response = {"text": bot_questions.q5};
-    callSend(sender_psid, response);
-  }else if(current_question == 'q6'){
-    let response = {"text": bot_questions.q6};
-    callSend(sender_psid, response);
-  }else if(current_question == 'q7'){
-    let response = {"text": bot_questions.q7};
-    callSend(sender_psid, response);
-  }
-}
-
-const confirmAppointment = (sender_psid) => {
-  console.log('APPOINTMENT INFO', userInputs);
-  let summery = "department:" + userInputs[user_id].department + "\u000A";
-  summery += "doctor:" + userInputs[user_id].doctor + "\u000A";
-  summery += "visit:" + userInputs[user_id].visit + "\u000A";
-  summery += "date:" + userInputs[user_id].date + "\u000A";
-  summery += "time:" + userInputs[user_id].time + "\u000A";
-  summery += "name:" + userInputs[user_id].name + "\u000A";
-  summery += "gender:" + userInputs[user_id].gender + "\u000A";
-  summery += "phone:" + userInputs[user_id].phone + "\u000A";
-  summery += "email:" + userInputs[user_id].email + "\u000A";
-  summery += "message:" + userInputs[user_id].message + "\u000A";
-
-  let response1 = {"text": summery};
-
-  let response2 = {
-    "text": "Select your reply",
-    "quick_replies":[
-            {
-              "content_type":"text",
-              "title":"Confirm",
-              "payload":"confirm-appointment",              
-            },{
-              "content_type":"text",
-              "title":"Cancel",
-              "payload":"off",             
-            }
-    ]
-  };
-  
-  callSend(sender_psid, response1).then(()=>{
-    return callSend(sender_psid, response2);
-  });
-}
-
-const saveAppointment = (arg, sender_psid) => {
-  let data = arg;
-  data.ref = generateRandom(6);
-  data.status = "pending";
-  db.collection('appointments').add(data).then((success)=>{
-    console.log('SAVED', success);
-    let text = "Thank you. We have received your appointment."+ "\u000A";
-    text += " We wil call you to confirm soon"+ "\u000A";
-    text += "Your booking reference number is:" + data.ref;
-    let response = {"text": text};
-    callSend(sender_psid, response);
-  }).catch((err)=>{
-     console.log('Error', err);
-  });
-}
-
-/**************
-end hospital
-**************/
 
 
 /**************
@@ -1217,26 +870,6 @@ const quantity = (sender_psid) => {
               "content_type":"text",
               "title":"3",
               "payload":"quantity:3",             
-            },{
-              "content_type":"text",
-              "title":"4",
-              "payload":"quantity:4",             
-            },{
-              "content_type":"text",
-              "title":"5",
-              "payload":"quantity:5",             
-            },{
-              "content_type":"text",
-              "title":"6",
-              "payload":"quantity:6",             
-            },{
-              "content_type":"text",
-              "title":"7",
-              "payload":"quantity:7",             
-            },{
-              "content_type":"text",
-              "title":"8",
-              "payload":"quantity:8",             
             }
     ]
   };
@@ -1295,8 +928,7 @@ console.log('ORDER INFO', userInputs);
   abc += "phone:" + userInputs[user_id].phone + "\u000A";
   abc += "email:" + userInputs[user_id].email + "\u000A";
   abc += "message:" + userInputs[user_id].message + "\u000A";
-  abc += "pickup:" + userInputs[user_id].pickup + "\u000A";
-  abc += "delivery:" + userInputs[user_id].delivery + "\u000A";  
+  abc += "pickup:" + userInputs[user_id].pickup + "\u000A";  
 
   let response1 = {"text": abc};
 
@@ -1340,103 +972,6 @@ const saveOrder = (arg, sender_psid) => {
 end order
 **************/
 
-/**************
-start donate
-**************/
-
-const showDonate = (sender_psid) => {
-    let response1 = {"text": "Sorry Sir, you can donate these type of Sanwin Makin available now."};
-    let response2 = {"text": "We are planning to donate more types of dessert later."};
-    let response3 = {
-      "attachment": {
-        "type": "template",
-        "payload": {
-          "template_type": "generic",
-          "elements": [{
-            "title": "Shwe Kyi Sanwin Makin",
-            "subtitle": "This type of Sanwin Makin is made with Shwe Kyi and the original taste of Sanwin Makin.",
-            "image_url":"https://scontent.frgn5-2.fna.fbcdn.net/v/t31.0-0/p180x540/415606_4691000434420_355451047_o.jpg?_nc_cat=109&_nc_sid=2c4854&_nc_eui2=AeF2M9RhymkUvzblKIVEcaVYZZ9IqNQbMhlln0io1BsyGeUUZNECSYed1motoMAU3T3XXsplzubf4UwghXbirA2G&_nc_ohc=kx_5FjqU2noAX_FLDXz&_nc_ht=scontent.frgn5-2.fna&tp=6&oh=2dccc6bd79739ae9a566cae4baadf8eb&oe=5F9EDD53",                       
-            "buttons": [
-                {
-                  "type": "postback",
-                  "title": "Order $7000",
-                  "payload": "SanwinMakin:Shwe Kyi Sanwin Makin",
-                },               
-              ],
-          },{
-            "title": "Banana Sanwin Makin",
-            "subtitle": "This type of Sanwin Makin is made with Banana and its taste is a little bit sour.",
-            "image_url":"https://scontent.frgn5-2.fna.fbcdn.net/v/t1.0-0/p526x296/102871159_948419118950746_478899810489249804_n.jpg?_nc_cat=102&_nc_sid=8bfeb9&_nc_eui2=AeFNEWd47jK_lkwdilqwV_h8WnacIXjhOhJadpwheOE6EsH59hBDO-Nk8-bL2cLd4G0G_Gbp47yqo93cdH9-0Na0&_nc_ohc=PzURL4fQxDQAX-9tx3p&_nc_ht=scontent.frgn5-2.fna&tp=6&oh=b736bed6a074bb67889f7f3db210d199&oe=5F9EA75E",                       
-            "buttons": [
-                {
-                  "type": "postback",
-                  "title": "Order $8000",
-                  "payload": "SanwinMakin:Banana Sanwin Makin",
-                },               
-              ],
-          }
-
-          ]
-        }
-      }
-    }
-     callSend(sender_psid, response1).then(()=>{
-        return callSend(sender_psid, response2).then(()=>{;
-        return callSend(sender_psid, response3);
-        });
-      });
-}
-
-
-/**************
-end donate
-**************/
-
-/**************
-start loyalty
-**************/
-
-const showLoyalty = (sender_psid) => {
-    let response1 = {"text": "Our loyalty program is clear. If you're already a member, click login button and enjoy your points."};
-    let response2 = {"text": "If you're not a member, you can signup a loyal member."};
-    let response3 = {
-      "attachment": {
-        "type": "template",
-        "payload": {
-          "template_type": "generic",
-          "elements": [{
-            "title":"User Click",
-            "image_url":"https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTPfInME3GRGW7nBH9eoEaGP7IBtiJjPWNiJA&usqp=CAU",             
-            "buttons": [                
-                  {
-                "type": "web_url",
-                "title": "Login",
-                "url":APP_URL+"loginform/"+sender_psid,
-                 "webview_height_ratio": "full",
-                "messenger_extensions": true,          
-              
-                },    
-                {
-                  "type": "web_url",
-                  "title": "Sign up",
-                  "url":APP_URL+"register/"+sender_psid,
-                  "webview_height_ratio": "full",
-                  "messenger_extensions": true,
-                },           
-              ],
-          }
-
-          ]
-        }
-      }
-    }
-     callSend(sender_psid, response1).then(()=>{
-        return callSend(sender_psid, response2).then(()=>{;
-        return callSend(sender_psid, response3);
-        });
-      });
-}
-/*
 const registerUser = async (message, response) => {
 
     const userRef = db.collection('users').doc(currentUser.id);
@@ -1454,10 +989,7 @@ const registerUser = async (message, response) => {
       let bot_message3 = new TextMessage(`You are already registered`, actionKeyboard);    
       response.send(bot_message3);
     }    
-}*/
-/**************
-end loyalty
-**************/
+}
 
 const hiReply =(sender_psid) => {
   let response = {"text": "You sent hi message"};
@@ -1697,7 +1229,6 @@ const setupGetStartedButton = (res) => {
 /**********************************
 FUNCTION TO SET UP PERSISTENT MENU
 ***********************************/
-
 
 const setupPersistentMenu = (res) => {
   var messageData = { 
