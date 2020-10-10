@@ -23,7 +23,13 @@ const uuidv4 = uuid();
 app.use(body_parser.json());
 app.use(body_parser.urlencoded());
 
+let currentuser = {};
 
+let current_question = '';
+
+let user_id = ''; 
+
+let userInputs = [];
 /*
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
