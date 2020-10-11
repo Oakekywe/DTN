@@ -984,7 +984,7 @@ const loyalmember = async (sender_psid, received_message) => {
 
     const memberRef = db.collection('members').doc(user_id);
     const member = await memberRef.get();
-    if (!user.exists) {
+    if (!member.exists) {
         console.log('No such document!');
         let message1 = new TextMessage('Click on following link to register'); 
         let message2 = new UrlMessage(APP_URL + 'register/');   
