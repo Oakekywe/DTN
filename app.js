@@ -131,7 +131,7 @@ app.get('/register/:sender_id',function(req,res){
 });*/
 app.get('/register',function(req,res){   
       let data = {
-        user_name: currentUser.name,
+        sender_id: req.params.sender_id,
       } 
      res.render('register.ejs', {data:data});
 });
