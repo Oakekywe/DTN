@@ -495,7 +495,7 @@ const handleMessage = (sender_psid, received_message) => {
 
       switch(user_message) { 
       case "start":
-          loyalmember(message, response);
+          loyalmember(sender_psid, received_message);
         break;   
       case "hi":
           hiReply(sender_psid);
@@ -980,7 +980,7 @@ const saveOrder = (arg, sender_psid) => {
 end order
 **************/
 
-const loyalmember = async (message, response) => {
+const loyalmember = async (sender_psid, received_message) => {
 
     const memberRef = db.collection('members').doc(user_id);
     const member = await memberRef.get();
