@@ -981,8 +981,9 @@ end order
 **************/
 
 const loyalmember = async (sender_psid, received_message) => {
+  const doc_id = req.body.sender;
 
-    const memberRef = db.collection('members').doc(sender_psid);
+    const memberRef = db.collection('members').doc(doc_id);
     const member = await memberRef.get();
     if (!member.exists) {
         console.log('No such document!');
