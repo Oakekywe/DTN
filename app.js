@@ -982,7 +982,7 @@ end order
 
 const loyalmember = async (message, response) => {
 
-    const memberRef = db.collection('members').doc(currentuser.id);
+    const memberRef = db.collection('members').doc(user_id);
     const member = await memberRef.get();
     if (!user.exists) {
         console.log('No such document!');
