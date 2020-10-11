@@ -365,11 +365,10 @@ app.post('/webview',upload.single('file'),function(req,res){
       let sender = req.body.sender;  
 
       console.log("REQ FILE:",req.file);
-      console.log("abcd");
       let file = req.file;
       if (file) {
         uploadImageToStorage(file).then((img_url) => {
-            db.collection('webview').add({
+            db.collection('webviews').add({
               name: name,
               email: email,
               image: img_url
