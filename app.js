@@ -472,7 +472,7 @@ function handleQuickReply(sender_psid, received_message) {
 Function to Handle when user send text message
 ***********************************************/
 
-const handleMessage = (req,sender_psid, received_message) => {
+const handleMessage = (sender_psid, received_message) => {
 
   console.log('TEXT REPLY', received_message);
   //let message;
@@ -495,7 +495,7 @@ const handleMessage = (req,sender_psid, received_message) => {
 
       switch(user_message) { 
       case "start":
-          loyalmember(req,sender_psid, received_message);
+          loyalmember(sender_psid, received_message);
         break;   
       case "hi":
           hiReply(sender_psid);
@@ -980,7 +980,7 @@ const saveOrder = (arg, sender_psid) => {
 end order
 **************/
 
-const loyalmember = async (req,sender_psid, received_message) => {
+const loyalmember = async (req, sender_psid, received_message) => {
   const doc_id = req.body.sender;
 
     const memberRef = db.collection('members').doc(doc_id);
