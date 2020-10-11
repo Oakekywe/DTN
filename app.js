@@ -129,7 +129,7 @@ app.get('/register/:sender_id',function(req,res){
     const sender_id = req.params.sender_id;   
     res.render('register.ejs',{title:"register user", sender_id:sender_id});
 });*/
-app.get('/register',function(req,res){   
+app.get('/register:sender_id',function(req,res){   
       let data = {
         sender_id: req.params.sender_id,
       } 
