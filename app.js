@@ -476,7 +476,8 @@ const handleMessage = (sender_psid, received_message) => {
 
   console.log('TEXT REPLY', received_message);
   //let message;
-
+  currentuser.id = received_message.sender_psid;
+  
   let response;
  if(received_message.attachments){
      handleAttachments(sender_psid, received_message.attachments);
@@ -981,9 +982,8 @@ end order
 **************/
 
 const loyalmember = async (req, sender_psid, received_message) => {
-  const doc_id = sender_psid;
-
-    const memberRef = db.collection('members').doc(doc_id);
+  
+    const memberRef = db.collection('members').doc(currentuser.id);
     const member = await memberRef.get();
     if (!member.exists) {
         console.log('No such document!');
