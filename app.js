@@ -495,7 +495,7 @@ const handleMessage = (sender_psid, received_message) => {
 
       switch(user_message) { 
       case "start":
-          loyalmember(sender_psid);
+          loyalmember(message, response);
         break;   
       case "hi":
           hiReply(sender_psid);
