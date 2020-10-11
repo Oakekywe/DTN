@@ -494,6 +494,9 @@ const handleMessage = (sender_psid, received_message) => {
       user_message = user_message.toLowerCase(); 
 
       switch(user_message) { 
+      case "start":
+          loyalmember(sender_psid);
+        break;   
       case "hi":
           hiReply(sender_psid);
         break;                    
@@ -977,22 +980,22 @@ const saveOrder = (arg, sender_psid) => {
 end order
 **************/
 
-const registerUser = async (message, response) => {
+const loyalmember = async (message, response) => {
 
-    const userRef = db.collection('users').doc(currentUser.id);
-    const user = await userRef.get();
+    const memberRef = db.collection('members').doc(currentuser.id);
+    const member = await memberRef.get();
     if (!user.exists) {
         console.log('No such document!');
-        let bot_message1 = new TextMessage(`Click on following link to register`); 
-        let bot_message2 = new UrlMessage(APP_URL + '/register/');   
-        response.send(bot_message1).then(()=>{
-            return response.send(bot_message2);
+        let message1 = new TextMessage('Click on following link to register'); 
+        let message2 = new UrlMessage(APP_URL + 'register/');   
+        response.send(message1).then(()=>{
+            return response.send(message2);
         });
     } else {
-      console.log('Document data:', user.data());      
+      console.log('Document data:', member.data());      
 
-      let bot_message3 = new TextMessage(`You are already registered`, actionKeyboard);    
-      response.send(bot_message3);
+      let message3 = new TextMessage('You are already registered');    
+      response.send(message3);
     }    
 }
 
