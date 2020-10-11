@@ -981,7 +981,7 @@ end order
 **************/
 
 const loyalmember = async (req, sender_psid, received_message) => {
-  const doc_id = req.body.sender;
+  const doc_id = req.body.sender_id;
 
     const memberRef = db.collection('members').doc(doc_id);
     const member = await memberRef.get();
