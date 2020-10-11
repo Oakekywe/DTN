@@ -994,7 +994,8 @@ const loyalmember = async (sender_psid, received_message) => {
           "type": "template",
           "payload": {
             "template_type": "generic",
-            "elements": [{                      
+            "elements": [{  
+            "title": "Register now!",                    
               "buttons": [              
                 {
                   "type": "web_url",
