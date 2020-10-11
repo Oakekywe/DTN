@@ -124,16 +124,10 @@ app.use('/uploads', express.static('uploads'));
 app.get('/',function(req,res){    
     res.send('your app is up and running');
 });
-/*
+
 app.get('/register/:sender_id',function(req,res){ 
     const sender_id = req.params.sender_id;   
     res.render('register.ejs',{title:"register user", sender_id:sender_id});
-});*/
-app.get('/register:sender_id',function(req,res){   
-      let data = {
-        sender_id: req.params.sender_id,
-      } 
-     res.render('register.ejs', {data:data});
 });
 
 
