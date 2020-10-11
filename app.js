@@ -472,7 +472,7 @@ function handleQuickReply(sender_psid, received_message) {
 Function to Handle when user send text message
 ***********************************************/
 
-const handleMessage = (sender_psid, received_message) => {
+const handleMessage = (req,sender_psid, received_message) => {
 
   console.log('TEXT REPLY', received_message);
   //let message;
