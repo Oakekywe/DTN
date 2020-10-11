@@ -986,16 +986,38 @@ const loyalmember = async (sender_psid, received_message) => {
     const member = await memberRef.get();
     if (!member.exists) {
         console.log('No such document!');
-        let message1 = new TextMessage('Click on following link to register'); 
-        let message2 = new UrlMessage(APP_URL + 'register/');   
-        response.send(message1).then(()=>{
-            return response.send(message2);
-        });
+        let text = "You're not a member. Please register now!";
+    
+        let response1 = {"text": text};        
+        let response2 = {
+        "attachment": {
+          "type": "template",
+          "payload": {
+            "template_type": "generic",
+            "elements": [{                      
+              "buttons": [              
+                {
+                  "type": "web_url",
+                  "title": "Register",
+                  "url":APP_URL+"register/"+sender_psid,
+                  "webview_height_ratio": "full",
+                  "messenger_extensions": true,          
+                },
+                
+              ],
+            }]
+          }
+        }
+      }
+        callSend(sender_psid, response1).then(()=>{
+        return callSend(sender_psid, response2);
+      });
     } else {
-      console.log('Document data:', member.data());      
+      console.log('Document data:', member.data());    
 
-      let message3 = new TextMessage('You are already registered');    
-      response.send(message3);
+        let text = "You're not a member. Please register now!";    
+        let response3 = {"text": text};          
+        callSend(sender_psid, response3);
     }    
 }
 
