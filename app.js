@@ -981,7 +981,7 @@ const saveOrder = (arg, sender_psid) => {
 end order
 **************/
 
-const loyalmember = async (req, sender_psid, received_message) => {
+const loyalmember = async (sender_psid, received_message) => {
   
     const memberRef = db.collection('members').doc(user_id);
     const member = await memberRef.get();
