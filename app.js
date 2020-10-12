@@ -803,8 +803,8 @@ const showOrder = (sender_psid) => {
       }
     }
      callSend(sender_psid, response1).then(()=>{
-        return callSend(sender_psid, response2).then(()=>{
-        return callSend(sender_psid, response3);
+        return callSend(sender_psid, response3).then(()=>{
+        return callSend(sender_psid, response2);
         });
       });
 }
