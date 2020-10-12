@@ -23,6 +23,14 @@ const uuidv4 = uuid();
 app.use(body_parser.json());
 app.use(body_parser.urlencoded());
 
+const questions = {
+  "q1": "What date do you want to order? (yyyy-mm-dd)",
+  "q2": "What is your full name?",
+  "q3": "What is your Phone number?",
+  "q4": "What email do you use?",
+  "q5": "Anything to say?"
+}
+
 let currentuser = {};
 
 let current_question = '';
