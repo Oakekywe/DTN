@@ -184,83 +184,10 @@ app.get('/admin/orders', async function(req,res){
 
   console.log('DATA:', data);
 
-  res.render('appointments.ejs', {data:data});
+  res.render('orders.ejs', {data:data});
   
 });
 
-app.get('/admin/appointments', async function(req,res){
- 
-  const appointmentsRef = db.collection('appointments');
-  const snapshot = await appointmentsRef.get();
-
-  if (snapshot.empty) {
-    res.send('no data');
-  } 
-
-  let data = []; 
-
-  snapshot.forEach(doc => {
-    let appointment = {};
-    appointment = doc.data();
-    appointment.doc_id = doc.id;
-
-    data.push(appointment);
-    
-  });
-
-  console.log('DATA:', data);
-
-  res.render('appointments.ejs', {data:data});
-  
-});
-
-app.get('/admin/updateappointment/:doc_id', async function(req,res){
-  let doc_id = req.params.doc_id; 
-  
-  const appoinmentRef = db.collection('appointments').doc(doc_id);
-  const doc = await appoinmentRef.get();
-  if (!doc.exists) {
-    console.log('No such document!');
-  } else {
-    console.log('Document data:', doc.data());
-    let data = doc.data();
-    data.doc_id = doc.id;
-
-    console.log('Document data:', data);
-    res.render('editappointment.ejs', {data:data});
-  } 
-
-});
-
-
-app.post('/admin/updateappointment', function(req,res){
-  console.log('REQ:', req.body); 
-
-  
-
-  let data = {
-    name:req.body.name,
-    phone:req.body.phone,
-    email:req.body.email,
-    gender:req.body.gender,
-    doctor:req.body.doctor,
-    department:req.body.department,
-    visit:req.body.visit,
-    date:req.body.date,
-    time:req.body.time,
-    message:req.body.message,
-    status:req.body.status,
-    doc_id:req.body.doc_id,
-    ref:req.body.ref,
-    comment:req.body.comment
-  }
-
-  db.collection('appointments').doc(req.body.doc_id)
-  .update(data).then(()=>{
-      res.redirect('/admin/appointments');
-  }).catch((err)=>console.log('ERROR:', error)); 
- 
-});
 
 /*********************************************
 Gallery page
@@ -389,7 +316,7 @@ app.post('/webview',upload.single('file'),function(req,res){
 
 //Set up Get Started Button. To run one time
 //eg https://fbstarter.herokuapp.com/setgsbutton
-app.get('https://okphdessert.herokuapp.com/setgsbutton',function(req,res){
+app.get('/setgsbutton',function(req,res){
     setupGetStartedButton(res);    
 });
 
@@ -442,18 +369,29 @@ function handleQuickReply(sender_psid, received_message) {
 
   received_message = received_message.toLowerCase();
 
-  if(received_message.startsWith("visit:")){
-    let visit = received_message.slice(6);    
-    userInputs[user_id].visit = visit;
-    
+  if(received_message.startsWith("quantity:")){
+    let quan = received_message.slice(9);
+    console.log ('SELECTED QUANTITY:',quan)
+    userInputs[user_id].quantity = quan;
+
     current_question = 'q1';
-    botQuestions(current_question, sender_psid);
+    Questions(current_question, sender_psid);
   }
   
   else{
 
       switch(received_message) {     
-                     
+        case "pickup": 
+          userInputs[user_id].pickup = "pickup";       
+          confirmOrder(current_question, sender_psid);
+          break; 
+        case "delivery":
+          userInputs[user_id].delivery = "delivery";       
+          confirmOrder(current_question, sender_psid);
+          break;  
+        case "confirmorder":
+            saveOrder(userInputs[user_id], sender_psid);
+          break;                   
         case "on":
             showQuickReplyOn(sender_psid);
           break;
@@ -480,13 +418,34 @@ const handleMessage = (sender_psid, received_message) => {
  
 
   let response;
- if(received_message.attachments){
+ 
+  if(received_message.attachments){
      handleAttachments(sender_psid, received_message.attachments);
   }else if(current_question == 'q1'){
      console.log('DATE ENTERED',received_message.text);
      userInputs[user_id].date = received_message.text;
      current_question = 'q2';
      Questions(current_question, sender_psid);
+  }else if(current_question == 'q2'){
+     console.log('FULL NAME ENTERED',received_message.text);
+     userInputs[user_id].name = received_message.text;
+     current_question = 'q3';
+     Questions(current_question, sender_psid);
+  }else if(current_question == 'q3'){
+     console.log('PHONE ENTERED',received_message.text);
+     userInputs[user_id].phone = received_message.text;
+     current_question = 'q4';
+     Questions(current_question, sender_psid);
+  }else if(current_question == 'q4'){
+     console.log('EMAIL ENTERED',received_message.text);
+     userInputs[user_id].email = received_message.text;
+     current_question = 'q5';
+     Questions(current_question, sender_psid);
+  }else if(current_question == 'q5'){
+     console.log('MESSAGE ENTERED',received_message.text);
+     userInputs[user_id].message = received_message.text;
+     current_question = '';
+     pickupordelivery(sender_psid);
   }
 
   else {
@@ -496,12 +455,15 @@ const handleMessage = (sender_psid, received_message) => {
       user_message = user_message.toLowerCase(); 
 
       switch(user_message) { 
-      case "start":
-          loyalmember(sender_psid, received_message);
-        break;   
       case "hi":
           hiReply(sender_psid);
-        break;                    
+        break; 
+      case "start":
+          startReply(sender_psid);
+        break;    
+      case "register":
+        loyalmember(sender_psid);
+        break;            
       case "text":
         textReply(sender_psid);
         break;
@@ -516,10 +478,14 @@ const handleMessage = (sender_psid, received_message) => {
         break;       
       case "show images":
         showImages(sender_psid)
-        break;               
+        break;   
+       case "check order":
+        checkorder(sender_psid)
+        break;              
       default:
           defaultReply(sender_psid);
-      }            
+      }       
+          
       
     }
 
@@ -574,18 +540,37 @@ const handlePostback = (sender_psid, received_postback) => {
 
   console.log('BUTTON PAYLOAD', payload);
 
-  
-  if(payload.startsWith("Doctor:")){
-    let doctor_name = payload.slice(7);
-    console.log('SELECTED DOCTOR IS: ', doctor_name);
-    userInputs[user_id].doctor = doctor_name;
+  if(payload.startsWith("SanwinMakin:")){
+    let sanwinmakin_name = payload.slice(12);
+    console.log('SELECTED SANWIN MAKIN IS: ', sanwinmakin_name);
+    userInputs[user_id].SanwinMakin = sanwinmakin_name;
     console.log('TEST', userInputs);
-    firstOrFollowUp(sender_psid);
+    quantity(sender_psid);
   }
   else{
 
-      switch(payload) { 
-      
+      switch(payload) {  
+      case "sanwinMakin":
+      userInputs[user_id].type = "sanwinMakin";
+      console.log('TEST',userInputs);
+          showSanwinmakin(sender_psid);
+        break;
+      case "pudding":
+      userInputs[user_id].type = "pudding";
+          showPudding(sender_psid);
+        break;
+      case "orderPudding":
+          quantity(sender_psid);
+        break;  
+      case "order":
+          showOrder(sender_psid);
+        break; 
+      case "donate":
+          showDonate(sender_psid);
+        break;  
+      case "loyalty":
+          showLoyalty(sender_psid);
+        break;      
       case "yes":
           showButtonReplyYes(sender_psid);
         break;
@@ -645,7 +630,6 @@ const showImages = (sender_psid) => {
 /*********************************************
 END GALLERY SAMPLE
 **********************************************/
-
 
 function webviewTest(sender_psid){
   let response;
@@ -981,6 +965,102 @@ const saveOrder = (arg, sender_psid) => {
 /**************
 end order
 **************/
+/**************
+start donate
+**************/
+
+const showDonate = (sender_psid) => {
+    let response1 = {"text": "Sorry Sir, you can donate these type of Sanwin Makin available now."};
+    let response2 = {"text": "We are planning to donate more types of dessert later."};
+    let response3 = {
+      "attachment": {
+        "type": "template",
+        "payload": {
+          "template_type": "generic",
+          "elements": [{
+            "title": "Shwe Kyi Sanwin Makin",
+            "subtitle": "This type of Sanwin Makin is made with Shwe Kyi and the original taste of Sanwin Makin.",
+            "image_url":"https://scontent.frgn5-2.fna.fbcdn.net/v/t31.0-0/p180x540/415606_4691000434420_355451047_o.jpg?_nc_cat=109&_nc_sid=2c4854&_nc_eui2=AeF2M9RhymkUvzblKIVEcaVYZZ9IqNQbMhlln0io1BsyGeUUZNECSYed1motoMAU3T3XXsplzubf4UwghXbirA2G&_nc_ohc=kx_5FjqU2noAX_FLDXz&_nc_ht=scontent.frgn5-2.fna&tp=6&oh=2dccc6bd79739ae9a566cae4baadf8eb&oe=5F9EDD53",                       
+            "buttons": [
+                {
+                  "type": "postback",
+                  "title": "Order $7000",
+                  "payload": "SanwinMakin:Shwe Kyi Sanwin Makin",
+                },               
+              ],
+          },{
+            "title": "Banana Sanwin Makin",
+            "subtitle": "This type of Sanwin Makin is made with Banana and its taste is a little bit sour.",
+            "image_url":"https://scontent.frgn5-2.fna.fbcdn.net/v/t1.0-0/p526x296/102871159_948419118950746_478899810489249804_n.jpg?_nc_cat=102&_nc_sid=8bfeb9&_nc_eui2=AeFNEWd47jK_lkwdilqwV_h8WnacIXjhOhJadpwheOE6EsH59hBDO-Nk8-bL2cLd4G0G_Gbp47yqo93cdH9-0Na0&_nc_ohc=PzURL4fQxDQAX-9tx3p&_nc_ht=scontent.frgn5-2.fna&tp=6&oh=b736bed6a074bb67889f7f3db210d199&oe=5F9EA75E",                       
+            "buttons": [
+                {
+                  "type": "postback",
+                  "title": "Order $8000",
+                  "payload": "SanwinMakin:Banana Sanwin Makin",
+                },               
+              ],
+          }
+
+          ]
+        }
+      }
+    }
+     callSend(sender_psid, response1).then(()=>{
+        return callSend(sender_psid, response2).then(()=>{;
+        return callSend(sender_psid, response3);
+        });
+      });
+}
+
+
+/**************
+end donate
+**************/
+
+/**************
+start loyalty
+**************/
+
+const showLoyalty = (sender_psid) => {
+    let response1 = {"text": "Our loyalty program is clear. If you're already a member, click login button and enjoy your points."};
+    let response2 = {"text": "If you're not a member, you can signup a loyal member."};
+    let response3 = {
+      "attachment": {
+        "type": "template",
+        "payload": {
+          "template_type": "generic",
+          "elements": [{
+            "title":"User Click",
+            "image_url":"https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTPfInME3GRGW7nBH9eoEaGP7IBtiJjPWNiJA&usqp=CAU",             
+            "buttons": [                
+                  {
+                "type": "web_url",
+                "title": "Login",
+                "url":APP_URL+"loginform/"+sender_psid,
+                 "webview_height_ratio": "full",
+                "messenger_extensions": true,          
+              
+                },    
+                {
+                  "type": "web_url",
+                  "title": "Sign up",
+                  "url":APP_URL+"register/"+sender_psid,
+                  "webview_height_ratio": "full",
+                  "messenger_extensions": true,
+                },           
+              ],
+          }
+
+          ]
+        }
+      }
+    }
+     callSend(sender_psid, response1).then(()=>{
+        return callSend(sender_psid, response2).then(()=>{;
+        return callSend(sender_psid, response3);
+        });
+      });
+}
 
 const loyalmember = async (sender_psid, received_message) => {
   
