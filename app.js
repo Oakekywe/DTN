@@ -803,15 +803,15 @@ const quantity = (sender_psid) => {
               "payload":"quantity:3",             
             },{
               "content_type":"text",
-              "title":"3",
+              "title":"4",
               "payload":"quantity:4",             
             },{
               "content_type":"text",
-              "title":"3",
+              "title":"5",
               "payload":"quantity:5",             
             },{
               "content_type":"text",
-              "title":"3",
+              "title":"6",
               "payload":"quantity:6",             
             }
     ]
