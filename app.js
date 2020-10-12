@@ -548,28 +548,16 @@ const handlePostback = (sender_psid, received_postback) => {
 
   console.log('BUTTON PAYLOAD', payload);
 
-  if(payload.startsWith("SanwinMakin:")){
-    let sanwinmakin_name = payload.slice(12);
-    console.log('SELECTED SANWIN MAKIN IS: ', sanwinmakin_name);
-    userInputs[user_id].SanwinMakin = sanwinmakin_name;
+  if(payload.startsWith("type:")){
+    let type = payload.slice(5);
+    console.log('SELECTED TYPE IS: ', type);
+    userInputs[user_id].type = type;
     console.log('TEST', userInputs);
     quantity(sender_psid);
   }
   else{
 
       switch(payload) {  
-      case "sanwinMakin":
-      userInputs[user_id].type = "sanwinMakin";
-      console.log('TEST',userInputs);
-          showSanwinmakin(sender_psid);
-        break;
-      case "pudding":
-      userInputs[user_id].type = "pudding";
-          showPudding(sender_psid);
-        break;
-      case "orderPudding":
-          quantity(sender_psid);
-        break;  
       case "order":
           showOrder(sender_psid);
         break; 
@@ -738,7 +726,7 @@ const showOrder = (sender_psid) => {
                 {
                   "type": "postback",
                   "title": "Order $7000",
-                  "payload": "SanwinMakin:Shwe Kyi Sanwin Makin",
+                  "payload": "type:Shwe Kyi Sanwin Makin",
                 },               
               ],
           },{
@@ -749,7 +737,7 @@ const showOrder = (sender_psid) => {
                 {
                   "type": "postback",
                   "title": "Order $6000",
-                  "payload": "SanwinMakin:Potato Sanwin Makin",
+                  "payload": "type:Potato Sanwin Makin",
                 },               
               ],
           },{
@@ -760,7 +748,7 @@ const showOrder = (sender_psid) => {
                 {
                   "type": "postback",
                   "title": "Order $6000",
-                  "payload": "SanwinMakin:Milk Sanwin Makin",
+                  "payload": "type:Milk Sanwin Makin",
                 },               
               ],
           },{
@@ -771,7 +759,7 @@ const showOrder = (sender_psid) => {
                 {
                   "type": "postback",
                   "title": "Order $8000",
-                  "payload": "SanwinMakin:Banana Sanwin Makin",
+                  "payload": "type:Banana Sanwin Makin",
                 },               
               ],
           },{
@@ -782,7 +770,7 @@ const showOrder = (sender_psid) => {
                 {
                   "type": "postback",
                   "title": "Order $4000",
-                  "payload": "orderPudding",
+                  "payload": "type:Pudding",
                 },               
               ],
             }
@@ -796,98 +784,6 @@ const showOrder = (sender_psid) => {
       });
 }
 
-/*
-const showSanwinmakin = (sender_psid) => {
-    let response1 = {"text": "We have 4 types of Sanwin Makin. You can order as follow: "};
-    let response2 = {
-      "attachment": {
-        "type": "template",
-        "payload": {
-          "template_type": "generic",
-          "elements": [{
-            "title": "Shwe Kyi Sanwin Makin",
-            "subtitle": "This type of Sanwin Makin is made with Shwe Kyi and the original taste of Sanwin Makin.",
-            "image_url":"https://scontent.frgn5-2.fna.fbcdn.net/v/t31.0-0/p180x540/415606_4691000434420_355451047_o.jpg?_nc_cat=109&_nc_sid=2c4854&_nc_eui2=AeF2M9RhymkUvzblKIVEcaVYZZ9IqNQbMhlln0io1BsyGeUUZNECSYed1motoMAU3T3XXsplzubf4UwghXbirA2G&_nc_ohc=kx_5FjqU2noAX_FLDXz&_nc_ht=scontent.frgn5-2.fna&tp=6&oh=2dccc6bd79739ae9a566cae4baadf8eb&oe=5F9EDD53",                       
-            "buttons": [
-                {
-                  "type": "postback",
-                  "title": "Order $7000",
-                  "payload": "SanwinMakin:Shwe Kyi Sanwin Makin",
-                },               
-              ],
-          },{
-            "title": "Potato Sanwin Makin",
-            "subtitle": "This type of Sanwin Makin is made with Potato and its taste is cheesy.",
-            "image_url":"https://i.pinimg.com/originals/00/5f/cf/005fcf0186075132975c0667d4c0c005.jpg",                       
-            "buttons": [
-                {
-                  "type": "postback",
-                  "title": "Order $6000",
-                  "payload": "SanwinMakin:Potato Sanwin Makin",
-                },               
-              ],
-          },{
-            "title": "Milk Sanwin Makin",
-            "subtitle": "This type of Sanwin Makin is made with Milk and its taste is sweet.",
-            "image_url":"https://burmaspice.com/wp-content/uploads/2018/08/Burma-Spice-South-East-Asian-Burmese-Recipe-Burmese-Semolina-Cake_web-res.jpg",                       
-            "buttons": [
-                {
-                  "type": "postback",
-                  "title": "Order $6000",
-                  "payload": "SanwinMakin:Milk Sanwin Makin",
-                },               
-              ],
-          },{
-            "title": "Banana Sanwin Makin",
-            "subtitle": "This type of Sanwin Makin is made with Banana and its taste is a little bit sour.",
-            "image_url":"https://scontent.frgn5-2.fna.fbcdn.net/v/t1.0-0/p526x296/102871159_948419118950746_478899810489249804_n.jpg?_nc_cat=102&_nc_sid=8bfeb9&_nc_eui2=AeFNEWd47jK_lkwdilqwV_h8WnacIXjhOhJadpwheOE6EsH59hBDO-Nk8-bL2cLd4G0G_Gbp47yqo93cdH9-0Na0&_nc_ohc=PzURL4fQxDQAX-9tx3p&_nc_ht=scontent.frgn5-2.fna&tp=6&oh=b736bed6a074bb67889f7f3db210d199&oe=5F9EA75E",                       
-            "buttons": [
-                {
-                  "type": "postback",
-                  "title": "Order $8000",
-                  "payload": "SanwinMakin:Banana Sanwin Makin",
-                },               
-              ],
-          }
-
-          ]
-        }
-      }
-    }
-     callSend(sender_psid, response1).then(()=>{
-        return callSend(sender_psid, response2);
-      });
-}
-
-const showPudding = (sender_psid) => {
-    let response1 = {"text": "Here is a baked pudding. "};
-    let response2 = {
-      "attachment": {
-        "type": "template",
-        "payload": {
-          "template_type": "generic",
-          "elements": [{
-            "title": "Pudding",
-            "subtitle": "This type of pudding is baked and it is soft and sweet.",
-            "image_url":"https://www.southeast-asia.com/wp-content/uploads/2020/09/Cassava-Cake_mimomotaro.jpg",                       
-            "buttons": [
-                {
-                  "type": "postback",
-                  "title": "Order $4000",
-                  "payload": "orderPudding",
-                },               
-              ],
-          }
-
-          ]
-        }
-      }
-    }
-     callSend(sender_psid, response1).then(()=>{
-        return callSend(sender_psid, response2);
-      });
-}
-*/
 const quantity = (sender_psid) => {
 
   let response = {
@@ -905,6 +801,18 @@ const quantity = (sender_psid) => {
               "content_type":"text",
               "title":"3",
               "payload":"quantity:3",             
+            },{
+              "content_type":"text",
+              "title":"3",
+              "payload":"quantity:4",             
+            },{
+              "content_type":"text",
+              "title":"3",
+              "payload":"quantity:5",             
+            },{
+              "content_type":"text",
+              "title":"3",
+              "payload":"quantity:6",             
             }
     ]
   };
@@ -956,7 +864,6 @@ const pickupordelivery = (sender_psid) => {
 const confirmOrder = (current_question, sender_psid) => {
 console.log('ORDER INFO', userInputs);
   let abc = "type:" + userInputs[user_id].type + "\u000A";
-  abc += "sanwinmakin:" + userInputs[user_id].SanwinMakin + "\u000A";
   abc += "quantity:" + userInputs[user_id].quantity + "\u000A";
   abc += "date:" + userInputs[user_id].date + "\u000A";
   abc += "name:" + userInputs[user_id].name + "\u000A";
