@@ -774,18 +774,7 @@ const showOrder = (sender_psid) => {
                   "payload": "SanwinMakin:Banana Sanwin Makin",
                 },               
               ],
-          }
-
-          ]
-        }
-      }
-    };
-     let response3 = {
-      "attachment": {
-        "type": "template",
-        "payload": {
-          "template_type": "generic",
-          "elements": [{
+          },{
             "title": "Pudding",
             "subtitle": "This type of pudding is baked and it is soft and sweet.",
             "image_url":"https://www.southeast-asia.com/wp-content/uploads/2020/09/Cassava-Cake_mimomotaro.jpg",                       
@@ -796,16 +785,14 @@ const showOrder = (sender_psid) => {
                   "payload": "orderPudding",
                 },               
               ],
-          }
-
+            }
           ]
         }
       }
-    }
+    }     
+    
      callSend(sender_psid, response1).then(()=>{
-        return callSend(sender_psid, response3).then(()=>{
         return callSend(sender_psid, response2);
-        });
       });
 }
 
