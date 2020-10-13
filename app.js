@@ -30,6 +30,12 @@ const questions = {
   "q4": "What email do you use?",
   "q5": "Anything to say?"
 }
+const reg_questions = {
+  
+  "q1": "What is your full name?",
+  "q2": "What is your Phone number?",
+  "q3": "What is your currently address?"
+}
 
 let currentuser = {};
 
@@ -133,34 +139,39 @@ app.get('/',function(req,res){
     res.send('your app is up and running');
 });
 
+/*
 app.get('/register/:sender_id',function(req,res){ 
     const sender_id = req.params.sender_id;   
     res.render('register.ejs',{title:"Register User", sender_id:sender_id});
 });
 
 
+app.post('/register',function(req,res){
+       
+      currentuser.name  = req.body.name;
+      currentuser.email = req.body.email;
+      currentuser.phone = req.body.phone;
+      currentuser.sender = req.body.sender;  
 
-app.post('/register',function(sender_psid,req,res){
-    
       let data = {
         userid: user_id,
-        name: req.body.name,
-        email: req.body.email,
-        phone: req.body.phone
+        name:  currentuser.name,
+        email: currentuser.email,
+        phone: currentuser.phone
     }
       
       console.log("ABCDEF");
-        db.collection('registers').doc(sender_id).set(data)
+        db.collection('registers').doc(user_id).set(data)
         .then(success => {   
           console.log("DATA SAVED")
-          Thankyou(req.body.sender);
+          Thankyou(currentuser.sender);
       }).catch(error => {
           console.log(error);
       }); 
      
            
 });
-
+*/
 
 /*********************************************
 Admin Check Order
@@ -272,7 +283,6 @@ app.post('/imagepick',function(req,res){
   });
       
 });
-
 
 
 /*********************************************
@@ -401,7 +411,13 @@ function handleQuickReply(sender_psid, received_message) {
         case "off":
             showQuickReplyOff(sender_psid);
           break; 
-                              
+        case "register":
+          current_question = "q1";
+          reg_Questions(current_question, sender_psid);
+        break; 
+        case "confirm-register":         
+            saveRegistration(userInputs[user_id], sender_psid);
+        break;                     
         default:
             defaultReply(sender_psid);
     } 
@@ -424,7 +440,26 @@ const handleMessage = (sender_psid, received_message) => {
  
   if(received_message.attachments){
      handleAttachments(sender_psid, received_message.attachments);
-  }else if(current_question == 'q1'){
+  }
+  else if(current_question == 'q1'){
+     console.log('NAME ENTERED',received_message.text);
+     userInputs[user_id].name = received_message.text;
+     current_question = 'q2';
+     reg_Questions(current_question, sender_psid);
+  }else if(current_question == 'q2'){
+     console.log('PHONE ENTERED',received_message.text);
+     userInputs[user_id].phone = received_message.text;
+     current_question = 'q3';
+     reg_Questions(current_question, sender_psid);
+  }else if(current_question == 'q3'){
+     console.log('ADDRESS ENTERED',received_message.text);
+     userInputs[user_id].address = received_message.text;
+     current_question = '';     
+     confirmRegister(sender_psid);
+  }
+
+
+  else if(current_question == 'q1'){
      console.log('DATE ENTERED',received_message.text);
      userInputs[user_id].date = received_message.text;
      current_question = 'q2';
@@ -465,7 +500,7 @@ const handleMessage = (sender_psid, received_message) => {
           startReply(sender_psid);
         break;    
       case "register":
-        loyalmember(sender_psid);
+        registerReply(sender_psid);
         break;            
       case "text":
         textReply(sender_psid);
@@ -647,6 +682,139 @@ function webviewTest(sender_psid){
     }
   callSendAPI(sender_psid, response);
 }
+/**************
+startdemo
+**************/
+const registerReply =(sender_psid) => {
+  let response = {"text": "Welcome to our DTN dessert shop, you can order our menu. You can make donation with us. You can be a loyal member."};
+  callSend(sender_psid, response).then(()=>{
+    showMenu(sender_psid);
+  });  
+}
+
+const showMenu = async(sender_psid) => {
+  let title = "";
+  const memberRef = db.collection('members').doc(sender_psid);
+    const member = await memberRef.get();
+    if (!member.exists) {
+      title = "Register";  
+      first_reg = true;      
+    } else {
+      title = "Update Profile";  
+      first_reg = false;      
+    } 
+
+
+  let response = {
+    "text": "Choose your reply",
+    "quick_replies":[
+            {
+              "content_type":"text",
+              "title":title,
+              "payload":"register",              
+            },{
+              "content_type":"text",
+              "title":"Order Now",
+              "payload":"shop",             
+            },
+            {
+              "content_type":"text",
+              "title":"My Order",
+              "payload":"check-order",             
+            }
+
+    ]
+  };
+  callSend(sender_psid, response);
+}
+
+const reg_Questions = (current_question, sender_psid) => {
+  if(current_question == 'q1'){
+    let response = {"text": reg_questions.q1};
+    callSend(sender_psid, response);
+  }else if(current_question == 'q2'){
+    let response = {"text": reg_questions.q2};
+    callSend(sender_psid, response);
+  }else if(current_question == 'q3'){
+    let response = {"text": reg_questions.q3};
+    callSend(sender_psid, response);
+  }
+  else if(current_question == 'q4'){
+    let response = {"text": reg_questions.q4};
+    callSend(sender_psid, response);
+  }
+}
+
+const confirmRegister = (sender_psid) => {
+
+  let show = "";
+  show += "name:" + userInputs[user_id].name + "\u000A";
+  show += "phone:" + userInputs[user_id].phone + "\u000A";
+  show += "address:" + userInputs[user_id].address + "\u000A";
+
+  let response1 = {"text": show};
+
+  let response2 = {
+    "text": "Confirm to register",
+    "quick_replies":[
+            {
+              "content_type":"text",
+              "title":"Confirm",
+              "payload":"confirm-register",              
+            },{
+              "content_type":"text",
+              "title":"Cancel",
+              "payload":"off",             
+            }
+    ]
+  };
+  
+  callSend(sender_psid, response1).then(()=>{
+    return callSend(sender_psid, response2);
+  });
+}
+
+const saveRegistration = (arg, sender_psid) => {
+
+  let data = arg;  
+
+  if(first_reg){
+      let today = new Date();
+      data.facebookid = sender_psid;
+      data.created_on = today;
+      data.points = 50;
+      data.status = "pending";
+     
+  
+      db.collection('members').doc(sender_psid).set(data).then((success)=>{
+        console.log('SAVED', success);
+        //first_reg = false;
+        let text = "Thank you. You have been registered."+ "\u000A";      
+        let response = {"text": text};
+        callSend(sender_psid, response);
+      }).catch((err)=>{
+         console.log('Error', err);
+      });
+
+  }else{
+      let updatedata = {name:data.name, phone:data.phone, address:data.address};
+      db.collection('members').doc(sender_psid).update(updatedata).then((success)=>{
+      console.log('SAVED', success);
+      //first_reg = false;
+      let text = "Thank you. You have been registered."+ "\u000A";      
+      let response = {"text": text};
+      callSend(sender_psid, response);
+      }).catch((err)=>{
+         console.log('Error', err);
+      });
+
+  }
+}
+
+
+/**************
+enddemo
+**************/
 
 
 /**************
@@ -963,7 +1131,7 @@ end donate
 /**************
 start loyalty
 **************/
-
+/*
 const showLoyalty = (sender_psid) => {
     let response1 = {"text": "Our loyalty program is clear. If you're already a member, click login button and enjoy your points."};
     let response2 = {"text": "If you're not a member, you can signup a loyal member."};
@@ -1046,7 +1214,7 @@ const loyalmember = async (sender_psid, received_message) => {
         callSend(sender_psid, response3);
     }    
 }
-
+*/
 const hiReply =(sender_psid) => {
   let response = {"text": "You sent hi message"};
   callSend(sender_psid, response);
