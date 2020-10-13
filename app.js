@@ -142,16 +142,14 @@ app.get('/register/:sender_id',function(req,res){
 
 app.post('/register',function(sender_psid,req,res){
        
-      currentuser.name  = req.body.name;
-      currentuser.email = req.body.email;
-      currentuser.phone = req.body.phone;
+      
       currentuser.sender = req.body.sender;  
 
       let data = {
         userid: user_id,
-        name:  currentuser.name,
-        email: currentuser.email,
-        phone: currentuser.phone
+        name: req.body.name,
+        email: req.body.email,
+        phone: req.body.phone
     }
       
       console.log("ABCDEF");
