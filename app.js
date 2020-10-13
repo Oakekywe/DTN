@@ -803,7 +803,7 @@ const saveRegistration = (arg, sender_psid) => {
       db.collection('members').doc(sender_psid).update(updatedata).then((success)=>{
       console.log('SAVED', success);
       //first_reg = false;
-      let text = "Thank you. You have been registered."+ "\u000A";      
+      let text = "Thank you. Your profile has been updated."+ "\u000A";      
       let response = {"text": text};
       callSend(sender_psid, response);
       }).catch((err)=>{
