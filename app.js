@@ -141,10 +141,7 @@ app.get('/register/:sender_id',function(req,res){
 
 
 app.post('/register',function(sender_psid,req,res){
-       
-      
-      currentuser.sender = req.body.sender;  
-
+    
       let data = {
         userid: user_id,
         name: req.body.name,
@@ -156,7 +153,7 @@ app.post('/register',function(sender_psid,req,res){
         db.collection('registers').doc(sender_psid).set(data)
         .then(success => {   
           console.log("DATA SAVED")
-          Thankyou(currentuser.sender);
+          Thankyou(req.body.sender);
       }).catch(error => {
           console.log(error);
       }); 
