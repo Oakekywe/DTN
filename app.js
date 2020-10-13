@@ -44,6 +44,8 @@ let current_question = '';
 let user_id = ''; 
 
 let userInputs = [];
+
+let first_reg = false;
 /*
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
