@@ -140,7 +140,7 @@ app.get('/register/:sender_id',function(req,res){
 
 
 
-app.post('/register',function(req,res){
+app.post('/register',function(sender_psid,req,res){
        
       currentuser.name  = req.body.name;
       currentuser.email = req.body.email;
@@ -155,7 +155,7 @@ app.post('/register',function(req,res){
     }
       
       console.log("ABCDEF");
-        db.collection('registers').doc(user_id).set(data)
+        db.collection('registers').doc(sender_psid).set(data)
         .then(success => {   
           console.log("DATA SAVED")
           Thankyou(currentuser.sender);
