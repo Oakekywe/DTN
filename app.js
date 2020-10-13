@@ -150,7 +150,7 @@ app.post('/register',function(sender_psid,req,res){
     }
       
       console.log("ABCDEF");
-        db.collection('registers').doc(sender_psid).set(data)
+        db.collection('registers').doc(sender_id).set(data)
         .then(success => {   
           console.log("DATA SAVED")
           Thankyou(req.body.sender);
