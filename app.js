@@ -244,6 +244,37 @@ app.post('/admin/savefood',upload.single('file'),function(req,res){
       }             
 });
 
+app.get('/order', async function(req,res){
+  
+  const foodsRef = db.collection('foods').orderBy('created_on', 'desc');
+  const snapshot = await foodsRef.get();
+
+  if (snapshot.empty) {
+    res.send('no data');
+  } 
+
+  let data = []; 
+
+  snapshot.forEach(doc => { 
+    
+    let food = {}; 
+
+    food = doc.data();    
+    food.id = doc.id; 
+    
+    let d = new Date(doc.data().created_on._seconds);
+    d = d.toString();
+    product.created_on = d;   
+
+    data.push(product);
+    
+  });  
+ 
+  res.render('order.ejs', {data:data});
+
+});
+
+
 //logintest
 app.get('/loginform/:sender_id',function(req,res){
     const sender_id = req.params.sender_id;
@@ -374,7 +405,10 @@ function handleQuickReply(sender_psid, received_message) {
         break; 
         case "confirm-register":         
             saveRegistration(userInputs[user_id], sender_psid);
-        break;                     
+        break;
+        case "ordernow":         
+            orderMenu(sender_psid);
+        break;               
         default:
             defaultReply(sender_psid);
     } 
@@ -672,7 +706,7 @@ const showMenu = async(sender_psid) => {
             },{
               "content_type":"text",
               "title":"Order Now",
-              "payload":"shop",             
+              "payload":"ordernow",             
             },
             {
               "content_type":"text",
@@ -768,6 +802,30 @@ const saveRegistration = (arg, sender_psid) => {
   }
 }
 
+const orderMenu =(sender_psid) => {
+  let response = {
+      "attachment": {
+        "type": "template",
+        "payload": {
+          "template_type": "generic",
+          "elements": [{
+            "title": "Welcome to our DTN dessert shop. You can now order here.",
+            "image_url":"https://tourisminmyanmar.com.mm/wp-content/uploads/2019/08/rsz_shutterstock_1009625584.jpg",                       
+            "buttons": [              
+              {
+                "type": "web_url",
+                "title": "Order Now",
+                "url":APP_URL+"order/",
+                 "webview_height_ratio": "full",
+                "messenger_extensions": true,          
+              },
+              
+            ],
+          }]
+        }
+      }
+    }  
+  callSend(sender_psid, response);
 
 /**************
 enddemo
