@@ -4,6 +4,23 @@
     <meta charset="UTF-8">
     <title>Foods</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+      table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+      }
+
+      td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+      }
+
+      tr:nth-child(even) {
+        background-color: #dddddd;
+      }
+    </style>
  </head>
 
   <body>
@@ -26,7 +43,7 @@
   <% data.forEach(function(food){ %>
      <tr>
       
-       <td><img src="<%= food.image %>" style="max-height:100%; max-width:100%"/></td>
+       <td><img src="<%= food.image %>" style="max-height:10%; max-width:20%"/></td>
        <td><%= food.sku %></td>
        <td><%= food.name %></td>
        <td><%= food.description %></td>
