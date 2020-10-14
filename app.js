@@ -198,7 +198,7 @@ app.get('/admin/foods', async(req,res) =>{
     
   });
   
-  res.render('food.ejs', {data:data});
+  res.render('foods.ejs', {data:data});
 
   }
 
