@@ -27,42 +27,31 @@
   <h1>All Foods</h1>
   <p><a href="../../admin/addfood">Add Food</a></p>
 
-
   <table cellspacing="1" cellpadding="5" border="1">
     <tr>
     <th>Image</th>
     <th>SKU</th>
     <th>Name</th>
     <th>Description</th>
-    <th>Price</th>
-   
+    <th>Price</th>   
     <th>Action</th>    
   </tr>
 
 
   <% data.forEach(function(food){ %>
-     <tr>
-      
-       <td style="width:250px; height:250px; vertical-align:left">
-       <img src="<%= food.image %>" style="max-height:100%; max-width:100%"/></td>
+     <tr>      
+       <td><img src="<%= food.image %>" style="max-height:10%; max-width:10%"/></td>
        <td><%= food.sku %></td>
        <td><%= food.name %></td>
        <td><%= food.description %></td>
-       <td><%= food.price %></td>
-     
+       <td><%= food.price %></td>     
        
        <td><a href="#">Edit</a> | <a href="#">Delete</a></td>
      </tr>
   <% }); %>
 
-	</table>
-  
+	</table>  
 
-  
-
- 
-  
-  
   </body>
 
 </html>
