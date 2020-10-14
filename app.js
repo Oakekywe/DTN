@@ -3,7 +3,6 @@ const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 const APP_URL = process.env.APP_URL;
 
 //new text
-
 // Imports dependencies and set up http server
 const 
   { uuid } = require('uuidv4'),
@@ -18,7 +17,6 @@ const
   app = express(); 
 
 const uuidv4 = uuid();
-
 
 app.use(body_parser.json());
 app.use(body_parser.urlencoded());
@@ -48,6 +46,12 @@ let userInputs = [];
 let first_reg = false;
 
 let customer = [];
+
+let temp_points = 0;
+
+let cart_total = 0;
+
+let cart_discount = 0;
 /*
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -72,7 +76,6 @@ const upload = multer({
 app.set('view engine', 'ejs');
 app.set('views', __dirname+'/views');
 
-
 var firebaseConfig = {
      credential: firebase.credential.cert({
     "private_key": process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n'),
@@ -82,7 +85,6 @@ var firebaseConfig = {
     databaseURL: process.env.FIREBASE_DB_URL,   
     storageBucket: process.env.FIREBASE_STORAGE_BUCKET
   };
-
 
 
 firebase.initializeApp(firebaseConfig);
@@ -98,7 +100,6 @@ app.post('/webhook', (req, res) => {
 
   // Parse the request body from the POST
   let body = req.body;
-
   
 
   // Check the webhook event is from a Page subscription
