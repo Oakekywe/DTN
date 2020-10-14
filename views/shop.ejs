@@ -31,10 +31,10 @@
 	    <p>price: <%= food.price %></p>
 
 	    <form action="../cart" method="post">
-	    <input type="hidden" name="food_id" value="<%= food.id %>"/>
-	    <input type="hidden" name="food_name" value="<%= food.name %>"/>
-	    <input type="hidden" name="food_price" value="<%= food.price %>"/>
-	    quantity: <input type="number" name="food_qty" min="1" value="1" style="width:50px;"/> <br>
+	    <input type="hidden" name="item_id" value="<%= food.id %>"/>
+	    <input type="hidden" name="item_name" value="<%= food.name %>"/>
+	    <input type="hidden" name="item_price" value="<%= food.price %>"/>
+	    quantity: <input type="number" name="item_qty" min="1" value="1" style="width:50px;"/> <br>
 	    <input type="submit" name="submit"/>
 	    </form> 	
   	</div><br>

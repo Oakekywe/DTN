@@ -46,6 +46,8 @@ let user_id = '';
 let userInputs = [];
 
 let first_reg = false;
+
+let customer = [];
 /*
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -145,7 +147,7 @@ app.get('/',function(req,res){
 /*********************************************
 Admin Check Order
 **********************************************/
-app.get('/admin/orders', async function(req,res){
+/*app.get('/admin/orders', async function(req,res){
  
   const ordersRef = db.collection('orders');
   const snapshot = await ordersRef.get();
@@ -169,9 +171,11 @@ app.get('/admin/orders', async function(req,res){
 
   res.render('orders.ejs', {data:data});
   
-});
+}); */
 
-//adminstart
+/*************
+StartAdminRoute
+**************/
 app.get('/admin/foods', async(req,res) =>{   
 
    
@@ -201,7 +205,6 @@ app.get('/admin/foods', async(req,res) =>{
   res.render('foods.ejs', {data:data});
 
   }
-
   
 });
 
@@ -243,8 +246,33 @@ app.post('/admin/savefood',upload.single('file'),function(req,res){
         });
       }             
 });
+/*************
+EndAdminRoute
+**************/
 
-app.get('/order', async function(req,res){
+/**************
+StartMemberRoute
+**************/
+
+app.get('/shop', async function(req,res){
+
+  customer[user_id].id = user_id;
+
+  const memberRef = db.collection('members').doc(user_id);
+  const member = await memberRef.get();
+  if (!member.exists) {
+    customer[user_id].name = ""; 
+    customer[user_id].phone = "";
+    customer[user_id].address = "";
+    customer[user_id].points = 0;
+         
+  } else {
+      customer[user_id].name = member.data().name; 
+      customer[user_id].phone = member.data().phone; 
+      customer[user_id].address = member.data().address;       
+      customer[user_id].points = member.data().points; 
+       
+  } 
   
   const foodsRef = db.collection('foods').orderBy('created_on', 'desc');
   const snapshot = await foodsRef.get();
@@ -270,11 +298,125 @@ app.get('/order', async function(req,res){
     
   });  
  
-  res.render('order.ejs', {data:data});
+  res.render('shop.ejs', {data:data});
 
 });
 
+app.post('/cart', function(req, res){
+    
+    if(!customer[user_id].cart){
+        customer[user_id].cart = [];
+    }
+    
+    let item = {};
+    item.id = req.body.item_id;
+    item.name = req.body.item_name;
+    item.price = parseInt(req.body.item_price);
+    item.qty = parseInt(req.body.item_qty);
+    item.total = item.price * item.qty; 
 
+
+    const itemInCart = (element) => element.id == item.id;
+    let item_index = customer[user_id].cart.findIndex(itemInCart); 
+
+    if(item_index < 0){
+        customer[user_id].cart.push(item);
+    }else{
+        customer[user_id].cart[item_index].qty = item.qty;
+        customer[user_id].cart[item_index].total = item.total;
+    }      
+     
+    res.redirect('../cart');   
+});
+
+
+app.get('/cart', function(req, res){     
+    temp_points = customer[user_id].points; 
+    let sub_total = 0;
+    cart_total = 0;
+    cart_discount = 0;
+
+    if(!customer[user_id].cart){
+        customer[user_id].cart = [];
+    }
+    if(customer[user_id].cart.length < 1){
+        res.send('your cart is empty. back to shop <a href="../shop">shop</a>');
+    }else{ 
+
+        customer[user_id].cart.forEach((item) => sub_total += item.total);        
+
+        cart_total = sub_total - cart_discount;       
+
+        customer[user_id].use_point = false;
+
+        res.render('cart.ejs', {cart:customer[user_id].cart, sub_total:sub_total, user:customer[user_id], cart_total:cart_total, discount:cart_discount, points:temp_points});    
+    }
+});
+
+
+
+app.get('/emptycart', function(req, res){  
+    customer[user_id].cart = [];
+    customer[user_id].use_point = false;
+    //customer[user_id].points = 400;
+    cart_discount = 0;
+    res.redirect('../cart');    
+});
+
+app.post('/pointdiscount', function(req, res){
+
+    //temp_points = customer[user_id].points; 
+    let sub_total = 0;
+    //cart_total = 0;
+    //cart_discount = 0;
+  
+    if(!customer[user_id].cart){
+        customer[user_id].cart = [];
+    }
+    if(customer[user_id].cart.length < 1){
+        res.send('your cart is empty. back to shop <a href="../shop">shop</a>');
+    }else{ 
+        customer[user_id].use_point = true;        
+
+        customer[user_id].cart.forEach((item) => sub_total += item.total); 
+
+        console.log('BEFORE');
+        console.log('sub total:'+sub_total);
+        console.log('cart total:'+cart_total);
+        console.log('cart discount:'+cart_discount);
+        console.log('temp points:'+ temp_points);
+       
+        if(sub_total != 0 || cart_total != 0){
+          if(sub_total >=  parseInt(req.body.points)){
+           console.log('Point is smaller than subtotal');
+           cart_discount =  parseInt(req.body.points);
+           cart_total = sub_total - cart_discount;
+           temp_points = 0; 
+           
+          }else{
+             console.log('Point is greater than subtotal');
+             cart_discount = sub_total; 
+             cart_total = 0;
+             temp_points -= sub_total;
+                       
+          }
+
+        }
+                
+
+        console.log('AFTER');
+        console.log('sub total:'+sub_total);
+        console.log('cart total:'+cart_total);
+        console.log('cart discount:'+cart_discount);
+        console.log('temp points:'+ temp_points);
+        
+        res.render('cart.ejs', {cart:customer[user_id].cart, sub_total:sub_total, user:customer[user_id], cart_total:cart_total, discount:cart_discount, points:temp_points});      
+    }
+});
+
+/*************
+EndMemberRoute
+**************/
 //logintest
 app.get('/loginform/:sender_id',function(req,res){
     const sender_id = req.params.sender_id;
@@ -613,40 +755,6 @@ const generateRandom = (length) => {
    return result;
 }
 
-/*********************************************
-GALLERY SAMPLE
-**********************************************/
-
-const showImages = (sender_psid) => {
-  let response;
-  response = {
-      "attachment": {
-        "type": "template",
-        "payload": {
-          "template_type": "generic",
-          "elements": [{
-            "title": "show images",                       
-            "buttons": [              
-              {
-                "type": "web_url",
-                "title": "enter",
-                "url":"https://fbstarter.herokuapp.com/showimages/"+sender_psid,
-                 "webview_height_ratio": "full",
-                "messenger_extensions": true,          
-              },
-              
-            ],
-          }]
-        }
-      }
-    }
-  callSendAPI(sender_psid, response);
-}
-
-
-/*********************************************
-END GALLERY SAMPLE
-**********************************************/
 
 function webviewTest(sender_psid){
   let response;
@@ -815,7 +923,7 @@ const orderMenu =(sender_psid) => {
               {
                 "type": "web_url",
                 "title": "Order Now",
-                "url":APP_URL+"order/",
+                "url":APP_URL+"shop/",
                  "webview_height_ratio": "full",
                 "messenger_extensions": true,          
               },
