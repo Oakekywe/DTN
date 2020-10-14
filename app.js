@@ -112,6 +112,7 @@ app.post('/webhook', (req, res) => {
 
       if(!userInputs[user_id]){
         userInputs[user_id] = {};
+        customer[user_id] = {};
       }    
 
 
