@@ -141,39 +141,6 @@ app.get('/',function(req,res){
     res.send('your app is up and running');
 });
 
-/*
-app.get('/register/:sender_id',function(req,res){ 
-    const sender_id = req.params.sender_id;   
-    res.render('register.ejs',{title:"Register User", sender_id:sender_id});
-});
-
-
-app.post('/register',function(req,res){
-       
-      currentuser.name  = req.body.name;
-      currentuser.email = req.body.email;
-      currentuser.phone = req.body.phone;
-      currentuser.sender = req.body.sender;  
-
-      let data = {
-        userid: user_id,
-        name:  currentuser.name,
-        email: currentuser.email,
-        phone: currentuser.phone
-    }
-      
-      console.log("ABCDEF");
-        db.collection('registers').doc(user_id).set(data)
-        .then(success => {   
-          console.log("DATA SAVED")
-          Thankyou(currentuser.sender);
-      }).catch(error => {
-          console.log(error);
-      }); 
-     
-           
-});
-*/
 
 /*********************************************
 Admin Check Order
@@ -204,92 +171,45 @@ app.get('/admin/orders', async function(req,res){
   
 });
 
+//adminstart
+app.get('/admin/products', async(req,res) =>{   
 
-/*********************************************
-Gallery page
-**********************************************/
-app.get('/showimages/:sender_id/',function(req,res){
-    const sender_id = req.params.sender_id;
+   
+  const productsRef = db.collection('products').orderBy('created_on', 'desc');
+  const snapshot = await productsRef.get();
 
-    let data = [];
+  if (snapshot.empty) {
+    res.send('no data');
+  }else{
+    let data = []; 
 
-    db.collection("images").limit(20).get()
-    .then(  function(querySnapshot) {
-        querySnapshot.forEach(function(doc) {
-            let img = {};
-            img.id = doc.id;
-            img.url = doc.data().url;         
-
-            data.push(img);                      
-
-        });
-        console.log("DATA", data);
-        res.render('gallery.ejs',{data:data, sender_id:sender_id, 'page-title':'welcome to my page'}); 
-
-    }
+  snapshot.forEach(doc => {
+    let product = {};
     
-    )
-    .catch(function(error) {
-        console.log("Error getting documents: ", error);
-    });    
-});
+    product = doc.data();
+    product.doc_id = doc.id;
+    
+    let d = new Date(doc.data().created_on._seconds);
+    d = d.toString();
+    product.created_on = d;
+    
 
+    data.push(product);
+    
+  });
+  
+  res.render('products.ejs', {data:data});
 
-app.post('/imagepick',function(req,res){
-      
-  const sender_id = req.body.sender_id;
-  const doc_id = req.body.doc_id;
-
-  console.log('DOC ID:', doc_id); 
-
-  db.collection('images').doc(doc_id).get()
-  .then(doc => {
-    if (!doc.exists) {
-      console.log('No such document!');
-    } else {
-      const image_url = doc.data().url;
-
-      console.log('IMG URL:', image_url);
-
-      let response = {
-      "attachment": {
-        "type": "template",
-        "payload": {
-          "template_type": "generic",
-          "elements": [{
-            "title": "Is this the image you like?",
-            "image_url":image_url,                       
-            "buttons": [
-                {
-                  "type": "postback",
-                  "title": "Yes!",
-                  "payload": "yes",
-                },
-                {
-                  "type": "postback",
-                  "title": "No!",
-                  "payload": "no",
-                }
-              ],
-          }]
-        }
-      }
-    }
+  }
 
   
-    callSend(sender_id, response); 
-    }
-  })
-  .catch(err => {
-    console.log('Error getting document', err);
-  });
-      
 });
 
+app.get('/admin/addfood', function(req,res){
+  res.render('addfood.ejs');  
+});
 
-/*********************************************
-END Gallery Page
-**********************************************/
+//logintest
 app.get('/loginform/:sender_id',function(req,res){
     const sender_id = req.params.sender_id;
     res.render('loginform.ejs',{title:"Login user", sender_id:sender_id});
@@ -1327,31 +1247,7 @@ const thankyouReply =(sender_psid, name, img_url) => {
   callSend(sender_psid, response);
 }
 
-function testDelete(sender_psid){
-  let response;
-  response = {
-      "attachment": {
-        "type": "template",
-        "payload": {
-          "template_type": "generic",
-          "elements": [{
-            "title": "Delete Button Test",                       
-            "buttons": [              
-              {
-                "type": "web_url",
-                "title": "enter",
-                "url":"https://fbstarter.herokuapp.com/test/",
-                 "webview_height_ratio": "full",
-                "messenger_extensions": true,          
-              },
-              
-            ],
-          }]
-        }
-      }
-    }
-  callSendAPI(sender_psid, response);
-}
+
 
 const defaultReply = (sender_psid) => {
   let response = startReply(sender_psid);
