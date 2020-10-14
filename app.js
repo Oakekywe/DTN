@@ -172,11 +172,11 @@ app.get('/admin/orders', async function(req,res){
 });
 
 //adminstart
-app.get('/admin/products', async(req,res) =>{   
+app.get('/admin/foods', async(req,res) =>{   
 
    
-  const productsRef = db.collection('products').orderBy('created_on', 'desc');
-  const snapshot = await productsRef.get();
+  const foodsRef = db.collection('foods').orderBy('created_on', 'desc');
+  const snapshot = await foodsRef.get();
 
   if (snapshot.empty) {
     res.send('no data');
@@ -184,21 +184,21 @@ app.get('/admin/products', async(req,res) =>{
     let data = []; 
 
   snapshot.forEach(doc => {
-    let product = {};
+    let food = {};
     
-    product = doc.data();
-    product.doc_id = doc.id;
+    food = doc.data();
+    food.doc_id = doc.id;
     
     let d = new Date(doc.data().created_on._seconds);
     d = d.toString();
-    product.created_on = d;
+    food.created_on = d;
     
 
-    data.push(product);
+    data.push(food);
     
   });
   
-  res.render('products.ejs', {data:data});
+  res.render('food.ejs', {data:data});
 
   }
 
@@ -207,6 +207,41 @@ app.get('/admin/products', async(req,res) =>{
 
 app.get('/admin/addfood', function(req,res){
   res.render('addfood.ejs');  
+});
+
+app.post('/admin/savefood',upload.single('file'),function(req,res){
+       
+      let name  = req.body.name;
+      let description = req.body.description;
+      let img_url = "";
+      let price = parseInt(req.body.price); 
+      let sku = req.body.sku;
+
+      let today = new Date();
+
+      
+
+
+      let file = req.file;
+      if (file) {
+        uploadImageToStorage(file).then((img_url) => {
+            db.collection('foods').add({
+              name: name,
+              description: description,
+              image: img_url,
+              price:price,
+              sku:sku,
+              created_on:today
+              }).then(success => {   
+                console.log("DATA SAVED")
+                res.redirect('../admin/foods');    
+              }).catch(error => {
+                console.log(error);
+              }); 
+        }).catch((error) => {
+          console.error(error);
+        });
+      }             
 });
 
 //logintest
