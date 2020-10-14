@@ -7,9 +7,8 @@
 
     <style>      
     	.food{
-    		width:200px;   
-    		border:1px solid black; 
-        vertical-align: center;		
+    		width:300px;   
+    		border:1px white; 
     	}
     	.food img{
     		width:100%;
@@ -35,7 +34,7 @@
 	    <input type="hidden" name="food_id" value="<%= food.id %>"/>
 	    <input type="hidden" name="food_name" value="<%= food.name %>"/>
 	    <input type="hidden" name="food_price" value="<%= food.price %>"/>
-	    quantity: <input type="number" name="food_qty" min="1" value="1" style="width:50px;"/> 
+	    quantity: <input type="number" name="food_qty" min="1" value="1" style="width:50px;"/> <br>
 	    <input type="submit" name="submit"/>
 	    </form> 	
   	</div>
