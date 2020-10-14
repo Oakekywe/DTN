@@ -2,13 +2,13 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8">
-    <title>Products</title>
+    <title>Foods</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
  </head>
 
   <body>
-  <h1>All Products</h1>
-  <p><a href="../../admin/addproduct">Add Product</a></p>
+  <h1>All Foods</h1>
+  <p><a href="../../admin/addfood">Add Food</a></p>
 
 
   <table cellspacing="1" cellpadding="5" border="1">
@@ -23,14 +23,14 @@
   </tr>
 
 
-  <% data.forEach(function(product){ %>
+  <% data.forEach(function(food){ %>
      <tr>
       
-       <td><img src="<%= product.image %>" width="100"/></td>
-       <td><%= product.sku %></td>
-       <td><%= product.name %></td>
-       <td><%= product.description %></td>
-       <td><%= product.price %></td>
+       <td><img src="<%= food.image %>" width="100"/></td>
+       <td><%= food.sku %></td>
+       <td><%= food.name %></td>
+       <td><%= food.description %></td>
+       <td><%= food.price %></td>
      
        
        <td><a href="#">Edit</a> | <a href="#">Delete</a></td>
