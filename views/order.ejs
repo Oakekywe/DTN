@@ -6,11 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <style>
-    	.product{
+    	.food{
     		width:200px;   
     		border:1px solid black; 		
     	}
-    	.product img{
+    	.food img{
     		width:100%;
     		max-width: 200px;
     	}
@@ -22,7 +22,7 @@
   <p><a href="../cart">View cart</a> | <a href="../emptycart">Empty cart</a></p>
 
 
-  <% data.forEach(function(product){ %>
+  <% data.forEach(function(food){ %>
 
   	<div class="food">
 	  	<img src="<%= food.image %>" />
