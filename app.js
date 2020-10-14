@@ -264,9 +264,9 @@ app.get('/order', async function(req,res){
     
     let d = new Date(doc.data().created_on._seconds);
     d = d.toString();
-    product.created_on = d;   
+    food.created_on = d;   
 
-    data.push(product);
+    data.push(food);
     
   });  
  
