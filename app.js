@@ -32,7 +32,8 @@ const reg_questions = {
   
   "q1": "What is your full name?",
   "q2": "What is your Phone number?",
-  "q3": "What is your currently address?"
+  "q3": "What is your currently address?",
+  "q4": "What is your order reference number?"
 }
 
 let currentuser = {};
@@ -677,15 +678,21 @@ function handleQuickReply(sender_psid, received_message) {
             showQuickReplyOff(sender_psid);
           break; 
         case "register":
-          current_question = "q1";
-          reg_Questions(current_question, sender_psid);
-        break; 
+            current_question = "q1";
+            reg_Questions(current_question, sender_psid);
+        break;
+        case "check-order":  
+            current_question = "q4";
+            reg_Questions(current_question, sender_psid);
+        break;  
         case "confirm-register":         
             saveRegistration(userInputs[user_id], sender_psid);
         break;
         case "ordernow":         
             orderMenu(sender_psid);
-        break;               
+        break;   
+        
+                   
         default:
             defaultReply(sender_psid);
     } 
@@ -724,6 +731,12 @@ const handleMessage = (sender_psid, received_message) => {
      userInputs[user_id].address = received_message.text;
      current_question = '';     
      confirmRegister(sender_psid);
+  }else if(current_question == 'q4'){
+     let order_ref = received_message.text; 
+
+     console.log('order_ref: ', order_ref);    
+     current_question = '';     
+     showOrder(sender_psid, order_ref);
   }
 
 
@@ -781,13 +794,8 @@ const handleMessage = (sender_psid, received_message) => {
         break;
       case "webview":
         webviewTest(sender_psid);
-        break;       
-      case "show images":
-        showImages(sender_psid)
-        break;   
-       case "check order":
-        checkorder(sender_psid)
-        break;              
+        break;          
+                     
       default:
           defaultReply(sender_psid);
       }       
@@ -857,7 +865,7 @@ const handlePostback = (sender_psid, received_postback) => {
 
       switch(payload) {  
       case "order":
-          showOrder(sender_psid);
+          showOrder1(sender_psid);
         break; 
       case "donate":
           showDonate(sender_psid);
@@ -882,7 +890,7 @@ const handlePostback = (sender_psid, received_postback) => {
 
 const generateRandom = (length) => {
    var result           = '';
-   var characters       = 'AZ123';
+   var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
    var charactersLength = characters.length;
    for ( var i = 0; i < length; i++ ) {
       result += characters.charAt(Math.floor(Math.random() * charactersLength));
@@ -1070,6 +1078,51 @@ const orderMenu =(sender_psid) => {
     }  
   callSend(sender_psid, response);
 }
+
+
+const showOrder = async(sender_psid, order_ref) => {
+
+    let cust_points = 0;
+
+    const ordersRef = db.collection('orders').where("ref", "==", order_ref).limit(1);
+    const snapshot = await ordersRef.get();
+
+    const memberRef = db.collection('members').doc(user_id);
+    const member = await memberRef.get();
+    if (!member.exists) {
+      cust_points = 0;           
+    } else {                
+        cust_points  = member.data().points;          
+    } 
+
+
+    if (snapshot.empty) {
+      let response = { "text": "Incorrect order number" };
+      callSend(sender_psid, response).then(()=>{
+        return registerReply(sender_psid);
+      });
+    }else{
+          let order = {}
+
+          snapshot.forEach(doc => {      
+              order.ref = doc.data().ref;
+              order.status = doc.data().status;
+              order.comment = doc.data().comment;  
+          });
+
+
+          let response1 = { "text": `Your order ${order.ref} is ${order.status}.` };
+          let response2 = { "text": `Seller message: ${order.comment}.` };
+          let response3 = { "text": `You have remaining ${cust_points} point(s)` };
+            callSend(sender_psid, response1).then(()=>{
+              return callSend(sender_psid, response2).then(()=>{
+                return callSend(sender_psid, response3)
+              });
+          });
+
+    }   
+
+}
 /**************
 enddemo
 **************/
@@ -1132,7 +1185,7 @@ const startReply = (sender_psid) => {
 }
 
 
-const showOrder = (sender_psid) => {
+const showOrder1 = (sender_psid) => {
     let response1 = {"text": "Here's our available menu now. You can check detail of dessert. "};
     let response2 = {
       "attachment": {
