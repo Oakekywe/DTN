@@ -278,7 +278,7 @@ app.get('/admin/orders', async(req,res)=>{
     
 });
 
-app.post('/admin/update_order', function(req,res){   
+app.post('/admin/update_order/:doc_id', function(req,res){   
 
   let data = {
     ref:req.body.ref,
