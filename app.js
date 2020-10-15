@@ -1079,7 +1079,7 @@ const orderMenu =(sender_psid) => {
   callSend(sender_psid, response);
 }
 
-/*
+
 const showOrder = async(sender_psid, order_ref) => {
 
     let cust_points = 0;
@@ -1122,30 +1122,6 @@ const showOrder = async(sender_psid, order_ref) => {
 
     }   
 
-}*/
-
-const showOrder = async(sender_psid, order_ref) => {    
-
-    const ordersRef = db.collection('orders').where("ref", "==", order_ref).limit(1);
-    const snapshot = await ordersRef.get();
-
-    if (snapshot.empty) {
-      let response = { "text": "Incorrect order number" };
-      callSend(sender_psid, response).then(()=>{
-        return registerReply(sender_psid);
-      });
-    }else{
-        let response = { "text": "You are correct." };
-        callSend(sender_psid, response).then(()=>{
-          return abcde(sender_psid);
-
-          });
-    }   
-
-}
-const abcde = (sender_psid) => {
-  let response = {"text": "add your course now!"};
-  callSend(sender_psid, response)
 }
 /**************
 enddemo
