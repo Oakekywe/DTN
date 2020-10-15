@@ -222,9 +222,7 @@ app.post('/admin/savefood',upload.single('file'),function(req,res){
       let price = parseInt(req.body.price); 
       let sku = req.body.sku;
 
-      let today = new Date();
-
-      
+      let today = new Date();      
 
 
       let file = req.file;
@@ -247,6 +245,37 @@ app.post('/admin/savefood',upload.single('file'),function(req,res){
           console.error(error);
         });
       }             
+});
+
+app.get('/admin/orders', async(req,res)=>{
+
+  const ordersRef = db.collection('orders').orderBy('created_on', 'desc');
+  const snapshot = await ordersRef.get();
+
+  if (snapshot.empty) {
+    res.send('no data');
+  } else{
+
+      let data = []; 
+
+  snapshot.forEach(doc => {
+    let order = {};
+    
+    order = doc.data();
+    order.doc_id = doc.id;
+    
+    let d = new Date(doc.data().created_on._seconds);
+    d = d.toString();
+    order.created_on = d;    
+
+    data.push(order);
+    
+  });
+
+  res.render('order_records.ejs', {data:data});
+
+  }
+    
 });
 /*************
 EndAdminRoute
