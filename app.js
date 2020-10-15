@@ -466,7 +466,7 @@ app.post('/order', function(req, res){
 
         console.log('update_data: ', update_data);
 
-        db.collection('users').doc(user_id).update(update_data).then((success)=>{
+        db.collection('members').doc(user_id).update(update_data).then((success)=>{
               console.log('POINT UPDATE:');
               let text = "Thank you. Your order has been confirmed. Your order reference number is "+data.ref;      
               let response = {"text": text};
