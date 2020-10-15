@@ -416,6 +416,70 @@ app.post('/pointdiscount', function(req, res){
     }
 });
 
+
+app.get('/order', function(req, res){
+    let sub_total;
+  
+    if(!customer[user_id].cart){
+        customer[user_id].cart = [];
+    }
+    if(customer[user_id].cart.length < 1){
+        res.send('your cart is empty. back to shop <a href="../shop">shop</a>');
+    }else{   
+        sub_total = 0;
+        customer[user_id].cart.forEach((item) => sub_total += item.total);   
+
+        let item_list = "";
+        customer[user_id].cart.forEach((item) => item_list += item.name+'*'+item.qty);  
+        
+        res.render('order.ejs', {cart:customer[user_id].cart, sub_total:sub_total, user:customer[user_id], cart_total:cart_total, discount:cart_discount, items:item_list});    
+    }
+});
+
+app.post('/order', function(req, res){
+    let today = new Date();
+
+    let data = {
+      name: req.body.name,
+      phone: req.body.phone,
+      address: req.body.address,
+      items: req.body.items,
+      sub_total: parseInt(req.body.sub_total),
+      discount: parseInt(req.body.discount),
+      total: parseInt(req.body.total),
+      payment_type: req.body.payment_type,
+      ref: generateRandom(6),
+      created_on: today,
+      status: "pending",
+      comment:"",      
+    }
+
+    db.collection('orders').add(data).then((success)=>{
+        
+        console.log('TEMP POINTS:', temp_points);
+        console.log('CUSTOMER: ', customer[user_id]);
+
+        //get 10% from sub total and add to remaining points;
+        let newpoints = temp_points + data.sub_total * 0.1;  
+
+        let update_data = {points: newpoints };
+
+        console.log('update_data: ', update_data);
+
+        db.collection('users').doc(user_id).update(update_data).then((success)=>{
+              console.log('POINT UPDATE:');
+              let text = "Thank you. Your order has been confirmed. Your order reference number is "+data.ref;      
+              let response = {"text": text};
+              callSend(user_id, response);       
+          
+          }).catch((err)=>{
+             console.log('Error', err);
+          });   
+      }).catch((err)=>{
+         console.log('Error', err);
+      });
+});
+
 /*************
 EndMemberRoute
 **************/
