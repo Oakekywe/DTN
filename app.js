@@ -198,7 +198,7 @@ app.get('/admin/members', async(req,res)=>{
     
     let d = new Date(doc.data().created_on._seconds);
     d = d.toString();
-    order.created_on = d;    
+    member.created_on = d;    
 
     data.push(member);
     
