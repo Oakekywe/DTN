@@ -928,7 +928,9 @@ function webviewTest(sender_psid){
 startdemo
 **************/
 const registerReply =(sender_psid) => {
-  let response = {"text": "Here's our loyalty program. If you're interesting in this program, click the register now!"};
+  let response = {"text": "Here's our loyalty program. If you're interesting in this program, choose the register now!"};
+   response += {"text": "If you want to order food only, choose the order now!"};
+ 
   callSend(sender_psid, response).then(()=>{
     showMenu(sender_psid);
   });  
@@ -1132,8 +1134,8 @@ enddemo
 start order
 **************/
 const startReply = (sender_psid) => {
-   let response1 = {"text": "Welcome to our DTN dessert shop. You can make online order with 24/7 service. "};
-   let response2 = {"text": "You can order our delicious menu. You can make donation with us. You can be a loyal member by sign up. "};
+   let response1 = {"text": "Welcome to our DTN dessert shop. You can make order online Myanmar traditional dessert with 24/7 services. "};
+   let response2 = {"text": "You can order our delicious menu. You can make donation with us. You can also be a loyal member by sign up. "};
    let response3 = {
          "attachment": {
                 "type": "template",
