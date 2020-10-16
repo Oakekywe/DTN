@@ -173,6 +173,12 @@ Admin Check Order
 /*************
 StartAdminRoute
 **************/
+app.get('/admin/home',function(req,res){    
+    res.render('home.ejs');
+});
+    
+
+
 app.get('/admin/members', async(req,res)=>{
 
   const membersRef = db.collection('members').orderBy('created_on', 'desc');
