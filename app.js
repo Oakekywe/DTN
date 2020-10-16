@@ -859,7 +859,7 @@ const handlePostback = (sender_psid, received_postback) => {
 
   }
   
-}
+
 
 const generateRandom = (length) => {
    var result           = '';
