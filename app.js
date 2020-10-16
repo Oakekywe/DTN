@@ -1220,7 +1220,7 @@ const showAdmin = async(sender_psid, admin_key) => {
     }   
 }
 
- function admin(sender_psid){
+ const admin = (sender_psid) =>{
   let response;
   response = {
       "attachment": {
@@ -1241,7 +1241,7 @@ const showAdmin = async(sender_psid, admin_key) => {
         }
       }
     }
-  callSendAPI(sender_psid, response);
+  callSend(sender_psid, response);
 }
 /**************
 enddemo
