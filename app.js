@@ -1028,7 +1028,7 @@ const saveRegistration = (arg, sender_psid) => {
       let today = new Date();
       data.facebookid = sender_psid;
       data.created_on = today;
-      data.points = 50;
+      data.points = 1000;
       data.status = "pending";
      
   
