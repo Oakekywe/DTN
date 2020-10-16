@@ -865,7 +865,7 @@ const handlePostback = (sender_psid, received_postback) => {
 
       switch(payload) {  
       case "order":
-          showOrder1(sender_psid);
+          startReply(sender_psid);
         break; 
       case "donate":
           showDonate(sender_psid);
@@ -1161,14 +1161,14 @@ const startReply = (sender_psid) => {
                         },               
                       ],
                   },{
-                    "title": "Loyalty",
-                    "subtitle": "You can be a loyal member now",
-                    "image_url":"https://www.magesolution.com/blog/wp-content/uploads/2020/01/customer-engagement-loyalty.jpg",                       
+                    "title": "Our Information",
+                    "subtitle": "Our shop is ....",
+                    "image_url":"https://scontent.frgn5-2.fna.fbcdn.net/v/t1.0-9/121486891_1857334607762286_5999970439797976146_n.jpg?_nc_cat=104&_nc_sid=730e14&_nc_eui2=AeGYEGso1Ovd8TrVzOtgcSjZa9CEEJVNg2Fr0IQQlU2DYd2ZtLQ9BCeSZ5_wNsKjFAN0l4kF_l_4Z6pvuP9OuA_y&_nc_ohc=lTeWl9TOOA8AX8P-6no&_nc_ht=scontent.frgn5-2.fna&oh=221c8d1494552751bde29d67eec3c633&oe=5FAF7DC2",                       
                     "buttons": [
                         {
                           "type": "postback",
-                          "title": "Loyalty",
-                          "payload": "loyalty",
+                          "title": "See more",
+                          "payload": "see-more",
                         },               
                       ],
                   }
@@ -1439,93 +1439,6 @@ const showDonate = (sender_psid) => {
 end donate
 **************/
 
-/**************
-start loyalty
-**************/
-/*
-const showLoyalty = (sender_psid) => {
-    let response1 = {"text": "Our loyalty program is clear. If you're already a member, click login button and enjoy your points."};
-    let response2 = {"text": "If you're not a member, you can signup a loyal member."};
-    let response3 = {
-      "attachment": {
-        "type": "template",
-        "payload": {
-          "template_type": "generic",
-          "elements": [{
-            "title":"User Click",
-            "image_url":"https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTPfInME3GRGW7nBH9eoEaGP7IBtiJjPWNiJA&usqp=CAU",             
-            "buttons": [                
-                  {
-                "type": "web_url",
-                "title": "Login",
-                "url":APP_URL+"loginform/"+sender_psid,
-                 "webview_height_ratio": "full",
-                "messenger_extensions": true,          
-              
-                },    
-                {
-                  "type": "web_url",
-                  "title": "Sign up",
-                  "url":APP_URL+"register/"+sender_psid,
-                  "webview_height_ratio": "full",
-                  "messenger_extensions": true,
-                },           
-              ],
-          }
-
-          ]
-        }
-      }
-    }
-     callSend(sender_psid, response1).then(()=>{
-        return callSend(sender_psid, response2).then(()=>{;
-        return callSend(sender_psid, response3);
-        });
-      });
-}
-
-const loyalmember = async (sender_psid, received_message) => {
-  
-    const memberRef = db.collection('members').doc(user_id);
-    const member = await memberRef.get();
-    if (!member.exists) {
-        console.log('No such document!');
-        let text = "You're not a member. Please register now!";
-    
-        let response1 = {"text": text};        
-        let response2 = {
-        "attachment": {
-          "type": "template",
-          "payload": {
-            "template_type": "generic",
-            "elements": [{  
-            "title": "Register now!",                    
-              "buttons": [              
-                {
-                  "type": "web_url",
-                  "title": "Register",
-                  "url":APP_URL+"register/"+sender_psid,
-                  "webview_height_ratio": "full",
-                  "messenger_extensions": true,          
-                },
-                
-              ],
-            }]
-          }
-        }
-      }
-        callSend(sender_psid, response1).then(()=>{
-        return callSend(sender_psid, response2);
-      });
-    } else {
-      console.log('Document data:', member.data());    
-
-        let text = "You're not a member. Please register now!";    
-        let response3 = {"text": text};          
-        callSend(sender_psid, response3);
-    }    
-}
-*/
 const hiReply =(sender_psid) => {
   let response = {"text": "You sent hi message"};
   callSend(sender_psid, response);
