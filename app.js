@@ -26,7 +26,7 @@ const reg_questions = {
   "q1": "What is your full name?",
   "q2": "What is your Phone number?",
   "q3": "What is your currently address?",
-  "q4": "What is your order reference number?"
+  "q4": "What is your order reference number?",
   "q5": "What is your key?"
 }
 
