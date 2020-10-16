@@ -63,7 +63,7 @@
 
 		<label for="start">Order date:</label>
 
-		<input type="date" id="bbbb" name="date" value="date" min="2020-10-16" max="">	<br/>
+		<input type="date" id="bbbb" name="date" value="date" min="<%= today %>" max="">	<br/>
 
 		<input type="radio" name="payment_type" value="cod" required/> Cash on Delivery 
 		<input type="radio" name="payment_type" value="pk" required/> Pick Up <br/>
@@ -73,6 +73,7 @@
 	
 
 	<script>
+		let today = new Date();
 		function myFunction() {
 		  var x = document.getElementById("bbbb").min;
 		  document.getElementById("demo").innerHTML = x;
