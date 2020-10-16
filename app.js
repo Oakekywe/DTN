@@ -520,8 +520,6 @@ app.post('/pointdiscount', function(req, res){
 
 app.get('/order', function(req, res){
     let sub_total;
-    let today = new Date();
-    let date = today + 2;
   
     if(!customer[user_id].cart){
         customer[user_id].cart = [];
