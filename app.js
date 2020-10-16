@@ -179,6 +179,37 @@ Admin Check Order
 /*************
 StartAdminRoute
 **************/
+app.get('/admin/members', async(req,res)=>{
+
+  const membersRef = db.collection('members').orderBy('created_on', 'desc');
+  const snapshot = await membersRef.get();
+
+  if (snapshot.empty) {
+    res.send('no member');
+  } else{
+
+      let data = []; 
+
+  snapshot.forEach(doc => {
+    let member = {};
+    
+    member = doc.data();
+    member.doc_id = doc.id;
+    
+    let d = new Date(doc.data().created_on._seconds);
+    d = d.toString();
+    order.created_on = d;    
+
+    data.push(member);
+    
+  });
+
+  res.render('member_records.ejs', {data:data});
+
+  }
+    
+});
+
 app.get('/admin/foods', async(req,res) =>{   
 
    
@@ -538,7 +569,7 @@ app.post('/order', function(req, res){
 
         db.collection('members').doc(user_id).update(update_data).then((success)=>{
               console.log('POINT UPDATE:');
-              let text = "Thank you. Your order has been confirmed. Your order reference number is "+data.ref;      
+              let text = "Thank you. Your order has been received. Your order reference number is "+data.ref;      
               let response = {"text": text};
               callSend(user_id, response);       
           
@@ -553,11 +584,7 @@ app.post('/order', function(req, res){
 /*************
 EndMemberRoute
 **************/
-//logintest
-app.get('/loginform/:sender_id',function(req,res){
-    const sender_id = req.params.sender_id;
-    res.render('loginform.ejs',{title:"Login user", sender_id:sender_id});
-});
+
 //webview test
 app.get('/webview/:sender_id',function(req,res){
     const sender_id = req.params.sender_id;
@@ -659,18 +686,7 @@ function handleQuickReply(sender_psid, received_message) {
   
   else{
 
-      switch(received_message) {     
-        case "pickup": 
-          userInputs[user_id].pickup = "pickup";       
-          confirmOrder(current_question, sender_psid);
-          break; 
-        case "delivery":
-          userInputs[user_id].delivery = "delivery";       
-          confirmOrder(current_question, sender_psid);
-          break;  
-        case "confirmorder":
-            saveOrder(userInputs[user_id], sender_psid);
-          break;                   
+      switch(received_message) {                    
         case "on":
             showQuickReplyOn(sender_psid);
           break;
@@ -738,35 +754,6 @@ const handleMessage = (sender_psid, received_message) => {
      current_question = '';     
      showOrder(sender_psid, order_ref);
   }
-
-
-  else if(current_question == 'q1'){
-     console.log('DATE ENTERED',received_message.text);
-     userInputs[user_id].date = received_message.text;
-     current_question = 'q2';
-     Questions(current_question, sender_psid);
-  }else if(current_question == 'q2'){
-     console.log('FULL NAME ENTERED',received_message.text);
-     userInputs[user_id].name = received_message.text;
-     current_question = 'q3';
-     Questions(current_question, sender_psid);
-  }else if(current_question == 'q3'){
-     console.log('PHONE ENTERED',received_message.text);
-     userInputs[user_id].phone = received_message.text;
-     current_question = 'q4';
-     Questions(current_question, sender_psid);
-  }else if(current_question == 'q4'){
-     console.log('EMAIL ENTERED',received_message.text);
-     userInputs[user_id].email = received_message.text;
-     current_question = 'q5';
-     Questions(current_question, sender_psid);
-  }else if(current_question == 'q5'){
-     console.log('MESSAGE ENTERED',received_message.text);
-     userInputs[user_id].message = received_message.text;
-     current_question = '';
-     pickupordelivery(sender_psid);
-  }
-
   else {
       
       let user_message = received_message.text;      
@@ -779,9 +766,6 @@ const handleMessage = (sender_psid, received_message) => {
         break; 
       case "start":
           startReply(sender_psid);
-        break;    
-      case "register":
-        registerReply(sender_psid);
         break;            
       case "text":
         textReply(sender_psid);
@@ -854,15 +838,6 @@ const handlePostback = (sender_psid, received_postback) => {
 
   console.log('BUTTON PAYLOAD', payload);
 
-  if(payload.startsWith("type:")){
-    let type = payload.slice(5);
-    console.log('SELECTED TYPE IS: ', type);
-    userInputs[user_id].type = type;
-    console.log('TEST', userInputs);
-    quantity(sender_psid);
-  }
-  else{
-
       switch(payload) {  
       case "order":
           registerReply(sender_psid);
@@ -870,9 +845,7 @@ const handlePostback = (sender_psid, received_postback) => {
       case "donate":
           showDonate(sender_psid);
         break;  
-      case "loyalty":
-          showLoyalty(sender_psid);
-        break;      
+        
       case "yes":
           showButtonReplyYes(sender_psid);
         break;
@@ -1129,14 +1102,8 @@ const showOrder = async(sender_psid, order_ref) => {
     }   
 
 }
-/**************
-enddemo
-**************/
 
 
-/**************
-start order
-**************/
 const startReply = (sender_psid) => {
    let response1 = {"text": "Welcome to our DTN dessert shop. You can make order online Myanmar traditional dessert with 24/7 services. "};
    let response2 = {"text": "You can order our delicious menu. You can make donation with us. You can also be a loyal member by sign up. "};
@@ -1192,210 +1159,10 @@ const startReply = (sender_psid) => {
     });
   });
 }
-
-
-const showOrder1 = (sender_psid) => {
-    let response1 = {"text": "Here's our available menu now. You can check detail of dessert. "};
-    let response2 = {
-      "attachment": {
-        "type": "template",
-        "payload": {
-          "template_type": "generic",
-          "elements": [{
-            "title": "Shwe Kyi Sanwin Makin",
-            "subtitle": "This type of Sanwin Makin is made with Shwe Kyi and the original taste of Sanwin Makin.",
-            "image_url":"https://scontent.frgn5-2.fna.fbcdn.net/v/t31.0-0/p180x540/415606_4691000434420_355451047_o.jpg?_nc_cat=109&_nc_sid=2c4854&_nc_eui2=AeF2M9RhymkUvzblKIVEcaVYZZ9IqNQbMhlln0io1BsyGeUUZNECSYed1motoMAU3T3XXsplzubf4UwghXbirA2G&_nc_ohc=kx_5FjqU2noAX_FLDXz&_nc_ht=scontent.frgn5-2.fna&tp=6&oh=2dccc6bd79739ae9a566cae4baadf8eb&oe=5F9EDD53",                       
-            "buttons": [
-                {
-                  "type": "postback",
-                  "title": "Order $7000",
-                  "payload": "type:Shwe Kyi Sanwin Makin",
-                },               
-              ],
-          },{
-            "title": "Potato Sanwin Makin",
-            "subtitle": "This type of Sanwin Makin is made with Potato and its taste is cheesy.",
-            "image_url":"https://i.pinimg.com/originals/00/5f/cf/005fcf0186075132975c0667d4c0c005.jpg",                       
-            "buttons": [
-                {
-                  "type": "postback",
-                  "title": "Order $6000",
-                  "payload": "type:Potato Sanwin Makin",
-                },               
-              ],
-          },{
-            "title": "Milk Sanwin Makin",
-            "subtitle": "This type of Sanwin Makin is made with Milk and its taste is sweet.",
-            "image_url":"https://burmaspice.com/wp-content/uploads/2018/08/Burma-Spice-South-East-Asian-Burmese-Recipe-Burmese-Semolina-Cake_web-res.jpg",                       
-            "buttons": [
-                {
-                  "type": "postback",
-                  "title": "Order $6000",
-                  "payload": "type:Milk Sanwin Makin",
-                },               
-              ],
-          },{
-            "title": "Banana Sanwin Makin",
-            "subtitle": "This type of Sanwin Makin is made with Banana and its taste is a little bit sour.",
-            "image_url":"https://scontent.frgn5-2.fna.fbcdn.net/v/t1.0-0/p526x296/102871159_948419118950746_478899810489249804_n.jpg?_nc_cat=102&_nc_sid=8bfeb9&_nc_eui2=AeFNEWd47jK_lkwdilqwV_h8WnacIXjhOhJadpwheOE6EsH59hBDO-Nk8-bL2cLd4G0G_Gbp47yqo93cdH9-0Na0&_nc_ohc=PzURL4fQxDQAX-9tx3p&_nc_ht=scontent.frgn5-2.fna&tp=6&oh=b736bed6a074bb67889f7f3db210d199&oe=5F9EA75E",                       
-            "buttons": [
-                {
-                  "type": "postback",
-                  "title": "Order $8000",
-                  "payload": "type:Banana Sanwin Makin",
-                },               
-              ],
-          },{
-            "title": "Pudding",
-            "subtitle": "This type of pudding is baked and it is soft and sweet.",
-            "image_url":"https://www.southeast-asia.com/wp-content/uploads/2020/09/Cassava-Cake_mimomotaro.jpg",                       
-            "buttons": [
-                {
-                  "type": "postback",
-                  "title": "Order $4000",
-                  "payload": "type:Pudding",
-                },               
-              ],
-            }
-          ]
-        }
-      }
-    }     
-    
-     callSend(sender_psid, response1).then(()=>{
-        return callSend(sender_psid, response2);
-      });
-}
-
-const quantity = (sender_psid) => {
-
-  let response = {
-    "text": "How many trays do you want to order?",
-    "quick_replies":[
-            {
-              "content_type":"text",
-              "title":"1",
-              "payload":"quantity:1",              
-            },{
-              "content_type":"text",
-              "title":"2",
-              "payload":"quantity:2",             
-            },{
-              "content_type":"text",
-              "title":"3",
-              "payload":"quantity:3",             
-            },{
-              "content_type":"text",
-              "title":"4",
-              "payload":"quantity:4",             
-            },{
-              "content_type":"text",
-              "title":"5",
-              "payload":"quantity:5",             
-            },{
-              "content_type":"text",
-              "title":"6",
-              "payload":"quantity:6",             
-            }
-    ]
-  };
-  callSend(sender_psid, response);
-
-}
-
-
-const Questions = (current_question,sender_psid) => {
-  if(current_question == 'q1'){
-    let response = {"text": questions.q1};
-    callSend(sender_psid, response);
-  }else if(current_question == 'q2'){
-    let response = {"text": questions.q2};
-    callSend(sender_psid, response);
-  }else if(current_question == 'q3'){
-    let response = {"text": questions.q3};
-    callSend(sender_psid, response);
-  }else if(current_question == 'q4'){
-    let response = {"text": questions.q4};
-    callSend(sender_psid, response);
-  }else if(current_question == 'q5'){
-    let response = {"text": questions.q5};
-    callSend(sender_psid, response);
-  }
-}
-
-
-const pickupordelivery = (sender_psid) => {
-
-  let response = {
-    "text": "Do you want to pick up or delivery for your order?",
-    "quick_replies":[
-            {
-              "content_type":"text",
-              "title":"Pick up",
-              "payload":"pickup",              
-            },{
-              "content_type":"text",
-              "title":"Delivery",
-              "payload":"delivery",             
-            }
-    ]
-  };
-  callSend(sender_psid, response);
-
-}
-
-const confirmOrder = (current_question, sender_psid) => {
-console.log('ORDER INFO', userInputs);
-  let abc = "type:" + userInputs[user_id].type + "\u000A";
-  abc += "quantity:" + userInputs[user_id].quantity + "\u000A";
-  abc += "date:" + userInputs[user_id].date + "\u000A";
-  abc += "name:" + userInputs[user_id].name + "\u000A";
-  abc += "phone:" + userInputs[user_id].phone + "\u000A";
-  abc += "email:" + userInputs[user_id].email + "\u000A";
-  abc += "message:" + userInputs[user_id].message + "\u000A";
-  abc += "pickup:" + userInputs[user_id].pickup + "\u000A";  
-
-  let response1 = {"text": abc};
-
-  let response2 = {
-    "text": "Confirm your order now.",
-    "quick_replies":[
-            {
-              "content_type":"text",
-              "title":"Confirm",
-              "payload":"confirmorder",              
-            },{
-              "content_type":"text",
-              "title":"Cancel",
-              "payload":"off",             
-            }
-    ]
-  };
-  
-  callSend(sender_psid, response1).then(()=>{
-    return callSend(sender_psid, response2);
-  });
-}
-
-const saveOrder = (arg, sender_psid) => {
-  let data = arg;
-  data.ref = generateRandom(5);
-  data.status = "pending";
-  db.collection('orders').add(data).then((success)=>{
-    console.log('SAVED', success);
-    let text = "Thank you for your order."+ "\u000A";
-    text += "We will confirm your order soon."+ "\u000A";
-    text += "Your order reference code is:" + data.ref;
-    let response = {"text": text};
-    callSend(sender_psid, response);
-  }).catch((err)=>{
-     console.log('Error', err);
-  });
-}
-
 /**************
-end order
+enddemo
 **************/
+
 /**************
 start donate
 **************/

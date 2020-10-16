@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Members</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+      table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+      }
+
+      td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+      }
+
+      tr:nth-child(even) {
+        background-color: #dddddd;
+      }
+    </style>
+ </head>
+ </head>
+
+  <body style="background-color:white">
+  <h1>All Loyal Members </h1>
+
+  <table cellspacing="1" cellpadding="5" border="1">
+    <tr>
+    
+    <th>Facebook ID</th>
+    <th>Member Name</th>
+    <th>Phone</th>       
+    <th>Address</th>
+    <th>Points</th> 
+    <th>Status</th>
+    <th>Action</th>
+  </tr>
+
+  <% data.forEach(function(member){ %>
+     <tr>
+      
+       <td><%= member.facebookid %></td>
+       <td><%= member.name %></td>
+       <td><%= member.phone %></td>
+       <td><%= member.address %></td>
+       <td><%= member.points %></td>
+       <td><%= member.status %></td>
+       <td><a href="update_order/<%= order.doc_id %>">Edit</a> | Delete</td> 
+      </tr>
+  <% }); %>
+  
+
+	</table> 
+ 
+
+  </body>
+
+</html>
