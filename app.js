@@ -976,7 +976,7 @@ const reg_Questions = (current_question, sender_psid) => {
     let response = {"text": reg_questions.q4};
     callSend(sender_psid, response);
   }else if(current_question == 'q5'){
-    let response = {"text": reg_questions.q4};
+    let response = {"text": reg_questions.q5};
     callSend(sender_psid, response);
   }
 }
