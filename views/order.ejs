@@ -54,16 +54,17 @@
 		<input type="text" name="phone" value="<%= user.phone %>" required/>	<br/>
 		<textarea  name="address" rows="4" cols="20" required><%= user.address %></textarea><br/>
 
-		<input  type="hidden" name="items" value="<%= items %>">		
-	
+		<input  type="hidden" name="items" value="<%= items %>">
 
 		<input type="hidden" name="sub_total" value="<%= sub_total %>" />
 		<input type="hidden" name="discount" value="<%= discount %>" />
 		<input type="hidden" name="total" value="<%= cart_total %>" />
 
-		<label for="start">Please place your order 2 days advance<br>Order date: </label>
-
+		<p>
+		<label for="start">Please place your order <strong>2 days advance</strong><br>Order date: </label>
 		<input type="date" name="date" value="date" min="<%= today %>" max="">	<br/>
+		</p>
+
 		<p>
 		<input type="radio" name="payment_type" value="cod" required/> Cash on Delivery 
 		<input type="radio" name="payment_type" value="pk" required/> Pick Up <br/>
