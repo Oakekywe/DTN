@@ -994,9 +994,9 @@ const reg_Questions = (current_question, sender_psid) => {
 const confirmRegister = (sender_psid) => {
 
   let show = "";
-  show += "name:" + userInputs[user_id].name + "\u000A";
-  show += "phone:" + userInputs[user_id].phone + "\u000A";
-  show += "address:" + userInputs[user_id].address + "\u000A";
+  show += "name: " + userInputs[user_id].name + "\u000A";
+  show += "phone: " + userInputs[user_id].phone + "\u000A";
+  show += "address: " + userInputs[user_id].address + "\u000A";
 
   let response1 = {"text": show};
 
