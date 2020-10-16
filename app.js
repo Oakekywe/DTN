@@ -520,6 +520,8 @@ app.post('/pointdiscount', function(req, res){
 
 app.get('/order', function(req, res){
     let sub_total;
+    let today = new Date();
+    let date = today + 2;
   
     if(!customer[user_id].cart){
         customer[user_id].cart = [];
@@ -539,7 +541,6 @@ app.get('/order', function(req, res){
 
 app.post('/order', function(req, res){
     let today = new Date();
-
     let data = {
       name: req.body.name,
       phone: req.body.phone,
@@ -548,6 +549,8 @@ app.post('/order', function(req, res){
       sub_total: parseInt(req.body.sub_total),
       discount: parseInt(req.body.discount),
       total: parseInt(req.body.total),
+
+      date: req.body.date,
       payment_type: req.body.payment_type,
       ref: generateRandom(6),
       created_on: today,
