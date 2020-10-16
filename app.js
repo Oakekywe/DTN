@@ -520,7 +520,7 @@ app.post('/pointdiscount', function(req, res){
 
 
 app.get('/order', function(req, res){
-  
+  let today = new Date();
     let sub_total;
   
     if(!customer[user_id].cart){
@@ -535,7 +535,7 @@ app.get('/order', function(req, res){
         let item_list = "";
         customer[user_id].cart.forEach((item) => item_list += item.name+'*'+item.qty);  
         
-        res.render('order.ejs', {cart:customer[user_id].cart, sub_total:sub_total, user:customer[user_id], cart_total:cart_total, discount:cart_discount, items:item_list});    
+        res.render('order.ejs', {cart:customer[user_id].cart, sub_total:sub_total, user:customer[user_id], cart_total:cart_total, discount:cart_discount, items:item_list, today:today});    
     }
 });
 
