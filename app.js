@@ -176,7 +176,6 @@ StartAdminRoute
 app.get('/admin/home',function(req,res){    
     res.render('home.ejs');
 });
-    
 
 
 app.get('/admin/members', async(req,res)=>{
@@ -1239,7 +1238,7 @@ const showAdmin = async(sender_psid, admin_key) => {
               {
                 "type": "web_url",
                 "title": "Admin",
-                "url":APP_URL+"admin/orders",         
+                "url":APP_URL+"admin/home",         
               },
               
             ],
