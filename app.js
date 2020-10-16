@@ -1197,7 +1197,7 @@ let response1 = {"text": "You have to pay half of the amount of total so that we
           },{
             "title": "K Pay",
             "subtitle": "0943135418 Oake Kywe Phyo Han",
-            "image_url":"https://scontent.frgn5-2.fna.fbcdn.net/v/t1.0-0/p526x296/121107899_1857706171058463_3677671571054052334_o.jpg?_nc_cat=109&_nc_sid=8bfeb9&_nc_eui2=AeGh1cdwnaDxmyTlMrF-15j7cIoeHYOHD05wih4dg4cPTjt4a0jLIzhX_5DTMs1t48p37D71PxEMTA2MpIOo4uae&_nc_ohc=Kl5PM012rl8AX-mw--d&_nc_ht=scontent.frgn5-2.fna&tp=6&oh=2ce2d3efafa67fc3bac1723cde974780&oe=5FB057CA",                       
+            "image_url":"https://scontent.frgn5-2.fna.fbcdn.net/v/t1.0-0/s600x600/121415269_1857710167724730_3179842538357888391_o.jpg?_nc_cat=106&_nc_sid=8bfeb9&_nc_eui2=AeE-o7Tupfzl6NvFi5bOQPzYwApcb66OocrAClxvro6hypj6VAEQSqokFHJ0-k_EcBgx873noAll8tktRlXhrtcl&_nc_ohc=ObUDCCLi0E4AX8Qabeq&_nc_ht=scontent.frgn5-2.fna&tp=7&oh=700c632cc11d5dc5204fae019af12f58&oe=5FAE2539",                       
             
           }
           ]
