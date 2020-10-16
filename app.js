@@ -338,7 +338,7 @@ app.post('/admin/update_order', function(req,res){
     sub_total:req.body.sub_total,
     discount:req.body.discount,
     total:req.body.total,
-    orderdate:req.body.date,
+    orderdate:req.body.orderdate,
     payment_type:req.body.payment_type,
     status:req.body.status,
     comment:req.body.comment,
