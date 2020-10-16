@@ -539,7 +539,7 @@ app.get('/order', function(req, res){
     }
 });
 
-app.post('/order', function(req, res){
+app.post('/order', function(sender_psid,req, res){
     let today = new Date();
     let data = {
       name: req.body.name,
@@ -573,6 +573,7 @@ app.post('/order', function(req, res){
               console.log('POINT UPDATE:');
               let text = "Thank you. Your order has been received. Your order reference number is: "+data.ref;      
               let response = {"text": text};
+              return waveQR(sender_psid);
               callSend(user_id, response);       
           
           }).catch((err)=>{
@@ -1164,6 +1165,28 @@ const startReply = (sender_psid) => {
     });
   });
 }
+
+const waveQR = (sender_psid) => {
+let response1 = {"text": "You have to pay half of the amount of total so that we must confirm your order."};
+    let response2 = {
+      "attachment": {
+        "type": "template",
+        "payload": {
+          "template_type": "generic",
+          "elements": [{
+            "title": "Wave Pay",
+            "subtitle": "This type of Sanwin Makin is made with Shwe Kyi and the original taste of Sanwin Makin.",
+            "image_url":"https://scontent.frgn5-2.fna.fbcdn.net/v/t1.0-0/p526x296/121586743_1857543374408076_2455719886480399307_o.jpg?_nc_cat=103&_nc_sid=8bfeb9&_nc_eui2=AeENgSqqMIwIm_3GppZifrpbdUUWn0MMW_d1RRafQwxb90GbO_gSVVfpmvv2-ZJ_25kNPJfZTUTx2aYonh1Y-j2M&_nc_ohc=e9wvjOVa6rgAX8sLyN0&_nc_ht=scontent.frgn5-2.fna&tp=6&oh=b466da0ae8ab543d8ae4c5a0fd8cb232&oe=5FAF9FF2",                       
+            
+          }
+          ]
+        }
+      }
+    }
+     callSend(sender_psid, response1).then(()=>{
+        return callSend(sender_psid, response2)
+      });
+ }    
 /**************
 enddemo
 **************/
