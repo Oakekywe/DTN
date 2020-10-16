@@ -338,6 +338,7 @@ app.post('/admin/update_order', function(req,res){
     sub_total:req.body.sub_total,
     discount:req.body.discount,
     total:req.body.total,
+    orderdate:req.body.date,
     payment_type:req.body.payment_type,
     status:req.body.status,
     comment:req.body.comment,
@@ -548,8 +549,7 @@ app.post('/order', function(req, res){
       sub_total: parseInt(req.body.sub_total),
       discount: parseInt(req.body.discount),
       total: parseInt(req.body.total),
-
-      date: req.body.date,
+      orderdate: req.body.date,
       payment_type: req.body.payment_type,
       ref: generateRandom(6),
       created_on: today,
