@@ -1180,7 +1180,12 @@ let response1 = {"text": "You have to pay half of the amount of total so that we
           "elements": [{
             "title": "Wave Pay",
             "subtitle": "This type of Sanwin Makin is made with Shwe Kyi and the original taste of Sanwin Makin.",
-            "image_url":"https://scontent.frgn5-2.fna.fbcdn.net/v/t1.0-0/p526x296/121621448_1857570484405365_4734299785565691958_o.jpg?_nc_cat=111&_nc_sid=8bfeb9&_nc_eui2=AeG-9HGm2dBJ88St4UZWmuc-gvWSa8GPgzOC9ZJrwY-DM_7kRpEJOwNCJ3ZJ9e6KuArdtI320wm2xkFm9Fok_jJG&_nc_ohc=TilZ8fpVSPAAX8k98ZE&_nc_ht=scontent.frgn5-2.fna&tp=6&oh=d2a2659b6312d84ee8450cb8790eac3d&oe=5FAD8EDD",                       
+            "image_url":"https://scontent.frgn5-2.fna.fbcdn.net/v/t1.0-0/p526x296/121644458_1857579311071149_233997658176677678_o.jpg?_nc_cat=110&_nc_sid=8bfeb9&_nc_eui2=AeE13CLqOjbMhwPTlUCvjcVH7oMEyqnBSwfugwTKqcFLB7anzKwsofjUbPf6kXPRKMsS4Zj1zJya4vBTPLjkZx5g&_nc_ohc=g-oDf3Dj8x8AX_AOxTy&_nc_ht=scontent.frgn5-2.fna&tp=6&oh=8752b229f9e1cf4e01430abacc95094a&oe=5FB02B4B",                       
+            
+          },{
+            "title": "K Pay",
+            "subtitle": "This type of Sanwin Makin is made with Shwe Kyi and the original taste of Sanwin Makin.",
+            "image_url":"https://scontent.frgn5-2.fna.fbcdn.net/v/t1.0-0/p526x296/121644458_1857579311071149_233997658176677678_o.jpg?_nc_cat=110&_nc_sid=8bfeb9&_nc_eui2=AeE13CLqOjbMhwPTlUCvjcVH7oMEyqnBSwfugwTKqcFLB7anzKwsofjUbPf6kXPRKMsS4Zj1zJya4vBTPLjkZx5g&_nc_ohc=g-oDf3Dj8x8AX_AOxTy&_nc_ht=scontent.frgn5-2.fna&tp=6&oh=8752b229f9e1cf4e01430abacc95094a&oe=5FB02B4B",                       
             
           }
           ]
