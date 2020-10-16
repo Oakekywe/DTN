@@ -929,10 +929,12 @@ startdemo
 **************/
 const registerReply =(sender_psid) => {
   let response = {"text": "Here's our loyalty program. If you're interesting in this program, choose the register now!"};
-   response += {"text": "If you want to order food only, choose the order now!"};
+  let response1 = {"text": "If you want to order food only, choose the order now!"};
  
   callSend(sender_psid, response).then(()=>{
+    callSend(sender_psid, response1).then(()=>{
     showMenu(sender_psid);
+    });
   });  
 }
 
