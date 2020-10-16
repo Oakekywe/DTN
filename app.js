@@ -519,6 +519,7 @@ app.post('/pointdiscount', function(req, res){
 
 
 app.get('/order', function(req, res){
+  let today = new Date();
     let sub_total;
   
     if(!customer[user_id].cart){
@@ -762,6 +763,9 @@ const handleMessage = (sender_psid, received_message) => {
       user_message = user_message.toLowerCase(); 
 
       switch(user_message) { 
+        case "register":
+          registerReply(sender_psid);
+        break; 
       case "hi":
           hiReply(sender_psid);
         break; 
