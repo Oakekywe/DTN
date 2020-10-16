@@ -573,7 +573,7 @@ app.post('/order', function(req, res){
               console.log('POINT UPDATE:');
               let text = "Thank you. Your order has been received. Your order reference number is: "+data.ref;      
               let response = {"text": text};
-              return waveQR(sender_psid);
+              return waveQR(user_id);
               callSend(user_id, response);       
           
           }).catch((err)=>{
@@ -1166,7 +1166,7 @@ const startReply = (sender_psid) => {
   });
 }
 
-const waveQR = (sender_psid) => {
+const waveQR = (user_id) => {
 let response1 = {"text": "You have to pay half of the amount of total so that we must confirm your order."};
     let response2 = {
       "attachment": {
