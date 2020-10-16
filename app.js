@@ -572,7 +572,7 @@ app.post('/order', function(req, res){
         db.collection('members').doc(user_id).update(update_data).then((success)=>{
               console.log('POINT UPDATE:');
 
-              return waveQR(user_id);
+              
               let text = "Thank you. Your order has been received. Your order reference number is: "+data.ref;      
               let response = {"text": text};
               
