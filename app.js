@@ -1191,13 +1191,13 @@ let response1 = {"text": "You have to pay half of the amount of total so that we
           "template_type": "generic",
           "elements": [{
             "title": "Wave Pay",
-            "subtitle": "This type of Sanwin Makin is made with Shwe Kyi and the original taste of Sanwin Makin.",
+            "subtitle": "0943135418 Oake Kywe Phyo Han",
             "image_url":"https://scontent.frgn5-2.fna.fbcdn.net/v/t1.0-0/p526x296/121644458_1857579311071149_233997658176677678_o.jpg?_nc_cat=110&_nc_sid=8bfeb9&_nc_eui2=AeE13CLqOjbMhwPTlUCvjcVH7oMEyqnBSwfugwTKqcFLB7anzKwsofjUbPf6kXPRKMsS4Zj1zJya4vBTPLjkZx5g&_nc_ohc=g-oDf3Dj8x8AX_AOxTy&_nc_ht=scontent.frgn5-2.fna&tp=6&oh=8752b229f9e1cf4e01430abacc95094a&oe=5FB02B4B",                       
             
           },{
             "title": "K Pay",
-            "subtitle": "This type of Sanwin Makin is made with Shwe Kyi and the original taste of Sanwin Makin.",
-            "image_url":"https://scontent.frgn5-2.fna.fbcdn.net/v/t1.0-0/p526x296/121644458_1857579311071149_233997658176677678_o.jpg?_nc_cat=110&_nc_sid=8bfeb9&_nc_eui2=AeE13CLqOjbMhwPTlUCvjcVH7oMEyqnBSwfugwTKqcFLB7anzKwsofjUbPf6kXPRKMsS4Zj1zJya4vBTPLjkZx5g&_nc_ohc=g-oDf3Dj8x8AX_AOxTy&_nc_ht=scontent.frgn5-2.fna&tp=6&oh=8752b229f9e1cf4e01430abacc95094a&oe=5FB02B4B",                       
+            "subtitle": "0943135418 Oake Kywe Phyo Han",
+            "image_url":"https://scontent.frgn5-2.fna.fbcdn.net/v/t1.0-0/s600x600/121545008_1857685167727230_6361365727157420256_o.jpg?_nc_cat=108&_nc_sid=8bfeb9&_nc_eui2=AeFJFGMRD2MXQtd_dL3NOViF1D1xIuUKxGrUPXEi5QrEaq4RW6rB48YB5pCXyLjH3aYyqY0jm_x3fpO3i57ssAUk&_nc_ohc=z2rLaGc56y0AX-gOVOx&_nc_ht=scontent.frgn5-2.fna&tp=7&oh=e7c13d8a8a63548013a21c637b5193be&oe=5FAFAFE2",                       
             
           }
           ]
