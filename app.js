@@ -1233,9 +1233,7 @@ const showAdmin = async(sender_psid, admin_key) => {
               {
                 "type": "web_url",
                 "title": "Admin",
-                "url":APP_URL+"admin/orders/",
-                 "webview_height_ratio": "full",
-                "messenger_extensions": true,          
+                "url":APP_URL+"admin/orders/",         
               },
               
             ],
