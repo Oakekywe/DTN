@@ -865,7 +865,7 @@ const handlePostback = (sender_psid, received_postback) => {
 
       switch(payload) {  
       case "order":
-          startReply(sender_psid);
+          registerReply(sender_psid);
         break; 
       case "donate":
           showDonate(sender_psid);
@@ -928,7 +928,7 @@ function webviewTest(sender_psid){
 startdemo
 **************/
 const registerReply =(sender_psid) => {
-  let response = {"text": "Welcome to our DTN dessert shop, you can order our menu. You can make donation with us. You can be a loyal member."};
+  let response = {"text": "Here's our loyalty program. If you're interesting in this program, click the register now!"};
   callSend(sender_psid, response).then(()=>{
     showMenu(sender_psid);
   });  
@@ -1132,15 +1132,16 @@ enddemo
 start order
 **************/
 const startReply = (sender_psid) => {
-   let response1 = {"text": "Welcome to our DTN dessert shop, you can order our menu. You can make donation with us. You can be a loyal member. "};
-   let response2 = {
+   let response1 = {"text": "Welcome to our DTN dessert shop. You can make online order with 24/7 service. "};
+   let response2 = {"text": "You can order our delicious menu. You can make donation with us. You can be a loyal member by sign up. "};
+   let response3 = {
          "attachment": {
                 "type": "template",
                 "payload": {
                   "template_type": "generic",
                   "elements": [{
-                    "title": "See our delicious menu",
-                    "subtitle": "Here's menu",
+                    "title": "Order here",
+                    "subtitle": "If you want to order some foods, choose this.",
                     "image_url":"https://tourisminmyanmar.com.mm/wp-content/uploads/2019/08/rsz_shutterstock_1009625584.jpg",                       
                     "buttons": [
                         {
@@ -1180,7 +1181,9 @@ const startReply = (sender_psid) => {
  };
 
   callSend(sender_psid, response1).then(()=>{
-    return callSend(sender_psid, response2);
+    return callSend(sender_psid, response2).then(()=>{
+      return callSend(sender_psid, response3);
+    });
   });
 }
 
