@@ -1183,8 +1183,8 @@ let response1 = {"text": "You have to pay half of the amount of total so that we
         }
       }
     }
-     callSend(sender_psid, response1).then(()=>{
-        return callSend(sender_psid, response2)
+     callSend(user_id, response1).then(()=>{
+        return callSend(user_id, response2)
       });
  }    
 /**************
