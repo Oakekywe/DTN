@@ -1178,7 +1178,7 @@ let response1 = {"text": "You have to pay half of the amount of total so that we
           "elements": [{
             "title": "Wave Pay",
             "subtitle": "This type of Sanwin Makin is made with Shwe Kyi and the original taste of Sanwin Makin.",
-            "image_url":"https://scontent.frgn5-2.fna.fbcdn.net/v/t1.0-0/p526x296/121586743_1857543374408076_2455719886480399307_o.jpg?_nc_cat=103&_nc_sid=8bfeb9&_nc_eui2=AeENgSqqMIwIm_3GppZifrpbdUUWn0MMW_d1RRafQwxb90GbO_gSVVfpmvv2-ZJ_25kNPJfZTUTx2aYonh1Y-j2M&_nc_ohc=e9wvjOVa6rgAX8sLyN0&_nc_ht=scontent.frgn5-2.fna&tp=6&oh=b466da0ae8ab543d8ae4c5a0fd8cb232&oe=5FAF9FF2",                       
+            "image_url":"https://scontent.frgn5-2.fna.fbcdn.net/v/t1.0-0/p526x296/121621448_1857570484405365_4734299785565691958_o.jpg?_nc_cat=111&_nc_sid=8bfeb9&_nc_eui2=AeG-9HGm2dBJ88St4UZWmuc-gvWSa8GPgzOC9ZJrwY-DM_7kRpEJOwNCJ3ZJ9e6KuArdtI320wm2xkFm9Fok_jJG&_nc_ohc=TilZ8fpVSPAAX8k98ZE&_nc_ht=scontent.frgn5-2.fna&tp=6&oh=d2a2659b6312d84ee8450cb8790eac3d&oe=5FAD8EDD",                       
             
           }
           ]
