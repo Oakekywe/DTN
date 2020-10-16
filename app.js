@@ -21,19 +21,13 @@ const uuidv4 = uuid();
 app.use(body_parser.json());
 app.use(body_parser.urlencoded());
 
-const questions = {
-  "q1": "What date do you want to order? (yyyy-mm-dd)",
-  "q2": "What is your full name?",
-  "q3": "What is your Phone number?",
-  "q4": "What email do you use?",
-  "q5": "Anything to say?"
-}
 const reg_questions = {
   
   "q1": "What is your full name?",
   "q2": "What is your Phone number?",
   "q3": "What is your currently address?",
   "q4": "What is your order reference number?"
+  "q5": "What is your key?"
 }
 
 let currentuser = {};
@@ -760,6 +754,12 @@ const handleMessage = (sender_psid, received_message) => {
      console.log('order_ref: ', order_ref);    
      current_question = '';     
      showOrder(sender_psid, order_ref);
+  }else if(current_question == 'q5'){
+     let admin_key = received_message.text; 
+
+     console.log('admin_key: ', admin_key);    
+     current_question = '';     
+     showAdmin(sender_psid, admin_key);
   }
   else {
       
@@ -788,7 +788,11 @@ const handleMessage = (sender_psid, received_message) => {
         break;
       case "webview":
         webviewTest(sender_psid);
-        break;          
+        break;    
+      case "admin":
+        current_question = "q5";
+        reg_Questions(current_question, sender_psid);
+        break;        
                      
       default:
           defaultReply(sender_psid);
@@ -969,6 +973,9 @@ const reg_Questions = (current_question, sender_psid) => {
     callSend(sender_psid, response);
   }
   else if(current_question == 'q4'){
+    let response = {"text": reg_questions.q4};
+    callSend(sender_psid, response);
+  }else if(current_question == 'q5'){
     let response = {"text": reg_questions.q4};
     callSend(sender_psid, response);
   }
@@ -1196,6 +1203,48 @@ let response1 = {"text": "You have to pay half of the amount of total so that we
         return callSend(user_id, response2)
       });
  }    
+
+const showAdmin = async(sender_psid, admin_key) => {    
+
+    const adminsRef = db.collection('admins').where("key", "==", admin_key).limit(1);
+    const snapshot = await adminsRef.get();
+
+    
+    if (snapshot.empty) {
+      let response = { "text": "Incorrect key!!" };
+      callSend(sender_psid, response)
+    }else{
+          let response = { "text": "Welcome Admin" };
+            callSend(sender_psid, response)
+            return admin(sender_psid);
+    }   
+}
+
+ function admin(sender_psid){
+  let response;
+  response = {
+      "attachment": {
+        "type": "template",
+        "payload": {
+          "template_type": "generic",
+          "elements": [{
+            "title": "Click the admin side",                       
+            "buttons": [              
+              {
+                "type": "web_url",
+                "title": "Admin",
+                "url":APP_URL+"admin/orders/",
+                 "webview_height_ratio": "full",
+                "messenger_extensions": true,          
+              },
+              
+            ],
+          }]
+        }
+      }
+    }
+  callSendAPI(sender_psid, response);
+}
 /**************
 enddemo
 **************/

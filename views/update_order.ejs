@@ -73,17 +73,17 @@
     <%if(data.status == "processing"){%>
         <%="selected"%>
     <%}%>
-    >Processing</option>
-    <option value="shipped"
-    <%if(data.status == "shipped"){%>
-        <%="selected"%>
-    <%}%>
-    >Shipped</option>
+    >Processing</option>    
     <option value="completed"
     <%if(data.status == "completed"){%>
         <%="selected"%>
     <%}%>
-    >Completed</option>   
+    >Completed</option> 
+    <option value="delivering"
+    <%if(data.status == "delivering"){%>
+        <%="selected"%>
+    <%}%>
+    >Shipped</option>  
   </select>   
   </div>
 
