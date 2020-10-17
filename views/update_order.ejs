@@ -11,52 +11,52 @@
 
   <form id="form" method="post" action="../update_order">
   <div>
-    <label for="ref">Reference</label>
+    <label for="ref">Reference</label><br>
     <input type="text" name="ref" value="<%= data.ref %>">    
   </div>
 
   <div>
-    <label for="name">Name</label>
+    <label for="name">Name</label><br>
     <input type="text" name="name" value="<%= data.name %>">    
   </div>
 
   <div>
-    <label for="phone">Phone</label>
+    <label for="phone">Phone</label><br>
     <input type="text" name="phone" value="<%= data.phone %>">    
   </div>
 
   <div>
-    <label for="address">Address</label>
+    <label for="address">Address</label><br>
     <input type="text" name="address" value="<%= data.address %>">    
   </div>
 
   <div>
-    <label for="items">Items</label>
+    <label for="items">Items</label><br>
     <input type="text" name="items" value="<%= data.address %>">    
   </div>
 
   <div>
-    <label for="sub_total">Sub Total</label>
+    <label for="sub_total">Sub Total</label><br>
     <input type="text" name="sub_total" value="<%= data.sub_total %>">    
   </div>
 
   <div>
-    <label for="discount">Discount</label>
+    <label for="discount">Discount</label><br>
     <input type="text" name="discount" value="<%= data.discount %>">    
   </div>
 
   <div>
-    <label for="total">Total</label>
+    <label for="total">Total</label><br>
     <input type="text" name="total" value="<%= data.total %>">    
   </div>
 
   <div>
-    <label for="orderdate">Order Date</label>
+    <label for="orderdate">Order Date</label><br>
     <input type="date" name="orderdate" value="<%= data.orderdate %>">    
   </div>
 
   <div>
-    <label for="payment_type">Payment Type</label>
+    <label for="payment_type">Payment Type</label><br>
     <input type="text" name="payment_type" value="<%= data.payment_type %>">    
   </div> 
 
@@ -83,14 +83,14 @@
     <%if(data.status == "delivering"){%>
         <%="selected"%>
     <%}%>
-    >Shipped</option>  
+    >Delivering</option>  
   </select>   
   </div>
 
 
   <div class="form-group">
-    <label for="name">Comment</label>
-    <textarea name="comment" rows="4" cols="50"></textarea>      
+    <label for="name">Comment</label><br>
+    <textarea name="comment" rows="4" cols="20"></textarea>      
   </div>
 
   
