@@ -60,7 +60,8 @@
        <td><%= order.payment_type %></td>
        <td><%= order.status %></td>
        <td><%= order.comment %></td> 
-       <td><a href="update_order/<%= order.doc_id %>">Edit</a> | Delete</td> 
+       <td><a href="update_order/<%= order.doc_id %>">Edit</a> | 
+        <a href="delete_order/<%= order.doc_id %>">Delete</td> 
       </tr>
   <% }); %>
   

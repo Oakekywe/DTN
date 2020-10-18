@@ -349,6 +349,29 @@ app.post('/admin/update_order', function(req,res){
  
 });
 
+app.post('/admin/delete_order', function(req,res){   
+
+  let data = {
+    ref:req.body.ref,
+    name:req.body.name,
+    phone:req.body.phone,
+    address:req.body.address,
+    items:req.body.items,
+    sub_total:req.body.sub_total,
+    discount:req.body.discount,
+    total:req.body.total,
+    orderdate:req.body.orderdate,
+    payment_type:req.body.payment_type,
+    status:req.body.status,
+    comment:req.body.comment,
+  }
+  db.collection("orders").doc(req.body.doc_id).delete(data).then(()=>{
+      console.log("Document successfully deleted!");
+      res.redirect('/admin/orders');
+  }).catch((err)=>console.log('ERROR:', error));
+ 
+});
+
 /*************
 EndAdminRoute
 **************/
