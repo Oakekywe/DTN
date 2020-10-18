@@ -349,7 +349,7 @@ app.post('/admin/update_order', function(req,res){
  
 });
 
-app.post('/admin/delete_order', function(req,res){   
+app.post('/admin/delete_order/:doc_id', function(req,res){   
 
   let data = {
     ref:req.body.ref,
