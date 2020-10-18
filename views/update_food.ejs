@@ -13,31 +13,31 @@
   
   <div class="form-group">
     <label for="file">Image</label>
-    <input type="file" name="image" value="<%= food.image %>" />
+    <input type="file" name="image" value="<%= data.image %>" />
     </div>
 
   <div>
     <label for="sku">Sku</label><br>
-    <input type="text" name="sku" value="<%= food.sku %>">    
+    <input type="text" name="sku" value="<%= data.sku %>">    
   </div>
 
   <div>
     <label for="name">Name</label><br>
-    <input type="text" name="name" value="<%= food.name %>">    
+    <input type="text" name="name" value="<%= data.name %>">    
   </div>
 
   <div>
     <label for="description">Description</label><br>
-    <textarea name="description" rows="4" cols="50" value="<%= food.description %>"></textarea>    
+    <textarea name="description" rows="4" cols="50" value="<%= data.description %>"></textarea>    
   </div>
 
   <div>
     <label for="price">Price</label><br>
-    <input type="text" name="price" value="<%= food.price %>">    
+    <input type="text" name="price" value="<%= data.price %>">    
   </div>
 
   
-  <input type="hidden"  name="doc_id" value="<%= food.doc_id %>">
+  <input type="hidden"  name="doc_id" value="<%= data.doc_id %>">
   
   <input type="submit" value="Submit"> 
   </form>
