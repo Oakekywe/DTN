@@ -288,7 +288,7 @@ app.get('/admin/update_food/:doc_id', async function(req,res){
   } else {
     
     let data = doc.data();
-    data.docid = doc.id;
+    data.doc_id = doc.id;
     
     res.render('update_food.ejs', {data:data});
   } 
