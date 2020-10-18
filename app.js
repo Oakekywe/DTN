@@ -365,7 +365,7 @@ app.get('/admin/delete_order/:doc_id', function(req,res){
     status:req.body.status,
     comment:req.body.comment,
   }
-  db.collection("orders").doc(doc_id).delete(data).then(()=>{
+  db.collection("orders").doc(order.doc_id).delete(data).then(()=>{
       console.log("Document successfully deleted!");
       res.redirect('/admin/orders');
   }).catch((err)=>console.log('ERROR:', error));
