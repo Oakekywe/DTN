@@ -348,7 +348,22 @@ app.post('/admin/update_order', function(req,res){
   }).catch((err)=>console.log('ERROR:', error)); 
  
 });
+app.get('/admin/delete_order/:doc_id', async function(req,res){
+  let doc_id = req.params.doc_id; 
+  
+  const orderRef = db.collection('orders').doc(doc_id);
+  const doc = await orderRef.get();
+ /* if (!doc.exists) {
+    console.log('No such document!');
+  } else {
+    
+    let data = doc.data();
+    data.doc_id = doc.id;
+    
+    res.render('update_order.ejs', {data:data});
+  } */
 
+});
 app.post('/admin/delete_order/:doc_id', function(req,res){   
 
   let data = {
@@ -371,6 +386,8 @@ app.post('/admin/delete_order/:doc_id', function(req,res){
   }).catch((err)=>console.log('ERROR:', error));
  
 });
+
+
 
 /*************
 EndAdminRoute
