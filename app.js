@@ -278,6 +278,40 @@ app.post('/admin/savefood',upload.single('file'),function(req,res){
       }             
 });
 
+app.get('/admin/update_food/:doc_id', async function(req,res){
+  let doc_id = req.params.doc_id; 
+  
+  const foodRef = db.collection('foods').doc(doc_id);
+  const doc = await foodRef.get();
+  if (!doc.exists) {
+    console.log('No such document!');
+  } else {
+    
+    let data = doc.data();
+    data.doc_id = doc.id;
+    
+    res.render('update_food.ejs', {data:data});
+  } 
+
+});
+
+app.post('/admin/update_food', function(req,res){   
+
+  let data = {
+    image:req.body.image,
+    sku:req.body.sku,
+    name:req.body.name,
+    description:req.body.description,
+    price:req.body.price,
+   
+  }
+
+  db.collection('foods').doc(req.body.doc_id).update(data).then(()=>{
+      res.redirect('/admin/foods');
+  }).catch((err)=>console.log('ERROR:', error)); 
+ 
+});
+
 app.get('/admin/orders', async(req,res)=>{
 
   const ordersRef = db.collection('orders').orderBy('created_on', 'desc');
@@ -348,30 +382,6 @@ app.post('/admin/update_order', function(req,res){
   }).catch((err)=>console.log('ERROR:', error)); 
  
 });
-
-app.get('/admin/delete_order/:doc_id', function(req,res){   
-
-  let data = {
-    ref:req.body.ref,
-    name:req.body.name,
-    phone:req.body.phone,
-    address:req.body.address,
-    items:req.body.items,
-    sub_total:req.body.sub_total,
-    discount:req.body.discount,
-    total:req.body.total,
-    orderdate:req.body.orderdate,
-    payment_type:req.body.payment_type,
-    status:req.body.status,
-    comment:req.body.comment,
-  }
-  db.collection("orders").doc(order.doc_id).delete(data).then(()=>{
-      console.log("Document successfully deleted!");
-      res.redirect('/admin/orders');
-  }).catch((err)=>console.log('ERROR:', error));
- 
-});
-
 
 
 /*************
