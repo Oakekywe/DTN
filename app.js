@@ -1031,7 +1031,7 @@ const confirmRegister = (sender_psid) => {
   let response1 = {"text": show};
 
   let response2 = {
-    "text": "Confirm to register",
+    "text": "Confirm to continue",
     "quick_replies":[
             {
               "content_type":"text",
