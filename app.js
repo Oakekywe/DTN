@@ -295,22 +295,7 @@ app.get('/admin/update_food/:doc_id', async function(req,res){
 
 });
 
-app.post('/admin/update_food', function(req,res){   
 
-  let data = {
-    image:req.body.image,
-    sku:req.body.sku,
-    name:req.body.name,
-    description:req.body.description,
-    price:req.body.price,
-   
-  }
-
-  db.collection('foods').doc(req.body.doc_id).update(data).then(()=>{
-      res.redirect('/admin/foods');
-  }).catch((err)=>console.log('ERROR:', error)); 
- 
-});
 
 app.get('/admin/orders', async(req,res)=>{
 
@@ -377,7 +362,8 @@ app.post('/admin/update_order', function(req,res){
     comment:req.body.comment,
   }
 
-  db.collection('orders').doc(req.body.doc_id).update(data).then(()=>{
+  db.collection('orders').doc(req.body.doc_id)
+  .update(data).then(()=>{
       res.redirect('/admin/orders');
   }).catch((err)=>console.log('ERROR:', error)); 
  
