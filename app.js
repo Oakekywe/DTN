@@ -278,24 +278,6 @@ app.post('/admin/savefood',upload.single('file'),function(req,res){
       }             
 });
 
-app.get('/admin/update_food/:doc_id', async function(req,res){
-  let doc_id = req.params.doc_id; 
-  
-  const foodRef = db.collection('foods').doc(doc_id);
-  const doc = await foodRef.get();
-  if (!doc.exists) {
-    console.log('No such document!');
-  } else {
-    
-    let data = doc.data();
-    data.doc_id = doc.id;
-    
-    res.render('update_food.ejs', {data:data});
-  } 
-
-});
-
-
 
 app.get('/admin/orders', async(req,res)=>{
 
