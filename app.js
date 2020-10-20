@@ -630,6 +630,226 @@ app.post('/order', function(req, res){
 /*************
 EndMemberRoute
 **************/
+/*************
+StartDonationRoute
+**************/
+
+app.get('/donate_shop', async function(req,res){
+
+    
+  const foodsRef = db.collection('foods').orderBy('created_on', 'desc');
+  const foods = await foodsRef.get();
+
+  if (foods.empty) {
+    res.send('no data');
+  } 
+
+  let data = []; 
+
+  foods.forEach(doc => { 
+    
+    let food = {}; 
+
+    food = doc.data();    
+    food.id = doc.id; 
+    
+    let d = new Date(doc.data().created_on._seconds);
+    d = d.toString();
+    food.created_on = d;   
+
+    data.push(food);
+    
+  });  
+ 
+  res.render('donate_shop.ejs', {data:data});
+
+});
+
+app.post('/cart', function(req, res){
+    
+    if(!customer[user_id].cart){
+        customer[user_id].cart = [];
+    }
+    
+    let item = {};
+    item.id = req.body.item_id;
+    item.name = req.body.item_name;
+    item.price = parseInt(req.body.item_price);
+    item.qty = parseInt(req.body.item_qty);
+    item.total = item.price * item.qty; 
+
+
+    const itemInCart = (element) => element.id == item.id;
+    let item_index = customer[user_id].cart.findIndex(itemInCart); 
+
+    if(item_index < 0){
+        customer[user_id].cart.push(item);
+    }else{
+        customer[user_id].cart[item_index].qty = item.qty;
+        customer[user_id].cart[item_index].total = item.total;
+    }      
+     
+    res.redirect('../cart');   
+});
+
+
+app.get('/cart', function(req, res){     
+    temp_points = customer[user_id].points; 
+    let sub_total = 0;
+    cart_total = 0;
+    cart_discount = 0;
+
+    if(!customer[user_id].cart){
+        customer[user_id].cart = [];
+    }
+    if(customer[user_id].cart.length < 1){
+        res.send('your cart is empty. back to shop <a href="../shop">shop</a>');
+    }else{ 
+
+        customer[user_id].cart.forEach((item) => sub_total += item.total);        
+
+        cart_total = sub_total - cart_discount;       
+
+        customer[user_id].use_point = false;
+
+        res.render('cart.ejs', {cart:customer[user_id].cart, sub_total:sub_total, user:customer[user_id], cart_total:cart_total, discount:cart_discount, points:temp_points});    
+    }
+});
+
+
+
+app.get('/emptycart', function(req, res){  
+    customer[user_id].cart = [];
+    customer[user_id].use_point = false;
+    //customer[user_id].points = 400;
+    cart_discount = 0;
+    res.redirect('../cart');    
+});
+
+app.post('/pointdiscount', function(req, res){
+
+    //temp_points = customer[user_id].points; 
+    let sub_total = 0;
+    //cart_total = 0;
+    //cart_discount = 0;
+  
+    if(!customer[user_id].cart){
+        customer[user_id].cart = [];
+    }
+    if(customer[user_id].cart.length < 1){
+        res.send('your cart is empty. back to shop <a href="../shop">shop</a>');
+    }else{ 
+        customer[user_id].use_point = true;        
+
+        customer[user_id].cart.forEach((item) => sub_total += item.total); 
+
+        console.log('BEFORE');
+        console.log('sub total:'+sub_total);
+        console.log('cart total:'+cart_total);
+        console.log('cart discount:'+cart_discount);
+        console.log('temp points:'+ temp_points);
+       
+        if(sub_total != 0 || cart_total != 0){
+          if(sub_total >=  parseInt(req.body.points)){
+           console.log('Point is smaller than subtotal');
+           cart_discount =  parseInt(req.body.points);
+           cart_total = sub_total - cart_discount;
+           temp_points = 0; 
+           
+          }else{
+             console.log('Point is greater than subtotal');
+             cart_discount = sub_total; 
+             cart_total = 0;
+             temp_points -= sub_total;
+                       
+          }
+
+        }
+                
+
+        console.log('AFTER');
+        console.log('sub total:'+sub_total);
+        console.log('cart total:'+cart_total);
+        console.log('cart discount:'+cart_discount);
+        console.log('temp points:'+ temp_points);
+        
+        res.render('cart.ejs', {cart:customer[user_id].cart, sub_total:sub_total, user:customer[user_id], cart_total:cart_total, discount:cart_discount, points:temp_points});      
+    }
+});
+
+
+app.get('/order', function(req, res){
+  let today = new Date();
+    let sub_total;
+  
+    if(!customer[user_id].cart){
+        customer[user_id].cart = [];
+    }
+    if(customer[user_id].cart.length < 1){
+        res.send('your cart is empty. back to shop <a href="../shop">shop</a>');
+    }else{   
+        sub_total = 0;
+        customer[user_id].cart.forEach((item) => sub_total += item.total);   
+
+        let item_list = "";
+        customer[user_id].cart.forEach((item) => item_list += item.name+'*'+item.qty);  
+        
+        res.render('order.ejs', {cart:customer[user_id].cart, sub_total:sub_total, user:customer[user_id], cart_total:cart_total, discount:cart_discount, items:item_list, today:today});    
+    }
+});
+
+app.post('/order', function(req, res){
+    let today = new Date();
+    let data = {
+      name: req.body.name,
+      phone: req.body.phone,
+      address: req.body.address,
+      items: req.body.items,
+      sub_total: parseInt(req.body.sub_total),
+      discount: parseInt(req.body.discount),
+      total: parseInt(req.body.total),
+      orderdate: req.body.date,
+      payment_type: req.body.payment_type,
+      ref: generateRandom(6),
+      created_on: today,
+      status: "pending",
+      comment:"Your order is pending",      
+    }
+
+    db.collection('orders').add(data).then((success)=>{
+        
+        console.log('TEMP POINTS:', temp_points);
+        console.log('CUSTOMER: ', customer[user_id]);
+
+        //get 10% from sub total and add to remaining points;
+        let newpoints = temp_points + data.sub_total * 0.1;  
+
+        let update_data = {points: newpoints };
+
+        console.log('update_data: ', update_data);
+
+        db.collection('members').doc(user_id).update(update_data).then((success)=>{
+              console.log('POINT UPDATE:');
+
+
+              let text = "Thank you. Your order has been received. Your order reference number is: "+data.ref;      
+              let response = {"text": text};
+              
+              callSend(user_id, response);       
+          
+          }).catch((err)=>{
+             console.log('Error', err);
+          });   
+
+        return waveQR(user_id);  
+      }).catch((err)=>{
+         console.log('Error', err);
+      });
+});
+
+/*************
+EndDonationRoute
+**************/
 
 //webview test
 app.get('/webview/:sender_id',function(req,res){
@@ -799,12 +1019,6 @@ const handleMessage = (sender_psid, received_message) => {
      console.log('order_ref: ', order_ref);    
      current_question = '';     
      showOrder(sender_psid, order_ref);
-  }else if(current_question == 'q5'){
-     let admin_key = received_message.text; 
-
-     console.log('admin_key: ', admin_key);    
-     current_question = '';     
-     showAdmin(sender_psid, admin_key);
   }
   else {
       
@@ -1144,7 +1358,7 @@ const showOrder = async(sender_psid, order_ref) => {
     }else{
           let order = {}
 
-          snapshot.forEach(doc => {      
+              snapshot.forEach(doc => {      
               order.ref = doc.data().ref;
               order.status = doc.data().status;
               order.comment = doc.data().comment;  
