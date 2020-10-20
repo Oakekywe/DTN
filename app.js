@@ -1508,7 +1508,7 @@ const showDonate = (sender_psid) => {
                 {
                   "type": "web_url",
                   "title": "Donate",
-                  "url":APP_URL+"shop/",
+                  "url":APP_URL+"donate_shop/",
                   "webview_height_ratio": "full",
                   "messenger_extensions": true,    
                 },               
