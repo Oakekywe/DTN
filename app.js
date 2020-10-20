@@ -172,7 +172,6 @@ app.post('/login',function(req,res){
     if(username == 'admin' && password == admin_pass){
       sess.username = 'admin';
       sess.login = true;
-      res.send('login successful');
       res.redirect('/admin/home');
     }else{
       res.send('login failed');
