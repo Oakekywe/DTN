@@ -177,6 +177,17 @@ app.post('/login',function(req,res){
     }   
 });
 
+app.get('/privatepage',function(req,res){    
+    sess = req.session;
+
+    if(sess.login){
+       res.render('privatepage.ejs');
+    }else{
+      res.send('You are not authorized to view.');
+    } 
+    
+});
+
 app.get('/logout',function(req,res){ 
     //sess = req.session;   
     req.session.destroy(null);  
