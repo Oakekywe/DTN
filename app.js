@@ -199,6 +199,7 @@ app.get('/admin/home',function(req,res){
 
 
 app.get('/admin/members', async(req,res)=>{
+  sess = req.session;
 
   if(sess.login){
        
@@ -237,34 +238,38 @@ app.get('/admin/members', async(req,res)=>{
 
 app.get('/admin/foods', async(req,res) =>{   
 
-   
-  const foodsRef = db.collection('foods').orderBy('created_on', 'desc');
-  const snapshot = await foodsRef.get();
-
-  if (snapshot.empty) {
-    res.send('no data');
-  }else{
-    let data = []; 
-
-  snapshot.forEach(doc => {
-    let food = {};
-    
-    food = doc.data();
-    food.doc_id = doc.id;
-    
-    let d = new Date(doc.data().created_on._seconds);
-    d = d.toString();
-    food.created_on = d;
-    
-
-    data.push(food);
-    
-  });
+  sess = req.session;
   
-  res.render('foods.ejs', {data:data});
+  if(sess.login){
+    const foodsRef = db.collection('foods').orderBy('created_on', 'desc');
+    const snapshot = await foodsRef.get();
 
-  }
-  
+    if (snapshot.empty) {
+      res.send('no data');
+    }else{
+        let data = []; 
+
+      snapshot.forEach(doc => {
+        let food = {};
+        
+        food = doc.data();
+        food.doc_id = doc.id;
+        
+        let d = new Date(doc.data().created_on._seconds);
+        d = d.toString();
+        food.created_on = d;        
+
+        data.push(food);
+        
+    });
+    
+    res.render('foods.ejs', {data:data});
+
+    }
+   }
+   else{
+      res.send('You need permission to view this page.');
+    }
 });
 
 app.get('/admin/addfood', function(req,res){
