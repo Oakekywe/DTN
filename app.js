@@ -484,7 +484,7 @@ app.get('/donate_emptycart', function(req, res){
 });
 
 
-app.get('/order', function(req, res){
+app.get('/donate_order', function(req, res){
   let today = new Date();
     let sub_total;
   
