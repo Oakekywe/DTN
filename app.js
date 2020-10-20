@@ -593,7 +593,7 @@ app.post('/order', function(req, res){
       ref: generateRandom(6),
       created_on: today,
       status: "pending",
-      comment:"Your order is pending.",      
+      comment:"Your order is pending",      
     }
 
     db.collection('orders').add(data).then((success)=>{
@@ -1280,33 +1280,23 @@ start donate
 **************/
 
 const showDonate = (sender_psid) => {
-    let response1 = {"text": "Sorry Sir, you can donate these type of Sanwin Makin available now."};
-    let response2 = {"text": "We are planning to donate more types of dessert later."};
+    let response1 = {"text": "Gentleman, please choose the dessert you want to donate and please tell us the place you want to donate."};
+    let response2 = {"text":"We will go and donate there on your behalf."};
     let response3 = {
       "attachment": {
         "type": "template",
         "payload": {
           "template_type": "generic",
           "elements": [{
-            "title": "Shwe Kyi Sanwin Makin",
-            "subtitle": "This type of Sanwin Makin is made with Shwe Kyi and the original taste of Sanwin Makin.",
-            "image_url":"https://scontent.frgn5-2.fna.fbcdn.net/v/t31.0-0/p180x540/415606_4691000434420_355451047_o.jpg?_nc_cat=109&_nc_sid=2c4854&_nc_eui2=AeF2M9RhymkUvzblKIVEcaVYZZ9IqNQbMhlln0io1BsyGeUUZNECSYed1motoMAU3T3XXsplzubf4UwghXbirA2G&_nc_ohc=kx_5FjqU2noAX_FLDXz&_nc_ht=scontent.frgn5-2.fna&tp=6&oh=2dccc6bd79739ae9a566cae4baadf8eb&oe=5F9EDD53",                       
+            "title": "Click to open the link for donation with us",            
+            "image_url":"https://www.questforlife.com.au/images/donate/donate.png?Action=thumbnail&Width=400&Height=250&algorithm=fill_proportional",                       
             "buttons": [
                 {
-                  "type": "postback",
-                  "title": "Order $7000",
-                  "payload": "SanwinMakin:Shwe Kyi Sanwin Makin",
-                },               
-              ],
-          },{
-            "title": "Banana Sanwin Makin",
-            "subtitle": "This type of Sanwin Makin is made with Banana and its taste is a little bit sour.",
-            "image_url":"https://scontent.frgn5-2.fna.fbcdn.net/v/t1.0-0/p526x296/102871159_948419118950746_478899810489249804_n.jpg?_nc_cat=102&_nc_sid=8bfeb9&_nc_eui2=AeFNEWd47jK_lkwdilqwV_h8WnacIXjhOhJadpwheOE6EsH59hBDO-Nk8-bL2cLd4G0G_Gbp47yqo93cdH9-0Na0&_nc_ohc=PzURL4fQxDQAX-9tx3p&_nc_ht=scontent.frgn5-2.fna&tp=6&oh=b736bed6a074bb67889f7f3db210d199&oe=5F9EA75E",                       
-            "buttons": [
-                {
-                  "type": "postback",
-                  "title": "Order $8000",
-                  "payload": "SanwinMakin:Banana Sanwin Makin",
+                  "type": "web_url",
+                  "title": "Donate",
+                  "url":APP_URL+"shop/",
+                  "webview_height_ratio": "full",
+                  "messenger_extensions": true,    
                 },               
               ],
           }
@@ -1316,10 +1306,10 @@ const showDonate = (sender_psid) => {
       }
     }
      callSend(sender_psid, response1).then(()=>{
-        return callSend(sender_psid, response2).then(()=>{;
-        return callSend(sender_psid, response3);
-        });
+        return callSend(sender_psid, response2).then(()=>{
+          return callSend(sender_psid, response2)
       });
+    });    
 }
 
 
