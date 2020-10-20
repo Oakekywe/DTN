@@ -19,7 +19,7 @@
 
   <body style="background-color:white">
   <h1>Order dessert for donataion </h1>
-  <p><a href="../cart">View cart</a> | <a href="../emptycart">Empty cart</a></p>
+  <p><a href="../donate_cart">View cart</a> | <a href="../donate_emptycart">Empty cart</a></p>
 
 
   <% data.forEach(function(food){ %>
@@ -30,7 +30,7 @@
       <p><%= food.description %><p>
       <p>price: <%= food.price %></p>
 
-      <form action="../cart" method="post">
+      <form action="../donate_cart" method="post">
       <input type="hidden" name="item_id" value="<%= food.id %>"/>
       <input type="hidden" name="item_name" value="<%= food.name %>"/>
       <input type="hidden" name="item_price" value="<%= food.price %>"/>
