@@ -30,8 +30,7 @@ const reg_questions = {
   "q1": "What is your full name?",
   "q2": "What is your Phone number?",
   "q3": "What is your currently address?",
-  "q4": "What is your order reference number?",
-  "q5": "What is your key?"
+  "q4": "What is your order reference number?"
 }
 let sess;
 
@@ -836,8 +835,7 @@ const handleMessage = (sender_psid, received_message) => {
         webviewTest(sender_psid);
         break;    
       case "admin":
-        current_question = "q5";
-        reg_Questions(current_question, sender_psid);
+        admin(sender_psid);
         break;        
                      
       default:
@@ -1250,22 +1248,6 @@ let response1 = {"text": "You have to pay half of the amount of total so that we
       });
  }    
 
-const showAdmin = async(sender_psid, admin_key) => {    
-
-    const adminsRef = db.collection('admins').where("key", "==", admin_key).limit(1);
-    const snapshot = await adminsRef.get();
-
-    
-    if (snapshot.empty) {
-      let response = { "text": "Incorrect key!!" };
-      callSend(sender_psid, response)
-    }else{
-          let response = { "text": "Welcome Admin" };
-            callSend(sender_psid, response)
-            return admin(sender_psid);
-    }   
-}
-
  const admin = (sender_psid) =>{
   let response;
   response = {
@@ -1279,7 +1261,7 @@ const showAdmin = async(sender_psid, admin_key) => {
               {
                 "type": "web_url",
                 "title": "Admin",
-                "url":APP_URL+"admin/home",         
+                "url":APP_URL+"admin/login",         
               },
               
             ],
