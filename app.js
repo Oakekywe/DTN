@@ -521,12 +521,12 @@ app.post('/donate_order', function(req, res){
 
     db.collection('donation_orders').add(data).then((success)=>{
         
-      let text = "Thank you for your ordering to donate. We'll comfirm your donation soon."
+      let text = "Thank you for your ordering to donate. We'll confirm your donation soon. "
       text += "Your reference number is: "+data.ref;      
       let response = {"text": text};
               
         callSend(user_id, response);          
-        
+        return waveQR(user_id);
       }).catch((err)=>{
          console.log('Error', err);
       });
@@ -536,11 +536,10 @@ app.post('/donate_order', function(req, res){
 EndDonationRoute
 **************/
 
-
 /**************
 StartMemberRoute
 **************/
-/*
+
 app.get('/shop', async function(req,res){
 
   customer[user_id].id = user_id;
@@ -770,7 +769,7 @@ app.post('/order', function(req, res){
          console.log('Error', err);
       });
 });
-*/
+
 /*************
 EndMemberRoute
 **************/
