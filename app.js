@@ -173,9 +173,21 @@ app.post('/login',function(req,res){
       sess.username = 'admin';
       sess.login = true;
       res.send('login successful');
+      res.redirect('/admin/home');
     }else{
       res.send('login failed');
     }   
+});
+
+app.get('/admin/home',function(req,res){
+    sess = req.session;
+
+    if(sess.login){
+       res.render('home.ejs');
+    }else{
+      res.send('You are not authorized to view.');
+    }    
+    
 });
 
 app.get('/privatepage',function(req,res){    
@@ -198,9 +210,7 @@ app.get('/logout',function(req,res){
 
 
 ////////////////////////////
-app.get('/admin/home',function(req,res){    
-    res.render('home.ejs');
-});
+
 
 
 app.get('/admin/members', async(req,res)=>{
