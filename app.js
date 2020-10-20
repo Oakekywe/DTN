@@ -17,9 +17,12 @@ const
   app = express(); 
 
 const uuidv4 = uuid();
+const session = require('express-session');
 
 app.use(body_parser.json());
 app.use(body_parser.urlencoded());
+app.set('trust proxy', 1);
+app.use(session({secret: 'effystonem'}));
 
 const reg_questions = {
   
@@ -29,6 +32,7 @@ const reg_questions = {
   "q4": "What is your order reference number?",
   "q5": "What is your key?"
 }
+let sess;
 
 let currentuser = {};
 
@@ -47,6 +51,8 @@ let temp_points = 0;
 let cart_total = 0;
 
 let cart_discount = 0;
+
+
 /*
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -141,38 +147,48 @@ app.get('/',function(req,res){
 });
 
 
-/*********************************************
-Admin Check Order
-**********************************************/
-/*app.get('/admin/orders', async function(req,res){
- 
-  const ordersRef = db.collection('orders');
-  const snapshot = await ordersRef.get();
-
-  if (snapshot.empty) {
-    res.send('no data');
-  } 
-
-  let data = []; 
-
-  snapshot.forEach(doc => {
-    let order = {};
-    order = doc.data();
-    order.doc_id = doc.id;
-
-    data.push(order);
-    
-  });
-
-  console.log('DATA:', data);
-
-  res.render('orders.ejs', {data:data});
-  
-}); */
-
 /*************
 StartAdminRoute
 **************/
+
+app.get('/login',function(req,res){    
+    sess = req.session;
+
+    if(sess.login){
+       res.send('You are already login. <a href="logout">logout</a>');
+    }else{
+      res.render('login.ejs');
+    } 
+    
+});
+
+app.post('/login',function(req,res){    
+    sess = req.session;
+
+    let username = req.body.username;
+    let password = req.body.password;
+
+    if(username == 'admin' && password == 'test123'){
+      sess.username = 'admin';
+      sess.login = true;
+      res.send('login successful');
+    }else{
+      res.send('login failed');
+      res.redirect('login');
+    }   
+});
+
+app.get('/logout',function(req,res){ 
+    //sess = req.session;   
+    req.session.destroy(null);  
+    res.redirect('login');
+});
+
+
+
+
+
+////////////////////////////
 app.get('/admin/home',function(req,res){    
     res.render('home.ejs');
 });
