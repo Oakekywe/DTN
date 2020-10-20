@@ -178,17 +178,6 @@ app.post('/admin/login',function(req,res){
     }   
 });
 
-app.get('/admin/home',function(req,res){
-    sess = req.session;
-
-    if(sess.login){
-       res.render('home.ejs');
-    }else{
-      res.send('You are not authorized to view.');
-    }    
-    
-});
-
 
 app.get('/admin/logout',function(req,res){ 
     //sess = req.session;   
@@ -197,39 +186,52 @@ app.get('/admin/logout',function(req,res){
 });
 
 
+app.get('/admin/home',function(req,res){
+    sess = req.session;
 
-////////////////////////////
-
+    if(sess.login){
+       res.render('home.ejs');
+    }else{
+      res.send('You need permission to view this page.');
+    }    
+    
+});
 
 
 app.get('/admin/members', async(req,res)=>{
 
-  const membersRef = db.collection('members').orderBy('created_on', 'desc');
-  const snapshot = await membersRef.get();
+  if(sess.login){
+       
+    const membersRef = db.collection('members').orderBy('created_on', 'desc');
+    const member = await membersRef.get();
 
-  if (snapshot.empty) {
-    res.send('no member');
-  } else{
+      if (member.empty) {
+        res.send('no member');
+      } else{
 
-      let data = []; 
+          let data = []; 
 
-  snapshot.forEach(doc => {
-    let member = {};
-    
-    member = doc.data();
-    member.doc_id = doc.id;
-    
-    let d = new Date(doc.data().created_on._seconds);
-    d = d.toString();
-    member.created_on = d;    
+      member.forEach(doc => {
+        let member = {};
+        
+        member = doc.data();
+        member.doc_id = doc.id;
+        
+        let d = new Date(doc.data().created_on._seconds);
+        d = d.toString();
+        member.created_on = d;    
 
-    data.push(member);
-    
-  });
+        data.push(member);
+        
+      });
 
-  res.render('member_records.ejs', {data:data});
+    res.render('member_records.ejs', {data:data});
+    } 
 
   }
+  else{
+      res.send('You need permission to view this page.');
+    }
     
 });
 
