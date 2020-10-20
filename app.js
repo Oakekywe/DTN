@@ -396,7 +396,7 @@ EndAdminRoute
 /**************
 StartMemberRoute
 **************/
-
+/*
 app.get('/shop', async function(req,res){
 
   customer[user_id].id = user_id;
@@ -626,7 +626,7 @@ app.post('/order', function(req, res){
          console.log('Error', err);
       });
 });
-
+*/
 /*************
 EndMemberRoute
 **************/
