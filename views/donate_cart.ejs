@@ -30,7 +30,7 @@
   </script>
 	
 	<h1>Cart</h1>
-	<p><a href="../shop">Shop</a> | <a href="../emptycart">Empty cart</a></p>
+	<p><a href="../donate_shop">Go back Shop</a> | <a href="../donate_emptycart">Empty cart</a></p>
 
 	<table cellspacing="1" cellpadding="5" border="1">
 	<tr>
@@ -52,27 +52,10 @@
 	</tr>
 	<% }); %>
 	</table>
-	<p>Sub Total: <%= sub_total %></p>
-	<p>Discount: <%= discount %></p>	
-	<p><strong>Total:</strong> <%= cart_total %></p>	
-	<p>You have <%= points %> point(s)</p>
-
-	<% if (points == 0 || cart_total == 0) { %>
-		<form action="../pointdiscount" method="post">				
-			<input type="submit" name="submit" value="Use Points" disabled/>
-		</form>
-
-	<%} else { %>
-		<form action="../pointdiscount" method="post">		
-			<input type="hidden" name="points" value ="<%= points %>" />
-			<input type="submit" name="submit" value="Use Points"/>
-		</form>
-	
-	<% } %>
-	
+		
+	<p><strong>Total:</strong> <%= cart_total %></p>
 
 	<p><a href="../order">Confirm</a></p>
-
 	
 
 </body>

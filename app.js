@@ -665,7 +665,7 @@ app.get('/donate_shop', async function(req,res){
 
 });
 
-app.post('/cart', function(req, res){
+app.post('/donate_cart', function(req, res){
     
     if(!customer[user_id].cart){
         customer[user_id].cart = [];
@@ -689,43 +689,38 @@ app.post('/cart', function(req, res){
         customer[user_id].cart[item_index].total = item.total;
     }      
      
-    res.redirect('../cart');   
+    res.redirect('../donate_cart');   
 });
 
 
-app.get('/cart', function(req, res){     
-    temp_points = customer[user_id].points; 
-    let sub_total = 0;
+app.get('/donate_cart', function(req, res){     
+    
     cart_total = 0;
-    cart_discount = 0;
+    
 
     if(!customer[user_id].cart){
         customer[user_id].cart = [];
     }
     if(customer[user_id].cart.length < 1){
-        res.send('your cart is empty. back to shop <a href="../shop">shop</a>');
+        res.send('your cart is empty. back to shop <a href="../donate_shop">Go back donate order</a>');
     }else{ 
 
         customer[user_id].cart.forEach((item) => sub_total += item.total);        
 
-        cart_total = sub_total - cart_discount;       
+        cart_total = sub_total
 
-        customer[user_id].use_point = false;
-
-        res.render('cart.ejs', {cart:customer[user_id].cart, sub_total:sub_total, user:customer[user_id], cart_total:cart_total, discount:cart_discount, points:temp_points});    
+        res.render('donate_cart.ejs', {cart:customer[user_id].cart, user:customer[user_id], cart_total:cart_total});    
     }
 });
 
 
 
-app.get('/emptycart', function(req, res){  
+app.get('/donate_emptycart', function(req, res){  
     customer[user_id].cart = [];
-    customer[user_id].use_point = false;
-    //customer[user_id].points = 400;
-    cart_discount = 0;
-    res.redirect('../cart');    
+    res.redirect('../donate_cart');    
 });
 
+/*
 app.post('/pointdiscount', function(req, res){
 
     //temp_points = customer[user_id].points; 
@@ -846,7 +841,7 @@ app.post('/order', function(req, res){
          console.log('Error', err);
       });
 });
-
+*/
 /*************
 EndDonationRoute
 **************/
