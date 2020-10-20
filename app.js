@@ -196,8 +196,6 @@ app.get('/logout',function(req,res){
 
 
 
-
-
 ////////////////////////////
 app.get('/admin/home',function(req,res){    
     res.render('home.ejs');
