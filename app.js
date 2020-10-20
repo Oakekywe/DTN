@@ -399,7 +399,8 @@ StartDonationRoute
 
 app.get('/donate_shop', async function(req,res){
 
-    
+    customer[user_id].id = user_id;
+
   const foodsRef = db.collection('foods').orderBy('created_on', 'desc');
   const foods = await foodsRef.get();
 
