@@ -174,7 +174,7 @@ app.post('/login',function(req,res){
       res.send('login successful');
     }else{
       res.send('login failed');
-      res.redirect('login');
+      res.render('login');
     }   
 });
 
