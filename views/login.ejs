@@ -4,16 +4,31 @@
     <meta charset="UTF-8">
     <title>Login</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css">
  </head>
 
   <body>
-  <h1>Login</h1>
-  <form action="/admin/login" method="post">
-  username: <input type="text" name="username" /><br>
-  password: <input type="password" name="password" /><br>
-  <input type="submit" name="Submit" value="Submit"/>
-  </form> 
+  <div class="login">
+  <div class="heading">
+    <h2>Login</h2>
+    <form action="/admin/login" method="post">
+
+      <div class="input-group input-group-lg">
+        <span class="input-group-addon"><i class="fa fa-user"></i></span>
+        <input type="text" class="form-control" placeholder="Username" name="username">
+          </div>
+
+        <div class="input-group input-group-lg">
+          <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+          <input type="password" class="form-control" placeholder="Password" name="password">
+        </div>
+
+        <button type="submit" name="Submit" value="Submit" class="float">Login</button>
+       </form>
+    </div>
+ </div>
 
   </body>
 
 </html>
+
