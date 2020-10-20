@@ -1,6 +1,7 @@
 'use strict';
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 const APP_URL = process.env.APP_URL;
+const admin_pass = process.env.ADMIN_PASSWORD;
 
 //new text
 // Imports dependencies and set up http server
@@ -168,7 +169,7 @@ app.post('/login',function(req,res){
     let username = req.body.username;
     let password = req.body.password;
 
-    if(username == 'admin' && password == 'process.env.ADMIN_PASSWORD'){
+    if(username == 'admin' && password == admin_pass){
       sess.username = 'admin';
       sess.login = true;
       res.send('login successful');
