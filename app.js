@@ -458,7 +458,7 @@ app.post('/donate_cart', function(req, res){
 
 
 app.get('/donate_cart', function(req, res){     
-    
+    let sub_total = 0;
     cart_total = 0;
     
 
