@@ -526,7 +526,7 @@ app.post('/donate_order', function(req, res){
       let response = {"text": text};
               
         callSend(user_id, response);          
-        return waveQR(user_id);
+        return waveQr(user_id);
       }).catch((err)=>{
          console.log('Error', err);
       });
@@ -1361,6 +1361,34 @@ const startReply = (sender_psid) => {
 
 const waveQR = (user_id) => {
 let response1 = {"text": "You have to pay half of the amount of total so that we must confirm your order."};
+    let response2 = {
+      "attachment": {
+        "type": "template",
+        "payload": {
+          "template_type": "generic",
+          "elements": [{
+            "title": "Wave Pay",
+            "subtitle": "0943135418 Oake Kywe Phyo Han",
+            "image_url":"https://scontent.frgn5-2.fna.fbcdn.net/v/t1.0-0/p526x296/121644458_1857579311071149_233997658176677678_o.jpg?_nc_cat=110&_nc_sid=8bfeb9&_nc_eui2=AeE13CLqOjbMhwPTlUCvjcVH7oMEyqnBSwfugwTKqcFLB7anzKwsofjUbPf6kXPRKMsS4Zj1zJya4vBTPLjkZx5g&_nc_ohc=g-oDf3Dj8x8AX_AOxTy&_nc_ht=scontent.frgn5-2.fna&tp=6&oh=8752b229f9e1cf4e01430abacc95094a&oe=5FB02B4B",                       
+            
+          },{
+            "title": "K Pay",
+            "subtitle": "0943135418 Oake Kywe Phyo Han",
+            "image_url":"https://scontent.frgn5-2.fna.fbcdn.net/v/t1.0-0/s600x600/121415269_1857710167724730_3179842538357888391_o.jpg?_nc_cat=106&_nc_sid=8bfeb9&_nc_eui2=AeE-o7Tupfzl6NvFi5bOQPzYwApcb66OocrAClxvro6hypj6VAEQSqokFHJ0-k_EcBgx873noAll8tktRlXhrtcl&_nc_ohc=ObUDCCLi0E4AX8Qabeq&_nc_ht=scontent.frgn5-2.fna&tp=7&oh=700c632cc11d5dc5204fae019af12f58&oe=5FAE2539",                       
+            
+          }
+          ]
+        }
+      }
+    }
+     callSend(user_id, response1).then(()=>{
+        return callSend(user_id, response2)
+      });
+ }    
+
+
+const waveQr = (user_id) => {
+let response1 = {"text": "Sir, You have to pay all of the amount of total so that we must confirm your order for donation."};
     let response2 = {
       "attachment": {
         "type": "template",
