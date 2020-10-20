@@ -152,18 +152,18 @@ app.get('/',function(req,res){
 StartAdminRoute
 **************/
 
-app.get('/login',function(req,res){    
+app.get('/admin/login',function(req,res){    
     sess = req.session;
 
     if(sess.login){
-       res.send('You are already login. <a href="logout">logout</a>');
+       res.send('You are already login. <a href="/admin/logout">logout</a>');
     }else{
       res.render('login.ejs');
     } 
     
 });
 
-app.post('/login',function(req,res){    
+app.post('/admin/login',function(req,res){    
     sess = req.session;
 
     let username = req.body.username;
@@ -189,21 +189,11 @@ app.get('/admin/home',function(req,res){
     
 });
 
-app.get('/privatepage',function(req,res){    
-    sess = req.session;
-
-    if(sess.login){
-       res.render('privatepage.ejs');
-    }else{
-      res.send('You are not authorized to view.');
-    } 
-    
-});
 
 app.get('/admin/logout',function(req,res){ 
     //sess = req.session;   
     req.session.destroy(null);  
-    res.redirect('login');
+    res.redirect('/admin/login');
 });
 
 
