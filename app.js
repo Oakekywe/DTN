@@ -30,7 +30,8 @@ const reg_questions = {
   "q1": "What is your full name?",
   "q2": "What is your Phone number?",
   "q3": "What is your currently address?",
-  "q4": "What is your order reference number?"
+  "q4": "What is your order reference number?",
+  "q5": "What is your donation order reference number?"
 }
 let sess;
 
@@ -974,6 +975,10 @@ function handleQuickReply(sender_psid, received_message) {
         break;
         case "ordernow":         
             orderMenu(sender_psid);
+        break;
+        case "check-donate-order":  
+            current_question = "q5";
+            reg_Questions(current_question, sender_psid);
         break;   
         
                    
@@ -1021,6 +1026,10 @@ const handleMessage = (sender_psid, received_message) => {
      console.log('order_ref: ', order_ref);    
      current_question = '';     
      showOrder(sender_psid, order_ref);
+  }else if(current_question == 'q5'){
+     let donate_ref = received_message.text;     
+     current_question = '';     
+     checkDonateRef(sender_psid, donate_ref);
   }
   else {
       
@@ -1555,13 +1564,59 @@ const showDonate = (sender_psid) => {
         }
       }
     }
+    let response4 = {
+    "quick_replies":[
+            {
+              "content_type":"text",
+              "title":"Check order for donation",
+              "payload":"check-donate-order",              
+            }
+    ]
+  };
      callSend(sender_psid, response1).then(()=>{
         return callSend(sender_psid, response2).then(()=>{
-          return callSend(sender_psid, response3)
+          return callSend(sender_psid, response3).then(()=>{
+            return callSend(sender_psid, response4)
+            });
       });
     });    
 }
 
+const checkDonateRef = async(sender_psid, donate_ref) => {
+
+    const donatesRef = db.collection('donation_orders').where("ref", "==", donate_ref).limit(1);
+    const snapshot = await donatesRef.get();
+   
+    if (snapshot.empty) {
+      let response = { "text": "Incorrect donation order number" };
+      callSend(sender_psid, response).then(()=>{
+        return showDonate(sender_psid);
+      });
+    }
+    else{
+          let order = {}
+
+              snapshot.forEach(doc => {      
+              order.ref = doc.data().ref;
+              order.status = doc.data().status;
+              order.comment = doc.data().comment;
+              order.name = doc.data().name;
+              order.place = doc.data().place;  
+          });
+
+
+          let response1 = { "text": `${order.name}'s donation order ${order.ref} reference number is ${order.status}.` };
+          let response2 = { "text": `Admin message is: ${order.comment}.` };
+          let response3 = { "text": `Place for donation is ${order.place}.` };
+            callSend(sender_psid, response1).then(()=>{
+              return callSend(sender_psid, response2).then(()=>{
+                return callSend(sender_psid, response3)
+              });
+          });
+
+    }   
+
+}
 
 /**************
 end donate
