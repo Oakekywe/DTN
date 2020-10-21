@@ -417,7 +417,7 @@ app.get('/admin/donate_orders', async(req,res)=>{
         
       });
 
-      res.render('order_records.ejs', {data:data});
+      res.render('donate_order_records.ejs', {data:data});
 
       }
   }
