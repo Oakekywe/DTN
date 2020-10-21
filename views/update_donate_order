@@ -64,11 +64,11 @@
         <%="selected"%>
     <%}%>
     >Pending</option>
-    <option value="pre-paid accepted"
-    <%if(data.status == "pre-paid accepted"){%>
+    <option value="pre-paidAccepted"
+    <%if(data.status == "pre-paidAccepted"){%>
         <%="selected"%>
     <%}%>
-    >Pre-paid Accepted</option>    
+    >Pre-paidAccepted</option>    
     <option value="completed"
     <%if(data.status == "completed"){%>
         <%="selected"%>
