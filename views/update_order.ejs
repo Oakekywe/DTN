@@ -27,7 +27,7 @@
 
   <div>
     <label for="address">Address</label><br>
-    <input type="text" name="address" value="<%= data.place %>">    
+    <input type="text" name="address" value="<%= data.address %>">    
   </div>
 
   <div>
@@ -59,6 +59,11 @@
         <%="selected"%>
     <%}%>
     >Pending</option>
+    <option value="pre-paidAccepted" 
+    <%if(data.status == "pre-paidAccepted"){%>
+        <%="selected"%>
+    <%}%>
+    >Pre-paid Accepted</option>
     <option value="processing"
     <%if(data.status == "processing"){%>
         <%="selected"%>
