@@ -98,6 +98,52 @@
   
 
 	</table> 
+
+
+  <h1>Order Records for donation</h1>
+
+  <table cellspacing="1" cellpadding="5" border="1">
+    <tr>
+    
+    <th>Reference</th>
+    <th>Customer Name</th>
+    <th>Phone</th> 
+    <th>Email</th>    
+    <th>Place for donation</th>
+    <th>Items</th>  
+    <th>Sub Total</th>
+    <th>Discount</th>
+    <th>Total</th>
+    <th>Order Date</th>
+    <th>Payment Type</th>
+    <th>Status</th>
+    <th>Comment</th>
+    <th>Action</th>
+  </tr>
+
+  <% data.forEach(function(order){ %>
+     <tr>
+      
+       <td><%= order.ref %></td>
+       <td><%= order.name %></td>
+       <td><%= order.email %></td>
+       <td><%= order.phone %></td>
+       <td><%= order.place %></td>
+       <td><%= order.items %></td>
+       <td><%= order.sub_total %></td>
+       <td><%= order.discount %></td>
+       <td><%= order.total %></td>
+       <td><%= order.orderdate %></td>
+       <td><%= order.payment_type %></td>
+       <td><%= order.status %></td>
+       <td><%= order.comment %></td> 
+       <td><a href="update_donate_order/<%= order.doc_id %>">Edit</a> | 
+        <a href="#">Delete</td> 
+      </tr>
+  <% }); %>
+  
+
+  </table> 
  
 
   </body>

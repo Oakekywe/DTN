@@ -319,7 +319,7 @@ app.get('/admin/orders', async(req,res)=>{
   const snapshot = await ordersRef.get();
 
       if (snapshot.empty) {
-        res.send('no data');
+        res.send('There is no order');
       } else{
 
           let data = []; 
@@ -388,6 +388,85 @@ app.post('/admin/update_order', function(req,res){
  
 });
 
+//////admindonation//////
+app.get('/admin/donate_orders', async(req,res)=>{
+  sess = req.session;
+  
+  if(sess.login){
+
+  const ordersRef = db.collection('donation_orders').orderBy('created_on', 'desc');
+  const snapshot = await ordersRef.get();
+
+      if (snapshot.empty) {
+        res.send('There is no order for donation');
+      } else{
+
+          let data = []; 
+
+      snapshot.forEach(doc => {
+        let order = {};
+        
+        order = doc.data();
+        order.doc_id = doc.id;
+        
+        let d = new Date(doc.data().created_on._seconds);
+        d = d.toString();
+        order.created_on = d;    
+
+        data.push(order);
+        
+      });
+
+      res.render('order_records.ejs', {data:data});
+
+      }
+  }
+    else{
+      res.send('You need permission to view this page.');
+    }
+});
+
+app.get('/admin/update_donate_order/:doc_id', async function(req,res){
+  let doc_id = req.params.doc_id; 
+  
+  const orderRef = db.collection('donation_orders').doc(doc_id);
+  const doc = await orderRef.get();
+  if (!doc.exists) {
+    console.log('No such document!');
+  } else {
+    
+    let data = doc.data();
+    data.doc_id = doc.id;
+    
+    res.render('update_order.ejs', {data:data});
+  } 
+
+});
+
+app.post('/admin/update_order', function(req,res){   
+
+  let data = {
+    ref:req.body.ref,
+    name:req.body.name,
+    email:req.body.email,
+    phone:req.body.phone,
+    place:req.body.place,
+    items:req.body.items,
+    sub_total:req.body.sub_total,
+    discount:req.body.discount,
+    total:req.body.total,
+    orderdate:req.body.orderdate,
+    payment_type:req.body.payment_type,
+    status:req.body.status,
+    comment:req.body.comment,
+  }
+
+  db.collection('donation_orders').doc(req.body.doc_id)
+  .update(data).then(()=>{
+      res.redirect('/admin/donate_orders');
+  }).catch((err)=>console.log('ERROR:', error)); 
+ 
+});
 
 /*************
 EndAdminRoute
@@ -1410,8 +1489,14 @@ let response1 = {"text": "Sir, You have to pay all of the amount of total so tha
         }
       }
     }
+    let response3 = {"text": "Sir, You can also pay with AYA MPU"};
+    let response4 = {"text": "0077223010039121 - OAKE KYWE PHYO HAN"};
      callSend(user_id, response1).then(()=>{
-        return callSend(user_id, response2)
+        return callSend(user_id, response2).then(()=>{
+          return callSend(user_id, response3).then(()=>{
+            return callSend(user_id, response4)
+            });
+          });
       });
  }    
 
@@ -1447,7 +1532,7 @@ start donate
 **************/
 
 const showDonate = (sender_psid) => {
-    let response1 = {"text": "Gentleman, please choose the dessert you want to donate and please tell us the place you want to donate."};
+    let response1 = {"text": "Sir, please choose the dessert you want to donate and please tell us the place you want to donate."};
     let response2 = {"text":"We will go and donate there on your behalf."};
     let response3 = {
       "attachment": {
