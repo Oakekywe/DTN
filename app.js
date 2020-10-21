@@ -459,6 +459,7 @@ app.post('/donate_cart', function(req, res){
 
 app.get('/donate_cart', function(req, res){     
     let sub_total = 0;
+    let service = 3000;
     cart_total = 0;
     
 
@@ -471,9 +472,9 @@ app.get('/donate_cart', function(req, res){
 
         customer[user_id].cart.forEach((item) => sub_total += item.total);        
 
-        cart_total = sub_total
+        cart_total = sub_total + service
 
-        res.render('donate_cart.ejs', {cart:customer[user_id].cart, user:customer[user_id], cart_total:cart_total});    
+        res.render('donate_cart.ejs', {cart:customer[user_id].cart, service:service, user:customer[user_id], cart_total:cart_total});    
     }
 });
 
@@ -498,7 +499,7 @@ app.get('/donate_order', function(req, res){
         let item_list = "";
         customer[user_id].cart.forEach((item) => item_list += item.name+'*'+item.qty);  
         
-        res.render('donate_order.ejs', {cart:customer[user_id].cart, user:customer[user_id], cart_total:cart_total, items:item_list, today:today});    
+        res.render('donate_order.ejs', {cart:customer[user_id].cart, service:service, user:customer[user_id], cart_total:cart_total, items:item_list, today:today});    
     }
 });
 
