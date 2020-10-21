@@ -438,12 +438,12 @@ app.get('/admin/update_donate_order/:doc_id', async function(req,res){
     let data = doc.data();
     data.doc_id = doc.id;
     
-    res.render('update_order.ejs', {data:data});
+    res.render('update_donate_order.ejs', {data:data});
   } 
 
 });
 
-app.post('/admin/update_order', function(req,res){   
+app.post('/admin/update_donate_order', function(req,res){   
 
   let data = {
     ref:req.body.ref,
