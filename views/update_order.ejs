@@ -26,13 +26,23 @@
   </div>
 
   <div>
-    <label for="address">Address</label><br>
+    <label for="address">Address</label>
     <input type="text" name="address" value="<%= data.address %>">    
   </div>
 
   <div>
-    <label for="items">Items</label><br>
+    <label for="items">Items</label>
     <input type="text" name="items" value="<%= data.items %>">    
+  </div>
+
+  <div>
+    <label for="sub_total">Sub Total</label>
+    <input type="text" name="sub_total" value="<%= data.sub_total %>">    
+  </div>
+
+  <div>
+    <label for="discount">Discount</label>
+    <input type="text" name="discount" value="<%= data.discount %>">    
   </div>
 
   <div>
@@ -59,11 +69,6 @@
         <%="selected"%>
     <%}%>
     >Pending</option>
-    <option value="pre-paidAccepted" 
-    <%if(data.status == "pre-paidAccepted"){%>
-        <%="selected"%>
-    <%}%>
-    >Pre-paid Accepted</option>
     <option value="processing"
     <%if(data.status == "processing"){%>
         <%="selected"%>
