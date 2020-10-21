@@ -1565,11 +1565,12 @@ const showDonate = (sender_psid) => {
       }
     }
     let response4 = {
-    "quick_replies":[
-            {
-              "content_type":"text",
-              "title":"Check order for donation",
-              "payload":"check-donate-order",              
+      "text": "If you want to check your donation order, click the 'Check'.",
+      "quick_replies":[
+              {
+                "content_type":"text",
+                "title":"Check",
+                "payload":"check-donate-order",              
             }
     ]
   };
