@@ -29,7 +29,7 @@
     };
   </script>
 	
-	<h1>Cart</h1>
+	<h1>Cart for donation</h1>
 	<p><a href="../donate_shop">Go back Shop</a> | <a href="../donate_emptycart">Empty cart</a></p>
 
 	<table cellspacing="1" cellpadding="5" border="1">
@@ -38,7 +38,6 @@
 		<th>Name</th>
 		<th>Qty</th>   
 		<th>Price</th>
-		<th>Service</th>
 		<th>Total</th>
 	</tr>
 
@@ -48,13 +47,12 @@
 		<td><%= item.name %></td>
 		<td><%= item.qty %></td>
 		<td><%= item.price %></td>
-		<td><%= item.service %></td>
 		<td><%= item.total %></td>
 		
 	</tr>
 	<% }); %>
 	</table>
-		
+	<p><strong>Service:</strong> <%= service %></p>	
 	<p><strong>Total:</strong> <%= cart_total %></p>
 
 	<p><a href="../donate_order">Confirm</a></p>

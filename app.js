@@ -499,7 +499,7 @@ app.get('/donate_order', function(req, res){
         let item_list = "";
         customer[user_id].cart.forEach((item) => item_list += item.name+'*'+item.qty);  
         
-        res.render('donate_order.ejs', {cart:customer[user_id].cart, service:service, user:customer[user_id], cart_total:cart_total, items:item_list, today:today});    
+        res.render('donate_order.ejs', {cart:customer[user_id].cart, user:customer[user_id], cart_total:cart_total, items:item_list, today:today});    
     }
 });
 
