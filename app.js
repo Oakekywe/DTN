@@ -1591,7 +1591,7 @@ const checkDonateRef = async(sender_psid, donate_ref) => {
     if (snapshot.empty) {
       let response = { "text": "Incorrect donation order number" };
       callSend(sender_psid, response).then(()=>{
-        return showDonate(sender_psid);
+        //return showDonate(sender_psid);
       });
     }
     else{
@@ -1608,7 +1608,7 @@ const checkDonateRef = async(sender_psid, donate_ref) => {
 
           let response1 = { "text": `${order.name}'s donation order ${order.ref} reference number is ${order.status}.` };
           let response2 = { "text": `Admin message is: ${order.comment}.` };
-          let response3 = { "text": `Place for donation is ${order.place}.` };
+          let response3 = { "text": `Place for donation is ${order.place}` };
             callSend(sender_psid, response1).then(()=>{
               return callSend(sender_psid, response2).then(()=>{
                 return callSend(sender_psid, response3)
