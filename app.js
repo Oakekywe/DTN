@@ -849,6 +849,10 @@ app.post('/order', function(req, res){
       });
 });
 
+app.get('/direction',function(req,res){    
+    res.render('direction.ejs');
+    
+});
 /*************
 EndMemberRoute
 **************/
@@ -1332,7 +1336,7 @@ const orderMenu =(sender_psid) => {
                 "type": "web_url",
                 "title": "Order Now",
                 "url":APP_URL+"shop/",
-                 "webview_height_ratio": "full",
+                "webview_height_ratio": "full",
                 "messenger_extensions": true,          
               },
               
@@ -1400,7 +1404,7 @@ const startReply = (sender_psid) => {
                   "template_type": "generic",
                   "elements": [{
                     "title": "Order here",
-                    "subtitle": "If you want to order some foods, choose this.",
+                    "subtitle": "If you want to order some foods with the loyalty program, choose this.",
                     "image_url":"https://tourisminmyanmar.com.mm/wp-content/uploads/2019/08/rsz_shutterstock_1009625584.jpg",                       
                     "buttons": [
                         {
@@ -1426,9 +1430,11 @@ const startReply = (sender_psid) => {
                     "image_url":"https://scontent.frgn5-2.fna.fbcdn.net/v/t1.0-9/121366527_1857338684428545_538891396508578240_n.jpg?_nc_cat=101&_nc_sid=730e14&_nc_eui2=AeEUnmGsNgF-NPsIwXEiLflDdKtZrHzzbqZ0q1msfPNuph0OaOHTDsxFbal6gfOBwG_cfVxr6uupOKO1TUN15esk&_nc_ohc=YERXUyNyNTUAX_qEs7P&_nc_ht=scontent.frgn5-2.fna&oh=3e97dcd954d0d4a943254dbf6d9529f8&oe=5FAD3C5C",                       
                     "buttons": [
                         {
-                          "type": "postback",
-                          "title": "See more",
-                          "payload": "see-more",
+                          "type": "web_url",
+                          "title": "See More",
+                          "url":APP_URL+"direction/",
+                          "webview_height_ratio": "full",
+                          "messenger_extensions": true,
                         },               
                       ],
                   }
