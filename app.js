@@ -452,8 +452,6 @@ app.post('/admin/update_order', function(req,res){
     phone:req.body.phone,
     place:req.body.place,
     items:req.body.items,
-    sub_total:req.body.sub_total,
-    discount:req.body.discount,
     total:req.body.total,
     orderdate:req.body.orderdate,
     payment_type:req.body.payment_type,
