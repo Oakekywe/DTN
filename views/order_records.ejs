@@ -4,6 +4,14 @@
     <meta charset="UTF-8">
     <title>Sale Record</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+    <link href="style.css" rel="stylesheet">
+    
     <style>
       table {
         font-family: arial, sans-serif;
@@ -39,20 +47,55 @@
       }
     </style>
 
-    <nav>
-      <ul>
-        <li><a href="/admin/home">Home</a></li>  
-      
-        <li><a href="/admin/members">See Members</a></li>   
-      
-        <li><a href="/admin/foods">See Foods</a></li>   
-      
-       <!--<li><a href="/admin/orders">See Orders</a></li>-->
+  <!--==============================
+              header
+=================================-->
+<nav class="navbar navbar-expand-md navbar-light bg-light sticky-top">
+  <h1 style="font-family: Times New Roman; font-size: 50px; color: #004085;">
+      DTN Dessert Shop Admin Page
+</h1>
+  <div class="container-fluid">
+    
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  <div class="collapse navbar-collapse" id="navbarResponsive">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item active">
+        <a class="nav-item" href="/admin/home"> Home</a>        
+      </li>
 
-       <li><a href="/admin/logout">logout</a></li>
-      </ul>
-    </nav>
- </head>
+      <li class="nav-item">
+        <a class="nav-item" href="/admin/members"> See Members</a>        
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-item" href="/admin/foods"> See Foods</a>        
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-item" href="/admin/addfood"> Add Foods</a>        
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-item" href="/admin/orders"> See Orders</a>        
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-item" href="/admin/donate_orders"> See Orders for donation</a>        
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-item" href="/admin/logout"> logout</a>        
+      </li>
+
+
+    </ul>
+    
+  </div>  
+  </div>
+</nav>
+</head>
  
 
   <body style="background-color:white">
