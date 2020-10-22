@@ -66,7 +66,7 @@
 
 	<% if (points == 0 || cart_total == 0) { %>
 		<form action="../pointdiscount" method="post">				
-			<input type="submit" name="submit" value="Use Points" disabled/>
+			<input type="submit" name="submit" class="btn btn-secondary" value="Use Points" disabled/>
 		</form>
 
 	<%} else { %>
@@ -78,7 +78,7 @@
 	<% } %>
 	
 
-	<p><a href="../order">Confirm</a></p>
+	<p><a class="btn btn-outline-success" href="../order">Confirm</a></p>
 
 	
 </div>
