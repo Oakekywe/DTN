@@ -1127,7 +1127,7 @@ const handlePostback = (sender_psid, received_postback) => {
 
       switch(payload) {  
       case "order":
-          registerReply(sender_psid);
+          showMenu(sender_psid);
         break; 
       case "donate":
           showDonate(sender_psid);
@@ -1200,14 +1200,14 @@ const registerReply =(sender_psid) => {
 
 const showMenu = async(sender_psid) => {
   let title = "";
-  const memberRef = db.collection('members').doc(sender_psid);
+    const memberRef = db.collection('members').doc(sender_psid);
     const member = await memberRef.get();
     if (!member.exists) {
       title = "Register";  
       first_reg = true; 
 
       let response1 = {
-      "text": "Choose your reply",
+      "text": "Register first and get 1000 points for 1000 kyats discount.",
       "quick_replies":[
               {
                 "content_type":"text",
@@ -1225,7 +1225,7 @@ const showMenu = async(sender_psid) => {
       first_reg = false; 
 
       let response2 = {
-      "text": "Choose your reply",
+      "text": "You're already a loyal member. Now, you can order with the discount points and you can also check your order with your reference number.",
       "quick_replies":[
               {
                 "content_type":"text",
