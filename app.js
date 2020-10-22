@@ -1243,11 +1243,10 @@ const showMenu = async(sender_psid) => {
               }
 
       ]
-    };          
-    } 
-
+    };
+    callSend(sender_psid, response2);          
+    }   
   
-  callSend(sender_psid, response2);
 }
 
 const reg_Questions = (current_question, sender_psid) => {
