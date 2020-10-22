@@ -1204,34 +1204,50 @@ const showMenu = async(sender_psid) => {
     const member = await memberRef.get();
     if (!member.exists) {
       title = "Register";  
-      first_reg = true;      
-    } else {
+      first_reg = true; 
+
+      let response1 = {
+      "text": "Choose your reply",
+      "quick_replies":[
+              {
+                "content_type":"text",
+                "title":title,
+                "payload":"register",              
+              }
+
+      ]
+    };
+   callSend(sender_psid, response1);
+         
+  } 
+    else {
       title = "Update Profile";  
-      first_reg = false;      
+      first_reg = false; 
+
+      let response2 = {
+      "text": "Choose your reply",
+      "quick_replies":[
+              {
+                "content_type":"text",
+                "title":title,
+                "payload":"register",              
+              },{
+                "content_type":"text",
+                "title":"Order Now",
+                "payload":"ordernow",             
+              },
+              {
+                "content_type":"text",
+                "title":"My Order",
+                "payload":"check-order",             
+              }
+
+      ]
+    };          
     } 
 
-
-  let response = {
-    "text": "Choose your reply",
-    "quick_replies":[
-            {
-              "content_type":"text",
-              "title":title,
-              "payload":"register",              
-            },{
-              "content_type":"text",
-              "title":"Order Now",
-              "payload":"ordernow",             
-            },
-            {
-              "content_type":"text",
-              "title":"My Order",
-              "payload":"check-order",             
-            }
-
-    ]
-  };
-  callSend(sender_psid, response);
+  
+  callSend(sender_psid, response2);
 }
 
 const reg_Questions = (current_question, sender_psid) => {
