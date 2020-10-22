@@ -1207,7 +1207,7 @@ const showMenu = async(sender_psid) => {
       first_reg = true; 
 
       let response1 = {
-      "text": "Register first and get 1000 points for 1000 kyats discount.",
+      "text": "Sir, You need to register first and get 1000 points for 1000 kyats discount. So you can enjoy with your order.",
       "quick_replies":[
               {
                 "content_type":"text",
