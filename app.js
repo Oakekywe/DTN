@@ -705,7 +705,7 @@ app.get('/cart', function(req, res){
         customer[user_id].cart = [];
     }
     if(customer[user_id].cart.length < 1){
-        res.send('your cart is empty. back to shop <a href="../shop">shop</a>');
+        res.send('your cart is empty. back to shop <a class="list-group-item" href="../shop">shop</a>');
     }else{ 
 
         customer[user_id].cart.forEach((item) => sub_total += item.total);        
