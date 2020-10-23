@@ -64,7 +64,7 @@
 		
 				<p><strong>Sub Total:</strong> <%= sub_total %><p>
 				<p><strong>Discount:</strong> - <%= discount %><p>
-				<p><strong>Total:</strong> <%= cart_total %><p>
+				<p><strong>Total:</strong> <%= cart_total %><p><hr>
 			</div>
 
 			<div class="card-body">			
@@ -84,9 +84,9 @@
 					</p>
 
 					<p>
-					<input class="custom-control-input" type="radio" name="payment_type" value="pre-paid" required/> Half Pre-paid
+					<input class="radio" type="radio" name="payment_type" value="pre-paid" required/> Half Pre-paid
 					</p>
-					<input type="submit" name="submit" value="Order"/>
+					<input class="btn btn-dark" type="submit" name="submit" value="Order"/>
 				</form>
 			</div>
 		</div>
