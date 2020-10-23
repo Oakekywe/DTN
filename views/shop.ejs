@@ -43,12 +43,7 @@
                           <h3><%= food.name %></h3>
                           <p><%= food.description %><p>
                           <p>price: <%= food.price %></p>
-                      </div> <!-- end of item-->
-                  
-                  </li>
-                  
                    
-            </ul>
       <form action="../cart" method="post">
       <input type="hidden" name="item_id" value="<%= food.id %>"/>
       <input type="hidden" name="item_name" value="<%= food.name %>"/>
@@ -60,7 +55,12 @@
     </div><br>
      
   <% }); %>
-
+   </div> <!-- end of item-->
+                  
+                  </li>
+                  
+                   
+            </ul>
       </div> <!-- end of slider-->
     </div> <!-- end of besth dishes-->
 </div> <!-- end of bestdishes wrapper-->
