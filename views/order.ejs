@@ -37,53 +37,64 @@
         );        
     };
   </script>
-<div class="container">
-	<h1>Order</h1>
-	<p><a href="../cart">Cart</a></p>
+<div class="container bg-light">
+    <div class="row">   
+      <div class="col-lg-2">
 
-	<h3>Items</h3>
-	<table cellspacing="1" cellpadding="5" border="1">
-		<% cart.forEach(function(item){ %>
-		<tr>
-			<td>
-				<%= item.name %> * <%= item.qty %>
-			</td>
-		</tr>
-		<% }); %>
-	</table>	
+        <h1 class="my-4"><b>Order</b></h1>
+        <div class="list-group">
+          <a href="../cart" class="list-group-item bg-dark text-white"><b>Cart</b></a>
+          
+        </div>
+      </div> 
+	<div class="col-lg-10">
+		<div class="card mt-4">
+			<div class="card-body">
+
+				<h3>Items</h3>
+					<table class="table table-dark table-striped" cellspacing="1" cellpadding="5" border="1">
+					<% cart.forEach(function(item){ %>
+					<tr>
+						<td>
+							<%= item.name %> * <%= item.qty %>
+						</td>
+					</tr>
+					<% }); %>
+				</table>	
 		
-	
-	
-	
-	<p><strong>Sub Total:</strong> <%= sub_total %><p>
-	<p><strong>Discount:</strong> - <%= discount %><p>
-	<p><strong>Total:</strong> <%= cart_total %><p>
+				<p><strong>Sub Total:</strong> <%= sub_total %><p>
+				<p><strong>Discount:</strong> - <%= discount %><p>
+				<p><strong>Total:</strong> <%= cart_total %><p>
+			</div>
 
-	<form id="form" action="../order" method="post">	
-	    <input type="text" name="name" value="<%= user.name %>" required/>	<br/>
-		<input type="text" name="phone" value="<%= user.phone %>" required/>	<br/>
-		<textarea  name="address" rows="3" cols="23" required><%= user.address %></textarea><br/>
+			<div class="card-body">			
+				<form id="form" action="../order" method="post">	
+				    <input class="form-control" type="text" name="name" value="<%= user.name %>" required/>	<br/>
+					<input class="form-control" type="text" name="phone" value="<%= user.phone %>" required/>	<br/>
+					<textarea class="form-control" name="address" rows="3" cols="23" required><%= user.address %></textarea><br/>
 
-		<input  type="hidden" name="items" value="<%= items %>">
+					<input  type="hidden" name="items" value="<%= items %>">
+					<input type="hidden" name="sub_total" value="<%= sub_total %>" />
+					<input type="hidden" name="discount" value="<%= discount %>" />
+					<input type="hidden" name="total" value="<%= cart_total %>" />
 
-		<input type="hidden" name="sub_total" value="<%= sub_total %>" />
-		<input type="hidden" name="discount" value="<%= discount %>" />
-		<input type="hidden" name="total" value="<%= cart_total %>" />
+					<p>
+					<label for="start">Please place your order <strong>2 days advance</strong><br>Order date: </label>
+					<input class="md-form md-outline input-with-post-icon datepicker" type="date" name="date" value="date" min="<%= today %>" max="">	<br/>
+					</p>
 
-		<p>
-		<label for="start">Please place your order <strong>2 days advance</strong><br>Order date: </label>
-		<input type="date" name="date" value="date" min="<%= today %>" max="">	<br/>
-		</p>
-
-		<p>
-		<input type="radio" name="payment_type" value="pre-paid" required/> Half Pre-paid
-		</p>
-		<input type="submit" name="submit" value="Order"/>
-	</form>
-	
+					<p>
+					<input class="custom-control-input" type="radio" name="payment_type" value="pre-paid" required/> Half Pre-paid
+					</p>
+					<input type="submit" name="submit" value="Order"/>
+				</form>
+			</div>
+		</div>
+	</div>
 </div>
-	<script>
-      
+</div>
+
+	<script>      
    
       const windowShut = () => {
 
@@ -95,17 +106,13 @@
           		console.log(err);
         	});
 
-
-    	},1500);
-   
+    	},1500);   
         
         }
       
-      document.getElementById("form").addEventListener("submit", windowShut);      
-     
+      document.getElementById("form").addEventListener("submit", windowShut);     
 
-  </script>
-	
+  </script>	
 
 </body>
 </html>
