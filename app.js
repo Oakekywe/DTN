@@ -1863,26 +1863,27 @@ const setupPersistentMenu = (res) => {
   var messageData = { 
       "persistent_menu":[
           {
-            "locale":"default",
-            "composer_input_disabled":false,
-            "call_to_actions":[
+            "locale": "default",
+            "composer_input_disabled": false,
+            "call_to_actions": [
                 {
-                  "type":"postback",
-                  "title":"View My Tasks",
-                  "payload":"view-tasks"
+                    "type": "postback",
+                    "title": "Talk to an agent",
+                    "payload": "CARE_HELP"
                 },
                 {
-                  "type":"postback",
-                  "title":"Add New Task",
-                  "payload":"add-task"
+                    "type": "postback",
+                    "title": "Outfit suggestions",
+                    "payload": "CURATION"
                 },
                 {
-                  "type":"postback",
-                  "title":"Cancel",
-                  "payload":"cancel"
+                    "type": "web_url",
+                    "title": "Shop now",
+                    "url": "https://www.originalcoastclothing.com/",
+                    "webview_height_ratio": "full"
                 }
-          ]
-      },
+            ]
+        },
       {
         "locale":"default",
         "composer_input_disabled":false
