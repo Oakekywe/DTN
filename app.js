@@ -1882,10 +1882,6 @@ const setupPersistentMenu = (res) => {
                   "payload":"cancel"
                 }
           ]
-      },
-      {
-        "locale":"default",
-        "composer_input_disabled":false
       }
     ]          
   };
