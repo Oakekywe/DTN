@@ -1860,7 +1860,7 @@ FUNCTION TO SET UP PERSISTENT MENU
 ***********************************/
 
 const setupPersistentMenu = (res) => {
-  var messageData = { 
+  let messageData = { 
       "persistent_menu":[
           {
             "locale": "default",
