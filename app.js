@@ -901,7 +901,7 @@ app.get('/setgsbutton',function(req,res){
 
 //Set up Persistent Menu. To run one time
 //eg https://fbstarter.herokuapp.com/setpersistentmenu
-app.get('/setpersistentmenu',function(req,res){
+app.get('https://dtn1.herokuapp.com/setpersistentmenu',function(req,res){
     setupPersistentMenu(res);    
 });
 
@@ -1411,7 +1411,7 @@ const showOrder = async(sender_psid, order_ref) => {
 
 const startReply = (sender_psid) => {
    let response1 = {"text": "Welcome to our DTN dessert shop. You can make order online Myanmar traditional dessert with 24/7 services. "};
-   let response2 = {"text": "You can order our delicious menu. You can make donation with us. You can also be a loyal member by sign up. "};
+   let response2 = {"text": "You can order our delicious menu with loyal points. You can make donation with us. You can also be a loyal member by sign up. "};
    let response3 = {
          "attachment": {
                 "type": "template",
