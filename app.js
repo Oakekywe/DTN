@@ -1131,8 +1131,16 @@ const handlePostback = (sender_psid, received_postback) => {
         break; 
       case "donate":
           showDonate(sender_psid);
+        break;
+      case "s-over":
+          startReply(sender_psid);
+        break;
+      case "s-now":
+          showMenu(sender_psid);
+        break;      
+      case "d-now":
+          showDonate(sender_psid);
         break;  
-        
       case "yes":
           showButtonReplyYes(sender_psid);
         break;
@@ -1868,18 +1876,18 @@ const setupPersistentMenu = (res) => {
             "call_to_actions":[
                 {
                   "type":"postback",
-                  "title":"View My Tasks",
-                  "payload":"view-tasks"
+                  "title":"Start Over",
+                  "payload":"s-over"
                 },
                 {
                   "type":"postback",
-                  "title":"Add New Task",
-                  "payload":"add-task"
+                  "title":"Shop Now",
+                  "payload":"s-now"
                 },
                 {
                   "type":"postback",
-                  "title":"Cancel",
-                  "payload":"cancel"
+                  "title":"Donate Now",
+                  "payload":"d-now"
                 }
           ]
       }
