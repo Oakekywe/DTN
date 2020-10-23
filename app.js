@@ -901,7 +901,7 @@ app.get('/setgsbutton',function(req,res){
 
 //Set up Persistent Menu. To run one time
 //eg https://fbstarter.herokuapp.com/setpersistentmenu
-app.get('https://dtn1.herokuapp.com/setpersistentmenu',function(req,res){
+app.get('/setpermenu',function(req,res){
     setupPersistentMenu(res);    
 });
 
