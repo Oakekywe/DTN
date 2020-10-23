@@ -10,7 +10,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
     <link href="style.css" rel="stylesheet">
-
     <style>      
     	
     	img {
@@ -20,15 +19,11 @@
           
         }
     </style>
-
  </head>
-
-<body>
-  
+<body>  
  
    <!-- Page Content -->
-  <div class="container bg-secondary">
-
+  <div class="container bg-light">
     <div class="row">   
       <div class="col-lg-2">
 
@@ -37,15 +32,13 @@
           <a href="../cart" class="list-group-item active">View cart</a>
           <a href="../emptycart" class="list-group-item">Empty cart</a>
         </div>
-      </div>
-      <!-- /.col-lg-2 -->
+      </div>      
 
       <div class="col-lg-10">
 
         <% data.forEach(function(food){ %>
 
-          <div class="card mt-4">       
-            <div class="food">
+          <div class="card mt-4">             
               
                 <img class="card-img-top img-fluid" src="<%= food.image %>" alt="">              
               
@@ -64,18 +57,12 @@
                     </form>
                   </div>
 
-              
-            </div>       
-          
           </div>
         <% }); %>
 
-      </div><!-- /.col-lg-10 -->
-
-    </div><!-- row -->
-
-  </div><!-- /.container -->
-
+      </div>
+    </div>
+  </div>
  </body>
 
 </html>

@@ -35,11 +35,21 @@
         );        
     };
   </script>
-	<div class="container">
-	<h1>Cart</h1>
-	<p><a href="../shop">Shop</a> | <a href="../emptycart">Empty cart</a></p>
 
-	<table cellspacing="1" cellpadding="5" border="1">
+<div class="container bg-light">
+    <div class="row">   
+      <div class="col-lg-2">
+
+        <h1 class="my-4"><b>Cart</b></h1>
+        <div class="list-group">
+          <a href="../shop" class="list-group-item active">Shop</a>
+          <a href="../emptycart" class="list-group-item">Empty cart</a>
+        </div>
+      </div>      
+	
+	<div class="col-lg-10">
+
+	<table class="table table-dark table-striped" cellspacing="1" cellpadding="5" border="1">
 	<tr>
 		
 		<th>Name</th>
@@ -80,7 +90,8 @@
 
 	<br><p><a class="btn btn-success" href="../order">Confirm</a></p>
 
-	
+		</div>
+	</div>
 </div>
 </body>
 </html>
