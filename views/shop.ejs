@@ -23,31 +23,51 @@
     	}
     </style>
  </head>
-
-  <body style="background-color:white">
+<body style="background-color:white">
   <h1>Order</h1>
   <p><a href="../cart">View cart</a> | <a href="../emptycart">Empty cart</a></p>
 
 
-  <% data.forEach(function(food){ %>
+<div class="bestdisheswrapper">
+    <div id="bestdishes" class="container">
+     <% data.forEach(function(food){ %>
 
-  	<div class="food">
-	  	<img src="<%= food.image %>" />
-	  	<h3><%= food.name %></h3>
-	  	<p><%= food.description %><p>
-	    <p>price: <%= food.price %></p>
-
-	    <form action="../cart" method="post">
-	    <input type="hidden" name="item_id" value="<%= food.id %>"/>
-	    <input type="hidden" name="item_name" value="<%= food.name %>"/>
-	    <input type="hidden" name="item_price" value="<%= food.price %>"/>
-	    quantity: <input type="number" name="item_qty" min="1" value="1" style="width:50px;"/> <br>	    
+    <div class="food">  
+     <h2 class="wow fadeInUp" data-wow-delay="0.3s">BEST DISHES</h2>
+      <div class="slider">
+            <ul class="slides">
+               <li class="slide">
+                    <div class="item">
+                          <img src="<%= food.image %>" width="226" height="225" alt="sliderimg" class="wow flipInX"
+                           data-wow-delay=".8s"> 
+                          <h3><%= food.name %></h3>
+                          <p><%= food.description %><p>
+                          <p>price: <%= food.price %></p>
+                      </div> <!-- end of item-->
+                  
+                  </li>
+                  
+                   
+            </ul>
+      <form action="../cart" method="post">
+      <input type="hidden" name="item_id" value="<%= food.id %>"/>
+      <input type="hidden" name="item_name" value="<%= food.name %>"/>
+      <input type="hidden" name="item_price" value="<%= food.price %>"/>
+      quantity: <input type="number" name="item_qty" min="1" value="1" style="width:50px;"/> <br>     
       
       <input type="submit" class="btn btn-success" name="submit"/>
-	    </form> 	
-  	</div><br>
+      </form>   
+    </div><br>
      
-  <% }); %> 
+  <% }); %>
+
+      </div> <!-- end of slider-->
+    </div> <!-- end of besth dishes-->
+</div> <!-- end of bestdishes wrapper-->
+
+
+
+ 
 
  </body>
 
