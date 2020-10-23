@@ -42,13 +42,14 @@
 
         <h1 class="my-4"><b>Cart</b></h1>
         <div class="list-group">
-          <a href="../shop" class="list-group-item bg-dark">Shop</a>
-          <a href="../emptycart" class="list-group-item">Empty cart</a>
+          <a href="../shop" class="list-group-item bg-dark text-white"><b>Shop</b></a>
+          <a href="../emptycart" class="list-group-item text-dark"><b>Empty cart</b></a>
         </div>
       </div>      
 	
 	<div class="col-lg-10">
 		<div class="card mt-4">
+			<div class="card-body">
 			<table class="table table-dark table-striped" cellspacing="1" cellpadding="5" border="1">
 			<tr>
 				
@@ -78,7 +79,7 @@
 				<form action="../pointdiscount" method="post">				
 					<input type="submit" name="submit" class="btn btn-secondary" value="Use Points" disabled/>
 				</form>
-		<div class="col-lg-6">
+
 			<%} else { %>
 				<form action="../pointdiscount" method="post">		
 					<input type="hidden" name="points" value ="<%= points %>" />
@@ -86,10 +87,10 @@
 				</form>
 			
 			<% } %>
-		</div>	
-			<div class="col-lg-6">
-				<p><a class="btn btn-success" href="../order">Confirm</a></p>
-			</div>
+			
+
+			<br><p><a class="btn btn-success" href="../order">Confirm</a></p>
+		</div>
 		</div>
 		</div>
 	</div>
