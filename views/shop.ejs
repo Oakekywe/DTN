@@ -33,13 +33,13 @@
     <div class="row">  
       <div class="col-lg-2">
 
-        <h1 class="my-4">Order</h1>
+        <h1 class="my-4"><b>Order</b></h1>
         <div class="list-group">
-          <a href="../cart">View cart</a>
-          <a href="../emptycart">Empty cart</a>
+          <a href="../cart" class="list-group-item">View cart</a>
+          <a href="../emptycart" class="list-group-item">Empty cart</a>
         </div>
       </div>
-      <!-- /.col-lg-3 -->
+      <!-- /.col-lg-2 -->
 
       <div class="col-lg-10">
 
@@ -52,15 +52,15 @@
               <img class="card-img-top img-fluid" src="<%= food.image %>" alt="">
 
               <div class="card-body">
-                <h3 class="card-title"><%= food.name %></h3>            
-                <p class="card-text"><%= food.description %></p>
-                <h4>price: <%= food.price %></h4>
+                <h3 class="card-title"><%= food.name %></h3>
+                <h5>Price: <%= food.price %></h5>            
+                <p class="card-text"><%= food.description %></p>                
 
                   <form action="../cart" method="post">
                   <input type="hidden" name="item_id" value="<%= food.id %>"/>
                   <input type="hidden" name="item_name" value="<%= food.name %>"/>
                   <input type="hidden" name="item_price" value="<%= food.price %>"/>
-                  quantity: <input type="number" name="item_qty" min="1" value="1" style="width:50px;"/> <br>     
+                  Quantity: <input type="number" name="item_qty" min="1" value="1" style="width:60px;"/> <br>     
                   
                   <input type="submit" class="btn btn-success" name="submit"/>
                   </form>
