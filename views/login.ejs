@@ -6,14 +6,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
  </head>
 
-  <body>
-  <h1>Admin Login</h1>
-  <form action="/admin/login" method="post">
-  Username: <input type="text" name="username" /><br>
-  Password: <input type="password" name="password" /><br>
-  <input type="submit" name="Submit" value="Submit"/>
-  </form> 
+ <nav class="navbar navbar-expand-md navbar-light bg-secondary sticky-top">
+  <h1 style="font-family: Times New Roman; font-size: 50px; color: white;">
+      DTN Dessert Shop Admin Page
+</h1>      
+</nav>
 
+  <body>
+    <div class="container bg-light">
+      <div class="card mt-4">
+        <h1>Admin Login</h1>
+        <form action="/admin/login" method="post">
+        Username: <input class="form-control" type="text" name="username" /><br>
+        Password: <input class="form-control" type="password" name="password" /><br>
+        <input class="btn btn-dark" type="submit" name="Submit" value="Submit"/>
+        </form> 
+      </div>
+    </div>
   </body>
 
 </html>
