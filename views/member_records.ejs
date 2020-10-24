@@ -82,33 +82,36 @@
     <body style="background-color:white">
   <h1>All Loyal Members </h1>
 
-  <table class="table-responsive" cellspacing="1" cellpadding="5" border="1">
-    <tr>
-    
-    <th>Facebook ID</th>
-    <th>Member Name</th>
-    <th>Phone</th>       
-    <th>Address</th>
-    <th>Points</th> 
-    <th>Status</th>
-    <th>Action</th>
-  </tr>
-
-  <% data.forEach(function(member){ %>
-     <tr>
-      
-       <td><%= member.facebookid %></td>
-       <td><%= member.name %></td>
-       <td><%= member.phone %></td>
-       <td><%= member.address %></td>
-       <td><%= member.points %></td>
-       <td><%= member.status %></td>
-       <td><a href="#">Edit</a> |<a href="#"> Delete</td> 
+    <div class="table-responsive sm">
+      <table class="table" cellspacing="1" cellpadding="5" border="1">
+        <tr>
+        
+        <th>Facebook ID</th>
+        <th>Member Name</th>
+        <th>Phone</th>       
+        <th>Address</th>
+        <th>Points</th> 
+        <th>Status</th>
+        <th>Action</th>
       </tr>
-  <% }); %>
-  
 
-  </table> 
+      <% data.forEach(function(member){ %>
+         <tr>
+          
+           <td><%= member.facebookid %></td>
+           <td><%= member.name %></td>
+           <td><%= member.phone %></td>
+           <td><%= member.address %></td>
+           <td><%= member.points %></td>
+           <td><%= member.status %></td>
+           <td><a href="#">Edit</a> |<a href="#"> Delete</td> 
+          </tr>
+      <% }); %>
+      
+
+      </table> 
+    </div>
+  
  
 
   </body>
