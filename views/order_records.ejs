@@ -29,29 +29,13 @@
         background-color: #dddddd;
       }
 
-      ul {
-        margin: 0;
-        padding: 0;
-      }
-      
-      a:visited {
-        color: green;
-      }
-
-      a:hover {
-        color: hotpink;
-      }
-
-      li {
-        display: inline;
-      }
     </style>
-
-  <!--==============================
+</head>
+<!--==============================
               header
 =================================-->
-<nav class="navbar navbar-expand-md navbar-light bg-light sticky-top">
-  <h1 style="font-family: Times New Roman; font-size: 50px; color: #004085;">
+<nav class="navbar navbar-expand-md navbar-light bg-dark sticky-top">
+  <h1 style="font-family: Times New Roman; font-size: 50px; color: white;">
       DTN Dessert Shop Admin Page
 </h1>
   <div class="container-fluid">
@@ -62,31 +46,33 @@
   <div class="collapse navbar-collapse" id="navbarResponsive">
     <ul class="navbar-nav ml-auto">
       <li class="nav-item active">
-        <a class="nav-item" href="/admin/home"> Home</a>        
+        <a class="nav-link h4 text-muted" href="/admin/home"> Home</a>        
       </li>
 
       <li class="nav-item">
-        <a class="nav-item" href="/admin/members"> See Members</a>        
+        <a class="nav-link h4 text-muted" href="/admin/members"> See Members</a>        
+      </li>
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle h4 text-muted" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Order
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item h4" href="/admin/orders"> See Orders</a>  
+          <a class="dropdown-item h4" href="/admin/donate_orders"> See Orders for donation</a>           
+      </li>
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle h4 text-muted" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Food
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item h4" href="/admin/foods"> See Foods</a> 
+          <a class="dropdown-item h4" href="/admin/addfood"> Add Foods</a>          
       </li>
 
       <li class="nav-item">
-        <a class="nav-item" href="/admin/foods"> See Foods</a>        
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-item" href="/admin/addfood"> Add Foods</a>        
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-item" href="/admin/orders"> See Orders</a>        
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-item" href="/admin/donate_orders"> See Orders for donation</a>        
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-item" href="/admin/logout"> logout</a>        
+        <a class="nav-link h4 text-muted" href="/admin/logout"> Logout</a>        
       </li>
 
 
@@ -95,8 +81,6 @@
   </div>  
   </div>
 </nav>
-</head>
- 
 
   <body style="background-color:white">
   <h1>Order Records</h1>
