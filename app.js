@@ -236,6 +236,18 @@ app.get('/admin/members', async(req,res)=>{
     
 });
 
+app.get('/admin/delete_member/:doc_id', function(req,res){
+  
+  let doc_id = req.params.doc_id; 
+
+    db.collection("members").doc(doc_id).delete().then(()=>{
+      console.log('DATA DELETED');
+        res.redirect('/admin/member_records');
+        
+    }).catch((err)=>console.log('ERROR:', error));   
+
+});
+
 
 app.get('/admin/foods', async(req,res) =>{   
 
