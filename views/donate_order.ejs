@@ -1,9 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Cart</title>
+	<title>Donate Order</title>
+	<meta charset="UTF-8">
+    <title>Order Foods</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+    <link href="style.css" rel="stylesheet">
 </head>
-<body style="background-color:white">
+<body>
 	<script>
       (function(d, s, id){
       var js, fjs = d.getElementsByTagName(s)[0];
@@ -27,48 +36,62 @@
         );        
     };
   </script>
+<div class="container bg-light">
+    <div class="row">   
+      <div class="col-lg-2">
 
-	<h1>Order</h1>
-	<p><a href="../donate_cart">Cart</a></p>
+        <h1 class="my-4"><b>Order</b></h1>
+        <div class="list-group">
+          <a href="../donate_cart" class="list-group-item bg-dark text-white"><b>Back To Cart</b></a>
+          
+        </div>
+      </div> 
+	<div class="col-lg-10">
+		<div class="card mt-4">
+			<div class="card-body">
 
-	<h3>Items</h3>
-	<table cellspacing="1" cellpadding="5" border="1">
-		<% cart.forEach(function(item){ %>
-		<tr>
-			<td>
-				<%= item.name %> * <%= item.qty %>
-			</td>
-		</tr>
-		<% }); %>
-	</table>		
+				<h3>Items</h3>
+					<table class="table table-dark table-striped" cellspacing="1" cellpadding="5" border="1">
 	
-	<p><strong>Total:</strong> <%= cart_total %><p>
-
-	<form id="form" action="../donate_order" method="post">	
-	    Name: <input type="text" name="name" required/><br>
-		Phone: <input type="text" name="phone" required/><br>
-		Email: <input type="email" name="email" required/><br>
-		Place you want to donate: <b>Yangon Only</b> <textarea  name="address" rows="4" cols="20"></textarea><br>
-
-		<input  type="hidden" name="items" value="<%= items %>">
-
-		<input type="hidden" name="total" value="<%= cart_total %>" />
-
-		<p>
-		<label for="start">Date you want to donate <strong>2 days advance</strong><br>Date: </label>
-		<input type="date" name="date" value="date" min="<%= today %>" max="">	<br/>
-		</p>
-
-		<p>
-		<input type="radio" name="payment_type" value="full pre-paid" required/>Full Pre-paid
-		</p>
-		<input type="submit" name="submit" value="Order"/>
-	</form>
+						<% cart.forEach(function(item){ %>
+						<tr>
+							<td>
+								<%= item.name %> * <%= item.qty %>
+							</td>
+						</tr>
+						<% }); %>
+					</table>		
 	
+				<p><strong>Total:</strong> <%= cart_total %><p>
+			</div>
 
-	<script>
-      
-   
+			<div class="card-body">
+			<form id="form" action="../donate_order" method="post">	
+			    Name: <input class="form-control" type="text" name="name" required/><br>
+				Phone: <input class="form-control" type="text" name="phone" required/><br>
+				Email: <input class="form-control" type="email" name="email" required/><br>
+				Place you want to donate: <b>Yangon Only</b> <textarea class="form-control" name="address" rows="3" cols="23"></textarea><br>
+
+				<input  type="hidden" name="items" value="<%= items %>">
+				<input type="hidden" name="total" value="<%= cart_total %>" />
+
+				<p>
+				<label for="start">Date you want to donate <strong>2 days advance</strong><br>Date: </label>
+				<input type="date" name="date" value="date" min="<%= today %>" max="">	<br/>
+				</p>
+
+				<p>
+				<input class="radio" type="radio" name="payment_type" value="full pre-paid" required/>Full Pre-paid
+				</p>
+				<input class="btn btn-dark" type="submit" name="submit" value="Order"/>
+			</form>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+
+	<script>   
       const windowShut = () => {
 
       	setTimeout(()=>{
@@ -79,17 +102,13 @@
           		console.log(err);
         	});
 
-
-    	},1500);
-   
+    	},1500);   
         
         }
       
-      document.getElementById("form").addEventListener("submit", windowShut);      
-     
+      document.getElementById("form").addEventListener("submit", windowShut);     
 
-  </script>
-	
+  </script>	
 
 </body>
 </html>
