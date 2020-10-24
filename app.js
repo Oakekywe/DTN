@@ -242,7 +242,7 @@ app.get('/admin/delete_member/:doc_id', function(req,res){
 
     db.collection("members").doc(doc_id).delete().then(()=>{
       console.log('DATA DELETED');
-        res.redirect('/admin/member_records');
+        res.redirect('/admin/members');
         
     }).catch((err)=>console.log('ERROR:', error));   
 
