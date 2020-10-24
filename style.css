@@ -65,6 +65,18 @@ figure {
 }
 
 
+#header{  overflow:hidden;   }
+.headerwrapper .logo {float:left; line-height:130px; margin-top:15px; }
+.headerwrapper nav ul{font-family:Arial; float:right; font-size:16px; font-weight:bold; margin-top:15px; }
+/*.headerwrapper nav  li{list-style:none; float:left; margin:20px; padding:15px; }
+.headerwrapper nav  li a {text-decoration:none; color:#313131; }
+*/
+.headerwrapper nav ul li {list-style:none; float:left; margin:20px; padding:15px;}
+.headerwrapper nav ul li a{text-decoration:none; color:#313131;}
+.headerwrapper nav ul li:hover{background:#ff5a0b; border-radius:5px; color:#FFF; transition:all 0.5s;
+animation:rubberBand 0.9s; -webkit-animation:rubberBand 0.9s;}
+.headerwrapper nav ul li:hover a{color:white;}
+
 
 /*
 Extra small (xs) devices (portrait phones, less than 576px)
