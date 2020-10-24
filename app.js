@@ -274,7 +274,13 @@ app.get('/admin/foods', async(req,res) =>{
 });
 
 app.get('/admin/addfood', function(req,res){
-  res.render('addfood.ejs');  
+  sess = req.session;
+  
+  if(sess.login){
+  res.render('addfood.ejs'); 
+  } else{
+      res.send('You need permission to view this page.');
+    } 
 });
 
 app.post('/admin/savefood',upload.single('file'),function(req,res){
@@ -349,6 +355,9 @@ app.get('/admin/orders', async(req,res)=>{
 });
 
 app.get('/admin/update_order/:doc_id', async function(req,res){
+  sess = req.session;
+  
+  if(sess.login){
   let doc_id = req.params.doc_id; 
   
   const orderRef = db.collection('orders').doc(doc_id);
@@ -362,6 +371,10 @@ app.get('/admin/update_order/:doc_id', async function(req,res){
     
     res.render('update_order.ejs', {data:data});
   } 
+  }
+    else{
+      res.send('You need permission to view this page.');
+    }
 
 });
 
@@ -387,6 +400,23 @@ app.post('/admin/update_order', function(req,res){
       res.redirect('/admin/orders');
   }).catch((err)=>console.log('ERROR:', error)); 
  
+});
+
+app.get('/admin/delete_order/:doc_id', async function(req,res){
+  sess = req.session;
+  
+  if(sess.login){
+  let doc_id = req.params.doc_id; 
+
+    db.collection("orders").doc(doc_id).delete().then(()=>{
+        console.log("Document successfully deleted!");
+    }).catch((err)=>console.log('ERROR:', error));
+  
+  }
+    else{
+      res.send('You need permission to view this page.');
+    }
+
 });
 
 //////admindonation//////
@@ -428,6 +458,9 @@ app.get('/admin/donate_orders', async(req,res)=>{
 });
 
 app.get('/admin/update_donate_order/:doc_id', async function(req,res){
+  sess = req.session;
+  
+  if(sess.login){
   let doc_id = req.params.doc_id; 
   
   const orderRef = db.collection('donation_orders').doc(doc_id);
@@ -441,6 +474,9 @@ app.get('/admin/update_donate_order/:doc_id', async function(req,res){
     
     res.render('update_donate_order.ejs', {data:data});
   } 
+}else{
+      res.send('You need permission to view this page.');
+    }
 
 });
 
