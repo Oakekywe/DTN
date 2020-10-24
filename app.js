@@ -402,20 +402,14 @@ app.post('/admin/update_order', function(req,res){
  
 });
 
-app.get('/admin/delete_order/:doc_id', async function(req,res){
-  sess = req.session;
+app.get('/admin/delete_order/:doc_id', function(req,res){
   
-  if(sess.login){
   let doc_id = req.params.doc_id; 
 
     db.collection("orders").doc(doc_id).delete().then(()=>{
-        console.log("Document successfully deleted!");
-    }).catch((err)=>console.log('ERROR:', error));
-  
-  }
-    else{
-      res.send('You need permission to view this page.');
-    }
+        res.redirect('/admin/orders');
+        
+    }).catch((err)=>console.log('ERROR:', error));   
 
 });
 
