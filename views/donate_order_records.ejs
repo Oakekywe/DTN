@@ -11,29 +11,16 @@
     <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
     <link href="style.css" rel="stylesheet">
     <style>
-      table {
-        font-family: arial, sans-serif;
-        border-collapse: collapse;
-        width: 100%;
+      h1{
+        font-family: Times New Roman;
       }
-
-      td, th {
-        border: 1px solid #dddddd;
-        text-align: left;
-        padding: 8px;
-      }
-
-      tr:nth-child(even) {
-        background-color: #dddddd;
-      }
-
     </style>
  </head>
  
 <nav class="navbar navbar-expand-md navbar-light bg-dark sticky-top">
-  <h1 style="font-family: Times New Roman; font-size: 50px; color: white;">
+  <h1 style="font-size: 50px; color: white;">
       DTN Dessert Shop Admin Page
-</h1>
+  </h1>
   <div class="container-fluid">
     
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
@@ -71,56 +58,58 @@
         <a class="nav-link h4 text-muted" href="/admin/logout"> Logout</a>        
       </li>
 
-
-    </ul>
-    
+    </ul>    
   </div>  
   </div>
 </nav>
 
-  <body style="background-color:white">
+  <body>
+  <div class="container">
+                  
+      <div class="card-body">
+        <h1>Order for donation records</h1>
 
+        <div class="table-responsive">
+          <table class="table table-dark table-striped" >
+            <tr>
+            
+            <th>Reference</th>
+            <th>Customer Name</th>
+            <th>Email</th> 
+            <th>Phone</th>       
+            <th>Place for donation</th>
+            <th>Items</th>
+            <th>Total</th>
+            <th>Order Date</th>
+            <th>Payment Type</th>
+            <th>Status</th>
+            <th>Comment</th>
+            <th>Action</th>
+          </tr>
 
-  <h1>Order Records for donation</h1>
+          <% data.forEach(function(order){ %>
+             <tr>
+              
+               <td><%= order.ref %></td>
+               <td><%= order.name %></td>
+               <td><%= order.email %></td>
+               <td><%= order.phone %></td>
+               <td><%= order.place %></td>
+               <td><%= order.items %></td>
+               <td><%= order.total %></td>
+               <td><%= order.orderdate %></td>
+               <td><%= order.payment_type %></td>
+               <td><%= order.status %></td>
+               <td><%= order.comment %></td> 
+               <td><a class="list-group-item bg-light text-dark" href="update_donate_order/<%= order.doc_id %>">Edit</a> | 
+               <a class="list-group-item bg-light text-dark" href="#">Delete</td> 
+              </tr>
+          <% }); %>          
 
-  <table cellspacing="1" cellpadding="5" border="1">
-    <tr>
-    
-    <th>Reference</th>
-    <th>Customer Name</th>
-    <th>Email</th> 
-    <th>Phone</th>       
-    <th>Place for donation</th>
-    <th>Items</th>
-    <th>Total</th>
-    <th>Order Date</th>
-    <th>Payment Type</th>
-    <th>Status</th>
-    <th>Comment</th>
-    <th>Action</th>
-  </tr>
-
-  <% data.forEach(function(order){ %>
-     <tr>
-      
-       <td><%= order.ref %></td>
-       <td><%= order.name %></td>
-       <td><%= order.email %></td>
-       <td><%= order.phone %></td>
-       <td><%= order.place %></td>
-       <td><%= order.items %></td>
-       <td><%= order.total %></td>
-       <td><%= order.orderdate %></td>
-       <td><%= order.payment_type %></td>
-       <td><%= order.status %></td>
-       <td><%= order.comment %></td> 
-       <td><a href="update_donate_order/<%= order.doc_id %>">Edit</a> | 
-        <a href="#">Delete</td> 
-      </tr>
-  <% }); %>
-  
-
-  </table>
+          </table>
+          </div>      
+      </div> 
+    </div>
   </body>
 
 </html> 
