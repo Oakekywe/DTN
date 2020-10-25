@@ -85,8 +85,7 @@
       <div class="card-body">
         <h1>Order Records </h1>
 
-        <div class="table-responsive">
-          <table class="table"  >
+          <table>
             <tr>
             
             <th>Reference</th>
@@ -119,16 +118,13 @@
                <td><%= order.payment_type %></td>
                <td><%= order.status %></td>
                <td><%= order.comment %></td> 
-               <td><a class="list-group-item bg-light text-dark" href="update_order/<%= order.doc_id %>">Edit</a>  
-                <a class="list-group-item bg-light text-dark" href="delete_order/<%= order.doc_id %>">Delete</td> 
+               <td><a class="list-group-item bg-dark text-light" href="update_order/<%= order.doc_id %>">Edit</a>  
+                <a class="list-group-item bg-dark text-light" href="delete_order/<%= order.doc_id %>">Delete</td> 
               </tr>
           <% }); %>          
 
-          </table> 
-        </div>
-          
-      </div>
-    
+          </table>           
+      </div>   
   </body>
 
 </html>
