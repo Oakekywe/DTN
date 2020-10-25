@@ -1395,7 +1395,7 @@ const orderMenu =(sender_psid) => {
           "template_type": "generic",
           "elements": [{
             "title": "Welcome to our DTN dessert shop. You can now order here.",
-            "image_url":"https://tourisminmyanmar.com.mm/wp-content/uploads/2019/08/rsz_shutterstock_1009625584.jpg",                       
+            "image_url":"https://cdn4.vectorstock.com/i/thumb-large/07/03/order-now-label-order-now-blue-band-sign-order-now-vector-27170703.jpg",                       
             "buttons": [              
               {
                 "type": "web_url",
