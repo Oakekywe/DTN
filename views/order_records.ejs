@@ -13,6 +13,19 @@
     <link href="style.css" rel="stylesheet">
     
     <style>
+      table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+      }
+      td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+      }
+      tr:nth-child(even) {
+        background-color: #dddddd;
+      }
       h1{
         font-family: Times New Roman;
       }
@@ -72,8 +85,8 @@
       <div class="card-body">
         <h1>Order Records </h1>
 
-        
-          <table class="table table-dark table-striped" >
+        <div class="table-responsive">
+          <table class="table"  >
             <tr>
             
             <th>Reference</th>
@@ -106,12 +119,14 @@
                <td><%= order.payment_type %></td>
                <td><%= order.status %></td>
                <td><%= order.comment %></td> 
-               <td><a class="list-group-item bg-light text-dark" href="update_order/<%= order.doc_id %>">Edit</a> | 
+               <td><a class="list-group-item bg-light text-dark" href="update_order/<%= order.doc_id %>">Edit</a>  
                 <a class="list-group-item bg-light text-dark" href="delete_order/<%= order.doc_id %>">Delete</td> 
               </tr>
           <% }); %>          
 
-        	</table> 
+          </table> 
+        </div>
+          
       </div>
     
   </body>
