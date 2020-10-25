@@ -1395,7 +1395,7 @@ const orderMenu =(sender_psid) => {
           "template_type": "generic",
           "elements": [{
             "title": "Welcome to our DTN dessert shop. You can now order here.",
-            "image_url":"https://cdn4.vectorstock.com/i/thumb-large/07/03/order-now-label-order-now-blue-band-sign-order-now-vector-27170703.jpg",                       
+            "image_url":"https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQTlcNuu2g3MNNFTPEBiB1nRmWt9Hu30puE6Q&usqp=CAU",                       
             "buttons": [              
               {
                 "type": "web_url",
