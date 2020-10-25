@@ -10,27 +10,10 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
     <link href="style.css" rel="stylesheet">
-    <style>
-      table {
-        font-family: arial, sans-serif;
-        border-collapse: collapse;
-        width: 90%;
-      }
-
-      td, th {
-        border: 1px solid #dddddd;
-        text-align: left;
-        padding: 8px;
-      }
-
-      tr:nth-child(even) {
-        background-color: #dddddd;
-      }
-
-    </style>
+    
 </head>
 
-  <nav class="navbar navbar-expand-md navbar-light bg-dark sticky-top">
+  <nav class="navbar navbar-expand-md navbar-light bg-dark ">
       <h1 style="font-family: Times New Roman; font-size: 50px; color: white;">
           DTN Dessert Shop Admin Page
       </h1>
@@ -82,8 +65,8 @@
     <body style="background-color:white">
   <h1>All Loyal Members </h1>
 
-    <div class="table-responsive-sm table-hover">
-      <table class="table">
+    <div class="table-responsive-sm">
+      <table class="table table-dark table-striped" >
         <tr>
         
         <th>Facebook ID</th>
@@ -104,7 +87,7 @@
            <td><%= member.address %></td>
            <td><%= member.points %></td>
            <td><%= member.status %></td>
-           <td><a class="list-group-item bg-dark text-white" href="delete_member/<%= member.doc_id %>"> Delete</td> 
+           <td><a class="list-group-item bg-light" href="delete_member/<%= member.doc_id %>"> Delete</td> 
           </tr>
       <% }); %>
       
