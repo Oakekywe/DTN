@@ -4,103 +4,113 @@
     <meta charset="UTF-8">
     <title>Sale Record</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+    <link href="style.css" rel="stylesheet">
  </head>
 
-  <body>
-  <h1>Order: <%=data.ref %></h1>
+<div class="container bg-light">
+  <div class="card mt-4"> 
+    <div class="card-body">
+    <body>
+        <h1>Order: <%=data.ref %></h1>
 
-  <form id="form" method="post" action="../update_order">
-  <div>
-    <label for="ref">Reference</label><br>
-    <input type="text" name="ref" value="<%= data.ref %>">    
+        <form id="form" method="post" action="../update_order">
+        <div>
+          <label for="ref">Reference</label><br>
+          <input class="form-control" type="text" name="ref" value="<%= data.ref %>">    
+        </div>
+
+        <div>
+          <label for="name">Name</label><br>
+          <input class="form-control" type="text" name="name" value="<%= data.name %>">    
+        </div>
+
+        <div>
+          <label for="phone">Phone</label><br>
+          <input class="form-control" type="text" name="phone" value="<%= data.phone %>">    
+        </div>
+
+        <div>
+          <label for="address">Address</label><br>
+          <input class="form-control" type="text" name="address" value="<%= data.address %>">    
+        </div>
+
+        <div>
+          <label for="items">Items</label><br>
+          <input class="form-control" type="text" name="items" value="<%= data.items %>">    
+        </div>
+
+        <div>
+          <label for="sub_total">Sub Total</label><br>
+          <input class="form-control" type="text" name="sub_total" value="<%= data.sub_total %>">    
+        </div>
+
+        <div>
+          <label for="discount">Discount</label><br>
+          <input class="form-control" type="text" name="discount" value="<%= data.discount %>">    
+        </div>
+
+        <div>
+          <label for="total">Total</label><br>
+          <input class="form-control" type="text" name="total" value="<%= data.total %>">    
+        </div>
+
+        <div>
+          <label for="orderdate">Order Date</label><br>
+          <input class="form-control" type="date" name="orderdate" value="<%= data.orderdate %>">    
+        </div>
+
+        <div>
+          <label for="payment_type">Payment Type</label><br>
+          <input class="form-control" type="text" name="payment_type" value="<%= data.payment_type %>">    
+        </div> 
+
+        
+        <div class="form-group">
+          <label for="status">Status:</label>
+        <select name="status" id="status">    
+          <option value="pending" 
+          <%if(data.status == "pending"){%>
+              <%="selected"%>
+          <%}%>
+          >Pending</option>
+          <option value="processing"
+          <%if(data.status == "processing"){%>
+              <%="selected"%>
+          <%}%>
+          >Processing</option>    
+          <option value="completed"
+          <%if(data.status == "completed"){%>
+              <%="selected"%>
+          <%}%>
+          >Completed</option> 
+          <option value="delivering"
+          <%if(data.status == "delivering"){%>
+              <%="selected"%>
+          <%}%>
+          >Delivering</option>  
+        </select>   
+        </div>
+
+
+        <div class="form-group">
+          <label for="name">Comment</label><br>
+          <textarea class="form-control" name="comment" rows="3" cols="30"></textarea>      
+        </div>
+
+        
+        <input type="hidden"  name="doc_id" value="<%= data.doc_id %>">
+        
+        <input class="btn btn-dark" type="submit" value="Submit"> 
+        </form>
+
+      </body>
+    </div>
   </div>
-
-  <div>
-    <label for="name">Name</label><br>
-    <input type="text" name="name" value="<%= data.name %>">    
-  </div>
-
-  <div>
-    <label for="phone">Phone</label><br>
-    <input type="text" name="phone" value="<%= data.phone %>">    
-  </div>
-
-  <div>
-    <label for="address">Address</label><br>
-    <input type="text" name="address" value="<%= data.address %>">    
-  </div>
-
-  <div>
-    <label for="items">Items</label><br>
-    <input type="text" name="items" value="<%= data.items %>">    
-  </div>
-
-  <div>
-    <label for="sub_total">Sub Total</label><br>
-    <input type="text" name="sub_total" value="<%= data.sub_total %>">    
-  </div>
-
-  <div>
-    <label for="discount">Discount</label><br>
-    <input type="text" name="discount" value="<%= data.discount %>">    
-  </div>
-
-  <div>
-    <label for="total">Total</label><br>
-    <input type="text" name="total" value="<%= data.total %>">    
-  </div>
-
-  <div>
-    <label for="orderdate">Order Date</label><br>
-    <input type="date" name="orderdate" value="<%= data.orderdate %>">    
-  </div>
-
-  <div>
-    <label for="payment_type">Payment Type</label><br>
-    <input type="text" name="payment_type" value="<%= data.payment_type %>">    
-  </div> 
-
-  
-  <div class="form-group">
-    <label for="status">Status:</label>
-  <select name="status" id="status">    
-    <option value="pending" 
-    <%if(data.status == "pending"){%>
-        <%="selected"%>
-    <%}%>
-    >Pending</option>
-    <option value="processing"
-    <%if(data.status == "processing"){%>
-        <%="selected"%>
-    <%}%>
-    >Processing</option>    
-    <option value="completed"
-    <%if(data.status == "completed"){%>
-        <%="selected"%>
-    <%}%>
-    >Completed</option> 
-    <option value="delivering"
-    <%if(data.status == "delivering"){%>
-        <%="selected"%>
-    <%}%>
-    >Delivering</option>  
-  </select>   
-  </div>
-
-
-  <div class="form-group">
-    <label for="name">Comment</label><br>
-    <textarea name="comment" rows="3" cols="30"></textarea>      
-  </div>
-
-  
-  <input type="hidden"  name="doc_id" value="<%= data.doc_id %>">
-  
-  <input type="submit" value="Submit"> 
-  </form>
- 
- 
-
-  </body>
+</div>
 
 </html>
