@@ -65,45 +65,40 @@
     <div class="card mt-4">     
               
       <div class="card-body">
-  <h1>All Loyal Members </h1>
+        <h1>All Loyal Members </h1>
 
-    <div class="table-responsive">
-      <table class="table table-dark table-striped" >
-        <tr>
-        
-        <th>Facebook ID</th>
-        <th>Member Name</th>
-        <th>Phone</th>       
-        <th>Address</th>
-        <th>Points</th> 
-        <th>Status</th>
-        <th>Action</th>
-      </tr>
-
-      <% data.forEach(function(member){ %>
-         <tr>
-          
-           <td><%= member.facebookid %></td>
-           <td><%= member.name %></td>
-           <td><%= member.phone %></td>
-           <td><%= member.address %></td>
-           <td><%= member.points %></td>
-           <td><%= member.status %></td>
-           <td><a class="list-group-item bg-light" href="delete_member/<%= member.doc_id %>"> Delete</td> 
+        <div class="table-responsive">
+          <table class="table table-dark table-striped" >
+            <tr>
+            
+            <th>Facebook ID</th>
+            <th>Member Name</th>
+            <th>Phone</th>       
+            <th>Address</th>
+            <th>Points</th> 
+            <th>Status</th>
+            <th>Action</th>
           </tr>
-      <% }); %>
-      
 
-      </table> 
+          <% data.forEach(function(member){ %>
+             <tr>
+              
+               <td><%= member.facebookid %></td>
+               <td><%= member.name %></td>
+               <td><%= member.phone %></td>
+               <td><%= member.address %></td>
+               <td><%= member.points %></td>
+               <td><%= member.status %></td>
+               <td><a class="list-group-item bg-light text-dark" href="delete_member/<%= member.doc_id %>"> Delete</td> 
+              </tr>
+          <% }); %>
+          
+
+          </table> 
+        </div>
+      </div>
     </div>
+ 
   </div>
-</div>
-
-  
- 
-</div>
-  </body>
- 
- 
-
+</body>
 </html>
