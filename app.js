@@ -367,7 +367,7 @@ app.post('/admin/update_food', function(req,res){
 
   let doc_id = req.body.doc_id;
   let data = {
-    image:req.body.image;
+    image:req.body.image,
     sku:req.body.sku,
     name:req.body.name,
     description:req.body.description,
