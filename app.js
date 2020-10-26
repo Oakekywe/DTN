@@ -197,7 +197,7 @@ app.get('/admin/home',function(req,res){
     
 });
 
-
+////////////adminmember////////////////
 app.get('/admin/members', async(req,res)=>{
   sess = req.session;
 
@@ -248,7 +248,7 @@ app.get('/admin/delete_member/:doc_id', function(req,res){
 
 });
 
-
+////////////////adminfood/////////////////
 app.get('/admin/foods', async(req,res) =>{   
 
   sess = req.session;
@@ -332,15 +332,57 @@ app.get('/admin/delete_food/:doc_id', function(req,res){
   
   let doc_id = req.params.doc_id; 
 
-    db.collection("foods").doc(doc_id).delete().then(()=>{
-      console.log('DATA F DELETED ');
+    db.collection("foods").doc(doc_id).delete().then(()=>{      
         res.redirect('/admin/foods');
         
     }).catch((err)=>console.log('ERROR:', error));   
 
 });
 
+app.get('/admin/update_food/:doc_id', async function(req,res){
+  sess = req.session;
+  
+  if(sess.login){
+  let doc_id = req.params.doc_id; 
+  
+  const foodRef = db.collection('foods').doc(doc_id);
+  const doc = await foodRef.get();
+  if (!doc.exists) {
+    console.log('No such document!');
+  } else {
+    
+    let data = doc.data();
+    data.doc_id = doc.id;
+    
+    res.render('update_food.ejs', {data:data});
+  } 
+  }
+    else{
+      res.send('You need permission to view this page.');
+    }
 
+});
+
+app.post('/admin/update_food', function(req,res){   
+
+  let doc_id = req.body.doc_id;
+  let data = {
+    image:req.body.image;
+    sku:req.body.sku,
+    name:req.body.name,
+    description:req.body.description,
+    price:req.body.price,
+    
+  }
+
+  db.collection('foods').doc(doc_id)
+  .update(data).then(()=>{
+      res.redirect('/admin/foods');
+  }).catch((err)=>console.log('ERROR:', error)); 
+ 
+});
+
+///////////////adminorder////////////////////
 app.get('/admin/orders', async(req,res)=>{
   sess = req.session;
   
@@ -525,8 +567,7 @@ app.get('/admin/delete_donate_order/:doc_id', function(req,res){
   
   let doc_id = req.params.doc_id; 
 
-    db.collection("donation_orders").doc(doc_id).delete().then(()=>{
-      console.log('DATA DELETED');
+    db.collection("donation_orders").doc(doc_id).delete().then(()=>{      
         res.redirect('/admin/donate_orders');
         
     }).catch((err)=>console.log('ERROR:', error));   
