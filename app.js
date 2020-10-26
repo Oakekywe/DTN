@@ -365,7 +365,6 @@ app.get('/admin/update_food/:doc_id', async function(req,res){
 
 app.post('/admin/update_food', function(req,res){   
 
-  let doc_id = req.body.doc_id;
   let data = {
     image:req.body.image,
     sku:req.body.sku,
@@ -375,7 +374,7 @@ app.post('/admin/update_food', function(req,res){
     
   }
 
-  db.collection('foods').doc(doc_id)
+  db.collection('foods').doc(req.body.doc_id)
   .update(data).then(()=>{
       res.redirect('/admin/foods');
   }).catch((err)=>console.log('ERROR:', error)); 
