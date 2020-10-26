@@ -364,27 +364,27 @@ app.get('/admin/update_food/:doc_id', async function(req,res){
 });
 
 app.post('/admin/update_food',upload.single('file'), function(req,res){ 
-let img_url = "";
-let file = req.file;
-let data = {
-    
-    sku:req.body.sku,
-    name:req.body.name,
-    description:req.body.description,
-    price:req.body.price,    
-  }
-      if (file){
-        uploadImageToStorage(file).then((img_url) => {
+    let img_url = "";
+    let file = req.file;
+    let data = {
+        image:req.body.file,
+        sku:req.body.sku,
+        name:req.body.name,
+        description:req.body.description,
+        price:req.body.price,    
+    }
+          if (file){
+            uploadImageToStorage(file).then((img_url) => {
 
-          db.collection('foods').doc(req.body.doc_id)
-          .update(data).then(success => {   
-                console.log("DATA SAVED")
-                res.redirect('/admin/foods');    
-              }).catch(error => {
-                console.log(error);
-              });
-      })  
-};
+              db.collection('foods').doc(req.body.doc_id)
+              .update(data).then(success => {   
+                    console.log("DATA UPDATED")
+                    res.redirect('/admin/foods');    
+                  }).catch(error => {
+                    console.log(error);
+                  });
+            })  
+          };
 });
 
 ///////////////adminorder////////////////////
