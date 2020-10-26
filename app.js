@@ -367,7 +367,7 @@ app.post('/admin/update_food',upload.single('file'), function(req,res){
     let img_url = "";
     let file = req.file;
     let data = {
-        image:req.body.file,
+        
         sku:req.body.sku,
         name:req.body.name,
         description:req.body.description,
