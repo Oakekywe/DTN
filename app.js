@@ -383,7 +383,7 @@ let data = {
               }).catch(error => {
                 console.log(error);
               });
-      }  
+      })  
 };
 });
 
