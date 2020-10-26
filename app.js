@@ -509,6 +509,19 @@ app.post('/admin/update_donate_order', function(req,res){
  
 });
 
+app.get('/admin/delete_donate_order/:doc_id', function(req,res){
+  
+  let doc_id = req.params.doc_id; 
+
+    db.collection("donation_orders").doc(doc_id).delete().then(()=>{
+      console.log('DATA DELETED');
+        res.redirect('/admin/donate_orders');
+        
+    }).catch((err)=>console.log('ERROR:', error));   
+
+});
+
+
 /*************
 EndAdminRoute
 **************/
