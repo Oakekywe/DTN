@@ -328,6 +328,18 @@ app.post('/admin/savefood',upload.single('file'),function(req,res){
       }             
 });
 
+app.get('/admin/delete_food/:doc_id', function(req,res){
+  
+  let doc_id = req.params.doc_id; 
+
+    db.collection("foods").doc(doc_id).delete().then(()=>{
+      console.log('DATA F DELETED ');
+        res.redirect('/admin/foods');
+        
+    }).catch((err)=>console.log('ERROR:', error));   
+
+});
+
 
 app.get('/admin/orders', async(req,res)=>{
   sess = req.session;
