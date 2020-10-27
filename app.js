@@ -933,7 +933,7 @@ app.post('/order', function(req, res){
 
     db.collection('orders').add(data).then((success)=>{
       
-        customer[user_id].cart = [];
+        
         console.log('TEMP POINTS:', temp_points);
         console.log('CUSTOMER: ', customer[user_id]);
 
