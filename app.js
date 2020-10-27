@@ -932,7 +932,8 @@ app.post('/order', function(req, res){
     }
 
     db.collection('orders').add(data).then((success)=>{
-        
+      
+        customer[user_id].cart = [];
         console.log('TEMP POINTS:', temp_points);
         console.log('CUSTOMER: ', customer[user_id]);
 
@@ -1139,7 +1140,7 @@ const handleMessage = (sender_psid, received_message) => {
      confirmRegister(sender_psid);
   }else if(current_question == 'q4'){
      let order_ref = received_message.text; 
-
+le
      console.log('order_ref: ', order_ref);    
      current_question = '';     
      showOrder(sender_psid, order_ref);
