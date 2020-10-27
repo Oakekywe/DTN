@@ -375,7 +375,7 @@ app.post('/admin/update_food',upload.single('file'), function(req,res){
     }
           if (file){
             uploadImageToStorage(file).then((img_url) => {
-
+              data.image = img_url;
               db.collection('foods').doc(req.body.doc_id)
               .update(data).then(success => {   
                     console.log("DATA UPDATED")
