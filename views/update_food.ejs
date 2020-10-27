@@ -4,46 +4,102 @@
     <meta charset="UTF-8">
     <title>Food Record</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+    <!--<link href="style.css" rel="stylesheet">-->
  </head>
 
+ <nav class="navbar navbar-expand-md navbar-light bg-dark">
+      <h1 style="font-family: Times New Roman; font-size: 50px; color: white;">
+          DTN Dessert Shop Admin Page
+      </h1>
+    <div class="container-fluid">
+      
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item active">
+          <a class="nav-link h4 text-muted" href="/admin/home"> Home</a>        
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link h4 text-muted" href="/admin/members"> See Members</a>        
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle h4 text-muted" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Order
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item h4" href="/admin/orders"> See Orders</a>  
+            <a class="dropdown-item h4" href="/admin/donate_orders"> See Orders for donation</a>           
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle h4 text-muted" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Food
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item h4" href="/admin/foods"> See Foods</a> 
+            <a class="dropdown-item h4" href="/admin/addfood"> Add Foods</a>          
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link h4 text-muted" href="/admin/logout"> Logout</a>        
+        </li>
+
+
+      </ul>
+    
+  </div>  
+  </div>
+</nav>
+
   <body>
-  <h1>Food: <%= data.name %></h1>
+<div class="container bg-light">
+  <div class="card mt-4"> 
+    <div class="card-body">
+    
+        <h1 class="my-4">Food: <%= data.name %></h1> 
 
-  <form id="form" enctype="multipart/form-data" method="post" action="../update_food">
-  
-  <div class="form-group">
-    <label for="file">Image</label>
-    <input class="form-control" type="file" name="file" value="<%= data.image %>" />
+          <form id="form" enctype="multipart/form-data" method="post" action="../update_food">
+          
+          <div class="form-group">
+            <label for="file">Image</label>
+            <input class="form-control" type="file" name="file" value="<%= data.image %>" />
+          </div>
+
+          <div>
+            <label for="sku">Sku</label><br>
+            <input class="form-control" type="text" name="sku" value="<%= data.sku %>">    
+          </div>
+
+          <div>
+            <label for="name">Name</label><br>
+            <input class="form-control" type="text" name="name" value="<%= data.name %>">    
+          </div>
+
+          <div>
+            <label for="description">Description</label><br>
+            <textarea class="form-control" name="description" rows="" cols=""></textarea>    
+          </div>
+
+          <div>
+            <label for="price">Price</label><br>
+            <input class="form-control" type="text" name="price" value="<%= data.price %>">    
+          </div>
+          
+          <input type="hidden" name="doc_id" value="<%= data.doc_id %>">          
+          <input class="btn btn-dark" type="submit" value="Submit"> 
+          </form>
+      </div>
     </div>
-
-  <div>
-    <label for="sku">Sku</label><br>
-    <input type="text" name="sku" value="<%= data.sku %>">    
   </div>
-
-  <div>
-    <label for="name">Name</label><br>
-    <input type="text" name="name" value="<%= data.name %>">    
-  </div>
-
-  <div>
-    <label for="description">Description</label><br>
-    <textarea name="description" rows="4" cols="50"></textarea>    
-  </div>
-
-  <div>
-    <label for="price">Price</label><br>
-    <input type="text" name="price" value="<%= data.price %>">    
-  </div>
-
-  
-  <input type="hidden" name="doc_id" value="<%= data.doc_id %>">
-  
-  <input type="submit" value="Submit"> 
-  </form>
- 
- 
-
-  </body>
+</body>
 
 </html>
