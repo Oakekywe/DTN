@@ -1594,12 +1594,9 @@ let response1 = {"text": "Sir, You have to pay all of the amount of total so tha
 }
 
 const chooseOption = (sender_psid) => {
-
-  let text = {"text": "Would you like to check your order status or would you like to cancel your order?"};
-
-  let response1 = {"text": text};
-  let response2 = {
-    "text": "Choose your option",
+  
+  let response = {
+    "text": "Would you like to check your order status or would you like to cancel your order?",
     "quick_replies":[
             {
               "content_type":"text",
@@ -1613,9 +1610,7 @@ const chooseOption = (sender_psid) => {
     ]
   };
   
-  callSend(sender_psid, response1).then(()=>{
-    return callSend(sender_psid, response2);
-  });
+  callSend(sender_psid, response)
 }
 /**************
 enddemo
