@@ -2,6 +2,8 @@
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 const APP_URL = process.env.APP_URL;
 const admin_pass = process.env.ADMIN_PASSWORD;
+const admin_username = process.env.ADMIN_USERNAME;
+
 
 //new text
 // Imports dependencies and set up http server
@@ -169,8 +171,8 @@ app.post('/admin/login',function(req,res){
     let username = req.body.username;
     let password = req.body.password;
 
-    if(username == 'admin' && password == admin_pass){
-      sess.username = 'admin';
+    if(username == admin_username && password == admin_pass){
+      sess.username = admin_username;
       sess.login = true;
       res.redirect('/admin/home');
     }else{
@@ -971,42 +973,6 @@ app.get('/direction',function(req,res){
 EndMemberRoute
 **************/
 
-
-//webview test
-app.get('/webview/:sender_id',function(req,res){
-    const sender_id = req.params.sender_id;
-    res.render('webview.ejs',{title:"Hello!! from WebView", sender_id:sender_id});
-});
-
-app.post('/webview',upload.single('file'),function(req,res){
-       
-      let name  = req.body.name;
-      let email = req.body.email;
-      let img_url = "";
-      let sender = req.body.sender;  
-
-      console.log("REQ FILE:",req.file);
-      let file = req.file;
-      if (file) {
-        uploadImageToStorage(file).then((img_url) => {
-            db.collection('webviews').add({
-              name: name,
-              email: email,
-              image: img_url
-              }).then(success => {   
-                console.log("DATA SAVED")
-                thankyouReply(sender, name, img_url);    
-              }).catch(error => {
-                console.log(error);
-              }); 
-        }).catch((error) => {
-          console.error(error);
-        });
-      }
-     
-           
-});
-
 //Set up Get Started Button. To run one time
 //eg https://fbstarter.herokuapp.com/setgsbutton
 app.get('/setgsbutton',function(req,res){
@@ -1033,8 +999,7 @@ app.get('/whitelists',function(req,res){
 
 
 // Accepts GET requests at the /webhook endpoint
-app.get('/webhook', (req, res) => {
-  
+app.get('/webhook', (req, res) => {  
 
   const VERIFY_TOKEN = process.env.VERIFY_TOKEN;  
 
@@ -1062,24 +1027,8 @@ function handleQuickReply(sender_psid, received_message) {
 
   received_message = received_message.toLowerCase();
 
-  if(received_message.startsWith("quantity:")){
-    let quan = received_message.slice(9);
-    console.log ('SELECTED QUANTITY:',quan)
-    userInputs[user_id].quantity = quan;
-
-    current_question = 'q1';
-    Questions(current_question, sender_psid);
-  }
-  
-  else{
-
       switch(received_message) {                    
-        case "on":
-            showQuickReplyOn(sender_psid);
-          break;
-        case "off":
-            showQuickReplyOff(sender_psid);
-          break; 
+        
         case "register":
             current_question = "q1";
             reg_Questions(current_question, sender_psid);
@@ -1097,14 +1046,11 @@ function handleQuickReply(sender_psid, received_message) {
         case "check-donate-order":  
             current_question = "q5";
             reg_Questions(current_question, sender_psid);
-        break;   
-        
+        break;          
                    
         default:
             defaultReply(sender_psid);
-    } 
-
-  }  
+    }     
  
 }
 
@@ -1155,35 +1101,21 @@ const handleMessage = (sender_psid, received_message) => {
       user_message = user_message.toLowerCase(); 
 
       switch(user_message) { 
-        case "register":
+        /*case "register":
           registerReply(sender_psid);
-        break; 
-      case "hi":
-          hiReply(sender_psid);
-        break; 
+        break; */
+      
       case "start":
           startReply(sender_psid);
-        break;            
-      case "text":
-        textReply(sender_psid);
-        break;
-      case "quick":
-        quickReply(sender_psid);
-        break;
-      case "button":                  
-        buttonReply(sender_psid);
-        break;
-      case "webview":
-        webviewTest(sender_psid);
-        break;    
+        break;           
+      
       case "admin":
         admin(sender_psid);
         break;        
                      
       default:
           defaultReply(sender_psid);
-      }       
-          
+      }             
       
     }
 
@@ -1253,13 +1185,7 @@ const handlePostback = (sender_psid, received_postback) => {
         break;      
       case "d-now":
           showDonate(sender_psid);
-        break;  
-      case "yes":
-          showButtonReplyYes(sender_psid);
-        break;
-      case "no":
-          showButtonReplyNo(sender_psid);
-        break;
+        break;       
                           
       default:
           defaultReply(sender_psid);
@@ -1280,31 +1206,6 @@ const generateRandom = (length) => {
 }
 
 
-function webviewTest(sender_psid){
-  let response;
-  response = {
-      "attachment": {
-        "type": "template",
-        "payload": {
-          "template_type": "generic",
-          "elements": [{
-            "title": "Click to open webview?",                       
-            "buttons": [              
-              {
-                "type": "web_url",
-                "title": "webview",
-                "url":APP_URL+"webview/"+sender_psid,
-                 "webview_height_ratio": "full",
-                "messenger_extensions": true,          
-              },
-              
-            ],
-          }]
-        }
-      }
-    }
-  callSendAPI(sender_psid, response);
-}
 /**************
 startdemo
 **************/
@@ -1328,7 +1229,7 @@ const showMenu = async(sender_psid) => {
       first_reg = true; 
 
       let response1 = {
-      "text": "Sir, You need to register first and get 1000 points for 1000 kyats discount. So you can enjoy with your order.",
+      "text": "Sir, You have to register first and get 1000 points for 1000 kyats discount. So you can enjoy with your order.",
       "quick_replies":[
               {
                 "content_type":"text",
@@ -1428,8 +1329,7 @@ const saveRegistration = (arg, sender_psid) => {
       data.facebookid = sender_psid;
       data.created_on = today;
       data.points = 1000;
-      data.status = "pending";
-     
+      
   
       db.collection('members').doc(sender_psid).set(data).then((success)=>{
         console.log('SAVED', success);
@@ -1765,118 +1665,6 @@ const checkDonateRef = async(sender_psid, donate_ref) => {
 end donate
 **************/
 
-const hiReply =(sender_psid) => {
-  let response = {"text": "You sent hi message"};
-  callSend(sender_psid, response);
-}
-
-const textReply =(sender_psid) => {
-  let response = {"text": "You sent text message"};
-  callSend(sender_psid, response);
-}
-
-const quickReply =(sender_psid) => {
-  let response = {
-    "text": "Select your reply",
-    "quick_replies":[
-            {
-              "content_type":"text",
-              "title":"On",
-              "payload":"on",              
-            },{
-              "content_type":"text",
-              "title":"Off",
-              "payload":"off",             
-            }
-    ]
-  };
-  callSend(sender_psid, response);
-}
-
-const showQuickReplyOn =(sender_psid) => {
-  let response = { "text": "You sent quick reply ON" };
-  callSend(sender_psid, response);
-}
-
-const showQuickReplyOff =(sender_psid) => {
-  let response = { "text": "You sent quick reply OFF" };
-  callSend(sender_psid, response);
-}
-
-const buttonReply =(sender_psid) => {
-
-  let response = {
-      "attachment": {
-        "type": "template",
-        "payload": {
-          "template_type": "generic",
-          "elements": [{
-            "title": "Are you OK?",
-            "image_url":"https://www.mindrops.com/images/nodejs-image.png",                       
-            "buttons": [
-                {
-                  "type": "postback",
-                  "title": "Yes!",
-                  "payload": "yes",
-                },
-                {
-                  "type": "postback",
-                  "title": "No!",
-                  "payload": "no",
-                }
-              ],
-          }]
-        }
-      }
-    }
-
-  
-  callSend(sender_psid, response);
-}
-
-const showButtonReplyYes =(sender_psid) => {
-  let response = { "text": "You clicked YES" };
-  callSend(sender_psid, response);
-}
-
-const showButtonReplyNo =(sender_psid) => {
-  let response = { "text": "You clicked NO" };
-  callSend(sender_psid, response);
-}
-const Thankyou =(sender_psid) => {
-  let response = { "text": "Thank you for sign up" };
-  callSend(sender_psid, response);
-}
-const thankyouReply =(sender_psid, name, img_url) => {
-  let response = {
-      "attachment": {
-        "type": "template",
-        "payload": {
-          "template_type": "generic",
-          "elements": [{
-            "title": "Thank you! " + name,
-            "image_url":img_url,                       
-            "buttons": [
-                {
-                  "type": "postback",
-                  "title": "Yes!",
-                  "payload": "yes",
-                },
-                {
-                  "type": "postback",
-                  "title": "No!",
-                  "payload": "no",
-                }
-              ],
-          }]
-        }
-      }
-    }
-  callSend(sender_psid, response);
-}
-
-
-
 const defaultReply = (sender_psid) => {
   let response = startReply(sender_psid);
   
@@ -1949,9 +1737,6 @@ const uploadImageToStorage = (file) => {
     blobStream.end(file.buffer);
   });
 }
-
-
-
 
 /*************************************
 FUNCTION TO SET UP GET STARTED BUTTON
