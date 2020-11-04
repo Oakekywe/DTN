@@ -1046,7 +1046,12 @@ function handleQuickReply(sender_psid, received_message) {
         case "check-donate-order":  
             current_question = "q5";
             reg_Questions(current_question, sender_psid);
-        break;          
+        break;
+        case "off":         
+            showMenu(sender_psid);
+        break; 
+
+                
                    
         default:
             defaultReply(sender_psid);
@@ -1294,9 +1299,9 @@ const reg_Questions = (current_question, sender_psid) => {
 const confirmRegister = (sender_psid) => {
 
   let show = "";
-  show += "name: " + userInputs[user_id].name + "\u000A";
-  show += "phone: " + userInputs[user_id].phone + "\u000A";
-  show += "address: " + userInputs[user_id].address + "\u000A";
+  show += "Name: " + userInputs[user_id].name + "\u000A";
+  show += "Phone: " + userInputs[user_id].phone + "\u000A";
+  show += "Address: " + userInputs[user_id].address + "\u000A";
 
   let response1 = {"text": show};
 
