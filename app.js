@@ -1622,7 +1622,7 @@ const update = (sender_psid,abc) => {
 
     console.log('UPdate_data: ', data_update);
 
-      db.collection('orders').doc(sender_psid).update(data_update).then((success)=>{
+      db.collection('orders').doc(ref).update(data_update).then((success)=>{
       console.log('SUCCESSFUL UPDATE');
 
       let text = "We have recieved your reason for cancelling. We'll cancel your order soon. Please check your order later.";      
