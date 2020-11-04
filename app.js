@@ -1342,9 +1342,8 @@ const saveRegistration = (arg, sender_psid) => {
         let text = "Thank you. You have been registered."+ "\u000A";      
         let response = {"text": text};
         callSend(sender_psid, response);
-        
-      });
-      return showMenu(sender_psid).catch((err)=>{
+        return showMenu(sender_psid);
+      }).catch((err)=>{
          console.log('Error', err);
       });
 
