@@ -1342,7 +1342,8 @@ const saveRegistration = (arg, sender_psid) => {
         let response = {"text": text};
         callSend(sender_psid, response);
         
-      })return showMenu(sender_psid);
+      });
+      return showMenu(sender_psid);
       .catch((err)=>{
          console.log('Error', err);
       });
