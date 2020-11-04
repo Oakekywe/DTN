@@ -1034,7 +1034,7 @@ function handleQuickReply(sender_psid, received_message) {
             current_question = "q1";
             reg_Questions(current_question, sender_psid);
         break;
-        case "myOrder":            
+        case "my-order":            
             chooseOption(sender_psid);
         break; 
         case "check-order":  
@@ -1278,7 +1278,7 @@ const showMenu = async(sender_psid) => {
               {
                 "content_type":"text",
                 "title":"My Order",
-                "payload":"myOrder",             
+                "payload":"my-order",             
               }
 
       ]
