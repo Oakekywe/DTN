@@ -919,6 +919,7 @@ app.get('/order', function(req, res){
 
 app.post('/order', function(req, res){
     let today = new Date();
+    let ref = generateRandom(6);
     let data = {
       name: req.body.name,
       phone: req.body.phone,
@@ -929,14 +930,14 @@ app.post('/order', function(req, res){
       total: parseInt(req.body.total),
       orderdate: req.body.date,
       payment_type: req.body.payment_type,
-      ref: generateRandom(6),
+      ref: ref,
       created_on: today,
       status: "pending",
       comment:"Your order is pending", 
       reasonforcancel:"",     
     }
 
-    db.collection('orders').add(data).then((success)=>{
+    db.collection('orders').doc(ref).set(data).then((success)=>{
       
         customer[user_id].cart = [];
         console.log('TEMP POINTS:', temp_points);
