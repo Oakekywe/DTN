@@ -33,7 +33,8 @@ const reg_questions = {
   "q2": "What is your Phone number?",
   "q3": "What is your currently address?",
   "q4": "What is your order reference number?",
-  "q5": "What is your donation order reference number?"
+  "q5": "What is your donation order reference number?",
+  "q6": "What reason do you want to cancel your order?"
 }
 let sess;
 
@@ -1033,10 +1034,17 @@ function handleQuickReply(sender_psid, received_message) {
             current_question = "q1";
             reg_Questions(current_question, sender_psid);
         break;
+        case "myOrder":            
+            chooseOption(sender_psid);
+        break; 
         case "check-order":  
             current_question = "q4";
             reg_Questions(current_question, sender_psid);
-        break;  
+        break; 
+        case "canel-order":  
+            current_question = "q6";
+            reg_Questions(current_question, sender_psid);
+        break; 
         case "confirm-register":         
             saveRegistration(userInputs[user_id], sender_psid);
         break;
@@ -1098,7 +1106,11 @@ const handleMessage = (sender_psid, received_message) => {
      let donate_ref = received_message.text;     
      current_question = '';     
      checkDonateRef(sender_psid, donate_ref);
-  }
+  }/*else if(current_question == 'q6'){
+     let abc = received_message.text;     
+     current_question = '';     
+     update(sender_psid, donate_ref);
+  }*/
   else {
       
       let user_message = received_message.text;      
@@ -1266,7 +1278,7 @@ const showMenu = async(sender_psid) => {
               {
                 "content_type":"text",
                 "title":"My Order",
-                "payload":"check-order",             
+                "payload":"myOrder",             
               }
 
       ]
@@ -1292,6 +1304,9 @@ const reg_Questions = (current_question, sender_psid) => {
     callSend(sender_psid, response);
   }else if(current_question == 'q5'){
     let response = {"text": reg_questions.q5};
+    callSend(sender_psid, response);
+  }else if(current_question == 'q6'){
+    let response = {"text": reg_questions.q6};
     callSend(sender_psid, response);
   }
 }
@@ -1576,6 +1591,31 @@ let response1 = {"text": "Sir, You have to pay all of the amount of total so tha
       }
     }
   callSend(sender_psid, response);
+}
+
+const chooseOption = (sender_psid) => {
+
+  let text = {"text": "Would you like to check your order status or would you like to cancel your order?"};
+
+  let response1 = {"text": text};
+  let response2 = {
+    "text": "Choose your option",
+    "quick_replies":[
+            {
+              "content_type":"text",
+              "title":"Check Order",
+              "payload":"check-order",              
+            },{
+              "content_type":"text",
+              "title":"Cancel Order",
+              "payload":"canel-order",             
+            }
+    ]
+  };
+  
+  callSend(sender_psid, response1).then(()=>{
+    return callSend(sender_psid, response2);
+  });
 }
 /**************
 enddemo
