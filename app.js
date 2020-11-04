@@ -176,7 +176,7 @@ app.post('/admin/login',function(req,res){
       sess.login = true;
       res.redirect('/admin/home');
     }else{
-      res.send('login failed');
+      res.send('login failed. <a href="/admin/login">Login Again</a>');
     }   
 });
 
@@ -194,7 +194,7 @@ app.get('/admin/home',function(req,res){
     if(sess.login){
        res.render('home.ejs');
     }else{
-      res.send('You need permission to view this page.');
+      res.send('You need permission to view this page. <a href="/admin/login">Login Here</a>');
     }    
     
 });
@@ -283,7 +283,7 @@ app.get('/admin/foods', async(req,res) =>{
     }
    }
    else{
-      res.send('You need permission to view this page.');
+      res.send('You need permission to view this page. <a href="/admin/login">Login Here</a>');
     }
 });
 
@@ -293,7 +293,7 @@ app.get('/admin/addfood', function(req,res){
   if(sess.login){
   res.render('addfood.ejs'); 
   } else{
-      res.send('You need permission to view this page.');
+      res.send('You need permission to view this page. <a href="/admin/login">Login Here</a>');
     } 
 });
 
@@ -360,7 +360,7 @@ app.get('/admin/update_food/:doc_id', async function(req,res){
   } 
   }
     else{
-      res.send('You need permission to view this page.');
+      res.send('You need permission to view this page. <a href="/admin/login">Login Here</a>');
     }
 
 });
@@ -423,7 +423,7 @@ app.get('/admin/orders', async(req,res)=>{
       }
   }
     else{
-      res.send('You need permission to view this page.');
+      res.send('You need permission to view this page. <a href="/admin/login">Login Here</a>');
     }
 });
 
@@ -446,7 +446,7 @@ app.get('/admin/update_order/:doc_id', async function(req,res){
   } 
   }
     else{
-      res.send('You need permission to view this page.');
+      res.send('You need permission to view this page. <a href="/admin/login">Login Here</a>');
     }
 
 });
@@ -520,7 +520,7 @@ app.get('/admin/donate_orders', async(req,res)=>{
       }
   }
     else{
-      res.send('You need permission to view this page.');
+      res.send('You need permission to view this page. <a href="/admin/login">Login Here</a>');
     }
 });
 
@@ -542,7 +542,7 @@ app.get('/admin/update_donate_order/:doc_id', async function(req,res){
     res.render('update_donate_order.ejs', {data:data});
   } 
 }else{
-      res.send('You need permission to view this page.');
+      res.send('You need permission to view this page. <a href="/admin/login">Login Here</a>');
     }
 
 });
