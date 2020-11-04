@@ -1333,8 +1333,7 @@ const saveRegistration = (arg, sender_psid) => {
       let today = new Date();
       data.facebookid = sender_psid;
       data.created_on = today;
-      data.points = 1000;
-      
+      data.points = 1000;      
   
       db.collection('members').doc(sender_psid).set(data).then((success)=>{
         console.log('SAVED', success);
@@ -1342,8 +1341,9 @@ const saveRegistration = (arg, sender_psid) => {
         let text = "Thank you. You have been registered."+ "\u000A";      
         let response = {"text": text};
         callSend(sender_psid, response);
-        return showMenu(sender_psid);
-      }).catch((err)=>{
+        
+      })return showMenu(sender_psid);
+      .catch((err)=>{
          console.log('Error', err);
       });
 
