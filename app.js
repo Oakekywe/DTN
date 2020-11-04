@@ -1108,11 +1108,11 @@ const handleMessage = (sender_psid, received_message) => {
      let donate_ref = received_message.text;     
      current_question = '';     
      checkDonateRef(sender_psid, donate_ref);
-  }/*else if(current_question == 'q6'){
+  }else if(current_question == 'q6'){
      let abc = received_message.text;     
      current_question = '';     
-     update(sender_psid, donate_ref);
-  }*/
+     update(sender_psid, abc);
+  }
   else {
       
       let user_message = received_message.text;      
@@ -1613,6 +1613,25 @@ const chooseOption = (sender_psid) => {
   };
   
   callSend(sender_psid, response)
+}
+
+const update = (sender_psid,abc) => {
+  
+    let data_update = {reasonforcancel: abc };
+
+    console.log('UPdate_data: ', data_update);
+
+      db.collection('orders').doc(sender_psid).update(data_update).then((success)=>{
+      console.log('SUCCESSFUL UPDATE');
+
+      let text = "We have recieved your reason for cancelling. We'll cancel your order soon. Please check your order later.";      
+      let response = {"text": text};
+              
+      callSend(sender_psid, response);       
+          
+    }).catch((err)=>{
+        console.log('Error', err);
+        }); 
 }
 /**************
 enddemo
