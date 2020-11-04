@@ -467,6 +467,7 @@ app.post('/admin/update_order', function(req,res){
     payment_type:req.body.payment_type,
     status:req.body.status,
     comment:req.body.comment,
+    reasonforcancel:req.body.cancel,
   }
 
   db.collection('orders').doc(req.body.doc_id)
@@ -931,7 +932,8 @@ app.post('/order', function(req, res){
       ref: generateRandom(6),
       created_on: today,
       status: "pending",
-      comment:"Your order is pending",      
+      comment:"Your order is pending", 
+      reasonforcancel:"",     
     }
 
     db.collection('orders').add(data).then((success)=>{
