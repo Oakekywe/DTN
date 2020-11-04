@@ -233,7 +233,7 @@ app.get('/admin/members', async(req,res)=>{
 
   }
   else{
-      res.send('You need permission to view this page.');
+      res.send('You need permission to view this page. <a href="/admin/login">Login Here</a>');
     }
     
 });
