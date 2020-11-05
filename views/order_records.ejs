@@ -99,8 +99,7 @@
             <th>Order Date</th>
             <th>Payment Type</th>
             <th>Status</th>
-            <th>Comment</th>
-            <th>Reason For Cancel</th>
+            <th>Comment</th>            
             <th>Action</th>
           </tr>
 
@@ -119,7 +118,6 @@
                <td><%= order.payment_type %></td>
                <td><%= order.status %></td>
                <td><%= order.comment %></td>
-               <td><%= order.reasonforcancel %></td> 
                <td><a class="btn btn-outline-dark" href="update_order/<%= order.doc_id %>">Edit</a>  
                 <a class="btn btn-outline-dark" href="delete_order/<%= order.doc_id %>">Delete</td> 
               </tr>

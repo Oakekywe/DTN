@@ -33,8 +33,7 @@ const reg_questions = {
   "q2": "What is your Phone number?",
   "q3": "What is your currently address?",
   "q4": "What is your order reference number?",
-  "q5": "What is your donation order reference number?",
-  "q6": "What reason do you want to cancel your order?"
+  "q5": "What is your donation order reference number?"
 }
 let sess;
 
@@ -467,7 +466,6 @@ app.post('/admin/update_order', function(req,res){
     payment_type:req.body.payment_type,
     status:req.body.status,
     comment:req.body.comment,
-    reasonforcancel:req.body.cancel,
   }
 
   db.collection('orders').doc(req.body.doc_id)
@@ -919,7 +917,6 @@ app.get('/order', function(req, res){
 
 app.post('/order', function(req, res){
     let today = new Date();
-    let ref = generateRandom(6);
     let data = {
       name: req.body.name,
       phone: req.body.phone,
@@ -930,14 +927,13 @@ app.post('/order', function(req, res){
       total: parseInt(req.body.total),
       orderdate: req.body.date,
       payment_type: req.body.payment_type,
-      ref: ref,
+      ref: generateRandom(6),
       created_on: today,
       status: "pending",
-      comment:"Your order is pending", 
-      reasonforcancel:"",     
+      comment:"Your order is pending",      
     }
 
-    db.collection('orders').doc(ref).set(data).then((success)=>{
+    db.collection('orders').add(data).then((success)=>{
       
         customer[user_id].cart = [];
         console.log('TEMP POINTS:', temp_points);
@@ -1037,17 +1033,10 @@ function handleQuickReply(sender_psid, received_message) {
             current_question = "q1";
             reg_Questions(current_question, sender_psid);
         break;
-        case "my-order":            
-            chooseOption(sender_psid);
-        break; 
         case "check-order":  
             current_question = "q4";
             reg_Questions(current_question, sender_psid);
-        break; 
-        case "canel-order":  
-            current_question = "q6";
-            reg_Questions(current_question, sender_psid);
-        break; 
+        break;  
         case "confirm-register":         
             saveRegistration(userInputs[user_id], sender_psid);
         break;
@@ -1109,10 +1098,6 @@ const handleMessage = (sender_psid, received_message) => {
      let donate_ref = received_message.text;     
      current_question = '';     
      checkDonateRef(sender_psid, donate_ref);
-  }else if(current_question == 'q6'){
-     let abc = received_message.text;     
-     current_question = '';     
-     update(sender_psid, abc);
   }
   else {
       
@@ -1281,7 +1266,7 @@ const showMenu = async(sender_psid) => {
               {
                 "content_type":"text",
                 "title":"My Order",
-                "payload":"my-order",             
+                "payload":"check-order",             
               }
 
       ]
@@ -1307,9 +1292,6 @@ const reg_Questions = (current_question, sender_psid) => {
     callSend(sender_psid, response);
   }else if(current_question == 'q5'){
     let response = {"text": reg_questions.q5};
-    callSend(sender_psid, response);
-  }else if(current_question == 'q6'){
-    let response = {"text": reg_questions.q6};
     callSend(sender_psid, response);
   }
 }
@@ -1594,45 +1576,6 @@ let response1 = {"text": "Sir, You have to pay all of the amount of total so tha
       }
     }
   callSend(sender_psid, response);
-}
-
-const chooseOption = (sender_psid) => {
-  
-  let response = {
-    "text": "Would you like to check your order status or would you like to cancel your order?",
-    "quick_replies":[
-            {
-              "content_type":"text",
-              "title":"Check Order",
-              "payload":"check-order",              
-            },{
-              "content_type":"text",
-              "title":"Cancel Order",
-              "payload":"canel-order",             
-            }
-    ]
-  };
-  
-  callSend(sender_psid, response)
-}
-
-const update = (sender_psid,abc) => {
-  
-    let data_update = {reasonforcancel: abc };
-
-    console.log('UPdate_data: ', data_update);
-
-      db.collection('orders').doc(ref).update(data_update).then((success)=>{
-      console.log('SUCCESSFUL UPDATE');
-
-      let text = "We have recieved your reason for cancelling. We'll cancel your order soon. Please check your order later.";      
-      let response = {"text": text};
-              
-      callSend(sender_psid, response);       
-          
-    }).catch((err)=>{
-        console.log('Error', err);
-        }); 
 }
 /**************
 enddemo
