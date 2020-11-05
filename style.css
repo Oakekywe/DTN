@@ -13,45 +13,6 @@
 }
 
 
-/*---Firefox Bug Fix --*/
-/*
-.carousel-item {
-  transition: -webkit-transform 0.5s ease;
-  transition: transform 0.5s ease;
-  transition: transform 0.5s ease, -webkit-transform 0.5s ease;
-  -webkit-backface-visibility: visible;
-  backface-visibility: visible;
-}
-/*--- Fixed Background Image --*/
-/*
-figure {
-  position: relative;
-  width: 100%;
-  height: 60%;
-  margin: 0!important;
-}
-.fixed-wrap {
-  clip: rect(0, auto, auto, 0);
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-#fixed {
-  background-image: url('img/mac.png');
-  position: fixed;
-  display: block;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-size: cover;
-  background-position: center center;
-  -webkit-transform: translateZ(0);
-          transform: translateZ(0);
-  will-change: transform;
-}
 
 /*--- Bootstrap Padding Fix --*/
 [class*="col-"] {
@@ -60,23 +21,77 @@ figure {
 
 
 
+/*||||||||||||||||||||||||||||||||| SLIDER ||||||||||||||||||||||||||||||*/
+.sliderwrapper { margin-top:30px;}
+.sliderwrapper .slider ul {list-style:none;}
+.slide img{cursor:pointer;}
 
-/*
-Extra small (xs) devices (portrait phones, less than 576px)
-No media query since this is the default in Bootstrap
 
-Small (sm) devices (landscape phones, 576px and up)
-@media (min-width: 576px) { ... }
+.sliderwrapper .slides h5{color:#cf0f1e; font-family:Economica-Bold; font-size:34px; margin-bottom:30px; margin-left:45px;}
+.sliderwrapper .slides p{color:#454242; font-family:arial; width:530px; line-height:2em; font-weight:bold; font-size:18px;
+float:left; margin-left:45px;}
+.sliderwrapper .slides img {float:right; margin-right:150px;}
 
-Medium (md) devices (tablets, 768px and up)
-@media (min-width: 768px) { ... }
+.sliderwrapper .slider {
+  position: relative;
+  width: 100%;
+  height: 420px;
+  overflow: hidden;
+}
 
-Large (lg) devices (desktops, 992px and up)
-@media (min-width: 992px) { ... }
+.sliderwrapper .slides {
+  height: 100%;
 
-Extra (xl) large devices (large desktops, 1200px and up)
-@media (min-width: 1200px) { ... }
-*/
+  /* Clear fix */
+  
+
+  /**
+   * Prevent blinking issue
+   * Not tested. Experimental.
+   */
+  -webkit-backface-visibility: hidden;
+  -webkit-transform-style: preserve-3d;
+}
+
+.sliderwrapper .slide {
+  height: 100%;
+  float: left;
+  clear: none;
+}
+
+
+.sliderwrapper .slider-arrows {}
+
+.sliderwrapper .slider-arrow {
+  position: absolute;
+  display: block;
+  margin-bottom: -20px;
+  padding: 20px;
+  background:url(MOdOWu1.png);
+}
+
+.sliderwrapper .slider-arrow--right { bottom: 60%; right: 0px; background:url(../images/arrowright.png) no-repeat; }
+.sliderwrapper .slider-arrow--left { bottom: 60%; left: 0px;  background:url(../images/arrowleft.png) no-repeat;}
+
+
+.sliderwrapper .slider-nav {
+  position: absolute;
+  bottom: 40px;
+}
+
+.sliderwrapper .slider-nav__item {
+  width: 10px;
+  height: 10px;
+  float: left;
+  clear: none;
+  display: block;
+  margin: 0 7.5px;
+  background: #d21d2c;
+  border-radius:40px;
+}
+
+.sliderwrapper .slider-nav__item:hover { background: #ff5a0b; }
+.sliderwrapper .slider-nav__item--current { background: #ff5a0b; }
 
 
 
