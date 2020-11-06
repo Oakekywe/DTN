@@ -1474,8 +1474,7 @@ const startReply = (sender_psid) => {
                           "type": "web_url",
                           "title": "See More",
                           "url":APP_URL+"direction/",
-                          "webview_height_ratio": "full",
-                          "messenger_extensions": true,
+                          
                         },               
                       ],
                   }
