@@ -1438,7 +1438,7 @@ const showOrder = async(sender_psid, order_ref) => {
 const startReply = (sender_psid) => {
    let response = {
                     "recipient":{
-                      "id":sender_psid;
+                      "id":sender_psid,
                     },
                     "sender_action":"typing_on"
                   };
