@@ -1436,12 +1436,6 @@ const showOrder = async(sender_psid, order_ref) => {
 
 
 const startReply = (sender_psid) => {
-   let response = {
-                    "recipient":{
-                      "id":sender_psid,
-                    },
-                    "sender_action":"typing_on"
-                  };
    let response1 = {"text": "Welcome to our DTN dessert shop. You can make order online Myanmar traditional dessert with 24/7 services. "};
    let response2 = {"text": "You can order our delicious menu with loyal points. You can make donation with us. You can also be a loyal member by sign up. "};
    let response3 = {
@@ -1491,11 +1485,9 @@ const startReply = (sender_psid) => {
     
  };
 
-  callSend(sender_psid, response).then(()=>{
-    return callSend(sender_psid, response1).then(()=>{
-      return callSend(sender_psid, response2).then(()=>{
-        return callSend(sender_psid, response3);
-      });
+  callSend(sender_psid, response1).then(()=>{
+    return callSend(sender_psid, response2).then(()=>{
+      return callSend(sender_psid, response3);
     });
   });
 }
