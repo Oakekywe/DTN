@@ -389,6 +389,104 @@ app.post('/admin/update_food',upload.single('file'), function(req,res){
           };
 });
 
+
+
+///////////////adminexchange////////////////////
+
+app.get('/admin/items', async(req,res) =>{   
+
+  sess = req.session;
+  
+  if(sess.login){
+    const itemsRef = db.collection('items').orderBy('created_on', 'desc');
+    const snapshot = await itemsRef.get();
+
+    if (snapshot.empty) {
+      res.send('There is no items.');
+    }else{
+        let data = []; 
+
+      snapshot.forEach(doc => {
+        let item = {};
+        
+        item = doc.data();
+        item.doc_id = doc.id;
+        
+        let d = new Date(doc.data().created_on._seconds);
+        d = d.toString();
+        item.created_on = d;        
+
+        data.push(item);
+        
+    });
+    
+    res.render('items.ejs', {data:data});
+
+    }
+   }
+   else{
+      res.send('You need permission to view this page. <a href="/admin/login">Login Here</a>');
+    }
+});
+
+app.get('/admin/additem', function(req,res){
+  sess = req.session;
+  
+  if(sess.login){
+  res.render('additem.ejs'); 
+  } else{
+      res.send('You need permission to view this page. <a href="/admin/login">Login Here</a>');
+    } 
+});
+
+app.post('/admin/saveitem',upload.single('file'),function(req,res){
+       
+      let name  = req.body.name;
+      let description = req.body.description;
+      let img_url = "";
+      let itempoint = parseInt(req.body.point); 
+      
+      let today = new Date();
+
+      let file = req.file;
+      if (file) {
+        uploadImageToStorage(file).then((img_url) => {
+            db.collection('items').add({
+              name: name,
+              description: description,
+              image: img_url,
+              itempoint: itempoint,              
+              created_on:today
+              }).then(success => {   
+                console.log("DATA SAVED")
+                res.redirect('../admin/items');    
+              }).catch(error => {
+                console.log(error);
+              }); 
+        }).catch((error) => {
+          console.error(error);
+        });
+      }             
+});
+
+app.get('/admin/delete_item/:doc_id', function(req,res){
+  
+  let doc_id = req.params.doc_id; 
+
+    db.collection("items").doc(doc_id).delete().then(()=>{      
+        res.redirect('/admin/items');
+        
+    }).catch((err)=>console.log('ERROR:', error));   
+
+});
+
+
+
+
+
+
+
+
 ///////////////adminorder////////////////////
 app.get('/admin/orders', async(req,res)=>{
   sess = req.session;

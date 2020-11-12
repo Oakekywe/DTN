@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Items</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+    <link href="style.css" rel="stylesheet">
+    <style>
+      table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+      }
+      td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+      }
+      tr:nth-child(even) {
+        background-color: #dddddd;
+      }
+      h1{
+        font-family: Times New Roman;
+      }
+    </style>
+    
+ </head>
+
+ <nav class="navbar navbar-expand-md navbar-light bg-dark sticky-top">
+  <h1 style="font-size: 50px; color: white;">
+      DTN Dessert Shop Admin Page
+  </h1>
+  <div class="container-fluid">
+    
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  <div class="collapse navbar-collapse" id="navbarResponsive">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item active">
+        <a class="nav-link h4 text-muted" href="/admin/home"> Home</a>        
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link h4 text-muted" href="/admin/members"> See Members</a>        
+      </li>
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle h4 text-muted" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Order
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item h4" href="/admin/orders"> See Orders</a>  
+          <a class="dropdown-item h4" href="/admin/donate_orders"> See Orders for donation</a>           
+      </li>
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle h4 text-muted" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Food
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item h4" href="/admin/foods"> See Foods</a> 
+          <a class="dropdown-item h4" href="/admin/addfood"> Add Foods</a>          
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link h4 text-muted" href="/admin/logout"> Logout</a>        
+      </li>
+
+    </ul>    
+  </div>  
+  </div>
+</nav>
+
+  <body>
+            
+      <div class="card-body">
+        <h1>All Exchange Items </h1>
+
+          <table>
+            <tr>
+              <th>Image</th>              
+              <th>Name</th>
+              <th>Description</th>
+              <th>Point</th>             
+              <th>Action</th>    
+            </tr>
+
+            <% data.forEach(function(item){ %>
+               <tr>
+                
+                 <td><img src="<%= item.image %>" width="100"/></td>
+                 
+                 <td><%= item.name %></td>
+                 <td><%= item.description %></td>
+                 <td><%= item.point %></td>               
+                 
+                 <td><a class="btn btn-outline-dark" href="update_item/<%= item.doc_id %>">Edit</a>  
+                  <a class="btn btn-outline-dark" href="delete_item/<%= item.doc_id %>">Delete</a></td>
+               </tr>
+            <% }); %>
+
+          </table>                
+      </div> 
+      
+  </body>
+
+</html>
