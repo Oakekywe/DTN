@@ -480,11 +480,52 @@ app.get('/admin/delete_item/:doc_id', function(req,res){
 
 });
 
+app.get('/admin/update_item/:doc_id', async function(req,res){
+  sess = req.session;
+  
+  if(sess.login){
+  let doc_id = req.params.doc_id; 
+  
+  const itemRef = db.collection('items').doc(doc_id);
+  const doc = await itemRef.get();
+  if (!doc.exists) {
+    console.log('No such document!');
+  } else {
+    
+    let data = doc.data();
+    data.doc_id = doc.id;
+    
+    res.render('update_item.ejs', {data:data});
+  } 
+  }
+    else{
+      res.send('You need permission to view this page. <a href="/admin/login">Login Here</a>');
+    }
 
+});
 
-
-
-
+app.post('/admin/update_item',upload.single('file'), function(req,res){ 
+    let img_url = "";
+    let file = req.file;
+    let data = {        
+        
+        name:req.body.name,
+        description:req.body.description,
+        itempoint:req.body.point,    
+    }
+          if (file){
+            uploadImageToStorage(file).then((img_url) => {
+              data.image = img_url;
+              db.collection('items').doc(req.body.doc_id)
+              .update(data).then(success => {   
+                    console.log("DATA UPDATED")
+                    res.redirect('/admin/items');    
+                  }).catch(error => {
+                    console.log(error);
+                  });
+            })  
+          };
+});
 
 
 ///////////////adminorder////////////////////
