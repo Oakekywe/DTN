@@ -1225,7 +1225,7 @@ app.post('/itempointdiscount', function(req, res){
       console.log("BEFORE <<<<<", temp_points);
         res.send('You dont have sufficient balance. <a href="../showitem">Trade back</a>');
     }
-    if(temp_points >= cart_total){
+    else if(temp_points >= cart_total){
         console.log("AFTER>>>>>>");
         console.log("AFTER>>>>>>", temp_points);
         console.log("AFTER>>>>>>", cart_total);
