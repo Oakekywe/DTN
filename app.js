@@ -1219,52 +1219,14 @@ app.get('/emptycart', function(req, res){
 
 app.post('/itempointdiscount', function(req, res){
 
-    //temp_points = customer[user_id].points; 
-    let sub_total = 0;
-    //cart_total = 0;
-    //cart_discount = 0;
-  
-    if(!customer[user_id].cart){
-        customer[user_id].cart = [];
-    }
-    if(customer[user_id].cart.length < 1){
-        res.send('your cart is empty. back to trade <a href="../showitem">Trade Back</a>');
+    if(customer[user_id].point < cart_total){
+      console.log("BEFORE <<<<<", cart_total);
+      console.log("BEFORE <<<<<", customer[user_id].point);
+        res.send('You dont have sufficient balance. <a href="../showitem">Trade back</a>');
     }else{ 
-        customer[user_id].use_point = true;        
-
-        customer[user_id].cart.forEach((item) => sub_total += item.total); 
-
-        console.log('BEFORE');
-        console.log('sub total:'+sub_total);
-        console.log('cart total:'+cart_total);
-        console.log('cart discount:'+cart_discount);
-        console.log('temp points:'+ temp_points);
-       
-        if(sub_total != 0 || cart_total != 0){
-          if(sub_total >=  parseInt(req.body.points)){
-           console.log('Point is smaller than subtotal');
-           cart_discount =  parseInt(req.body.points);
-           cart_total = sub_total - cart_discount;
-           temp_points = 0; 
-           
-          }else{
-             console.log('Point is greater than subtotal');
-             cart_discount = sub_total; 
-             cart_total = 0;
-             temp_points -= sub_total;
-                       
-          }
-
-        }
-                
-
-        console.log('AFTER');
-        console.log('sub total:'+sub_total);
-        console.log('cart total:'+cart_total);
-        console.log('cart discount:'+cart_discount);
-        console.log('temp points:'+ temp_points);
+      console.log("AFTER>>>>>>");
+      
         
-        res.render('itemcart.ejs', {cart:customer[user_id].cart, sub_total:sub_total, user:customer[user_id], cart_total:cart_total, discount:cart_discount, points:temp_points});      
     }
 });
 
