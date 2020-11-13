@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Item Cart</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+    <link href="style.css" rel="stylesheet">
+</head>
+<body>
+
+ <script>
+      (function(d, s, id){
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) {return;}
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/messenger.Extensions.js";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'Messenger'));
+
+    const APP_ID = 351422272858795;    
+    var senderID = "";
+    
+    window.extAsyncInit = function() {
+        MessengerExtensions.getContext(APP_ID, 
+          function success(thread_context){
+           senderID = thread_context.psid;
+          },
+          function error(err){
+            console.log(err);
+          }
+        );        
+    };
+  </script>
+
+<div class="container bg-light">
+    <div class="row">   
+      <div class="col-lg-2">
+
+        <h1 class="my-4"><b>Item Cart</b></h1>
+        <div class="list-group">
+          <a href="../showitem" class="list-group-item bg-dark text-white"><b>Back To Shop</b></a>
+          <a href="../emptycart" class="list-group-item text-dark"><b>Empty cart</b></a>
+        </div>
+      </div>      
+	
+	<div class="col-lg-10">
+		<div class="card mt-4">
+			<div class="card-body">
+			<table class="table table-dark table-striped" cellspacing="1" cellpadding="5" border="1">
+			<tr>
+				
+				<th>Name</th>
+				<th>Qty</th>   
+				<th>Point</th>
+				<th>Total Points</th>
+			</tr>
+
+			<% cart.forEach(function(item){ %>
+			<tr>
+				
+				<td><%= item.name %></td>
+				<td><%= item.qty %></td>
+				<td><%= item.itempoint %></td>
+				<td><%= item.total %></td>
+				
+			</tr>
+			<% }); %>
+			</table>
+			<p>Sub Total: <%= sub_total %></p>
+			<p>Discount: <%= discount %></p>	
+			<p><strong>Total points:</strong> <%= cart_total %></p>	
+			<p>You have <%= points %> point(s)</p>
+
+			<% if (points == 0 || cart_total == 0) { %>
+				<form action="../itempointdiscount" method="post">				
+					<input type="submit" name="submit" class="btn btn-secondary" value="Use Points" disabled/>
+				</form>
+
+			<%} else { %>
+				<form action="../itempointdiscount" method="post">		
+					<input type="hidden" name="points" value ="<%= points %>" />
+					<input class="btn btn-outline-primary" type="submit" name="submit" value="Use Points"/>
+				</form>
+			
+			<% } %>
+			
+
+			<br><p><a class="btn btn-dark" href="../order">Confirm</a></p>
+		</div>
+		</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>
+
+

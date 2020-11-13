@@ -28,7 +28,7 @@
 
         <h1 class="my-4"><b>Items</b></h1>
         <div class="list-group">
-          <a href="../cart" class="list-group-item bg-dark text-white"><b>View cart</b></a>
+          <a href="../itemcart" class="list-group-item bg-dark text-white"><b>View cart</b></a>
           <a href="../emptycart" class="list-group-item text-dark"><b>Empty cart</b></a>
         </div>
       </div>      
@@ -46,10 +46,10 @@
                   <h5>Points: <%= item.itempoint %></h5>            
                   <p class="card-text"><%= item.description %></p>                
 
-                    <form action="../cart" method="post">
+                    <form action="../itemcart" method="post">
                     <input type="hidden" name="item_id" value="<%= item.id %>"/>
                     <input type="hidden" name="item_name" value="<%= item.name %>"/>
-                    <input type="hidden" name="item_price" value="<%= item.itempoint %>"/>
+                    <input type="hidden" name="item_point" value="<%= item.itempoint %>"/>
                     Quantity: <input type="number" name="item_qty" min="1" value="1" style="width:60px;"/> <br>     
                     
                     <br><input type="submit" class="btn btn-success" name="submit"/>
