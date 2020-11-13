@@ -876,7 +876,7 @@ StartMemberRoute
 app.get('/shop', async function(req,res){
 
   customer[user_id].id = user_id;
-
+  console.log("CUSTOMER_ID", customer[user_id].id);
   const memberRef = db.collection('members').doc(user_id);
   const member = await memberRef.get();
   if (!member.exists) {
