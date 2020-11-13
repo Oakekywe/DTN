@@ -1220,6 +1220,7 @@ app.get('/emptycart', function(req, res){
 app.post('/itempointdiscount', function(req, res){
 
     if(!temp_points < cart_total){
+      customer[user_id].cart = [];
       console.log("BEFORE <<<<<", cart_total);
       console.log("BEFORE <<<<<", temp_points);
         res.send('You dont have sufficient balance. <a href="../showitem">Trade back</a>');
