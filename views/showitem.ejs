@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Exchange Items</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+    <link href="style.css" rel="stylesheet">
+    <style>      
+    	
+    	img {
+          border: 1px solid #ddd;
+          border-radius: 4px;
+          padding: 5px;
+          
+        }
+    </style>
+ </head>
+<body>  
+ 
+  <div class="container bg-light">
+    <div class="row">   
+      <div class="col-lg-2">
+
+        <h1 class="my-4"><b>Items</b></h1>
+        <div class="list-group">
+          <a href="../cart" class="list-group-item bg-dark text-white"><b>View cart</b></a>
+          <a href="../emptycart" class="list-group-item text-dark"><b>Empty cart</b></a>
+        </div>
+      </div>      
+
+      <div class="col-lg-10">
+
+        <% data.forEach(function(item){ %>
+
+          <div class="card mt-4">             
+              
+                <img class="card-img-top img-fluid" src="<%= item.image %>" alt="">              
+              
+                  <div class="card-body">
+                  <h3 class="card-title"><%= item.name %></h3>
+                  <h5>Points: <%= item.itempoint %></h5>            
+                  <p class="card-text"><%= item.description %></p>                
+
+                    <form action="../cart" method="post">
+                    <input type="hidden" name="item_id" value="<%= item.id %>"/>
+                    <input type="hidden" name="item_name" value="<%= item.name %>"/>
+                    <input type="hidden" name="item_price" value="<%= item.itempoint %>"/>
+                    Quantity: <input type="number" name="item_qty" min="1" value="1" style="width:60px;"/> <br>     
+                    
+                    <br><input type="submit" class="btn btn-success" name="submit"/>
+                    </form>
+                  </div>
+
+          </div>
+        <% }); %>
+
+      </div>
+    </div>
+  </div>
+ </body>
+
+</html>

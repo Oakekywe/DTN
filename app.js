@@ -876,7 +876,7 @@ StartMemberRoute
 app.get('/shop', async function(req,res){
 
   customer[user_id].id = user_id;
-  console.log("CUSTOMER_ID", customer[user_id].id);
+  
   const memberRef = db.collection('members').doc(user_id);
   const member = await memberRef.get();
   if (!member.exists) {
@@ -1104,6 +1104,61 @@ app.post('/order', function(req, res){
       });
 });
 
+
+
+app.get('/showitem', async function(req,res){
+
+  customer[user_id].id = user_id;
+  
+  const memberRef = db.collection('members').doc(user_id);
+  const member = await memberRef.get();
+  if (!member.exists) {
+    customer[user_id].name = ""; 
+    customer[user_id].phone = "";
+    customer[user_id].address = "";
+    customer[user_id].points = 0;
+         
+  } else {
+      customer[user_id].name = member.data().name; 
+      customer[user_id].phone = member.data().phone; 
+      customer[user_id].address = member.data().address;       
+      customer[user_id].points = member.data().points; 
+       
+  } 
+  
+  const itemsRef = db.collection('items').orderBy('created_on', 'desc');
+  const snapshot = await itemsRef.get();
+
+  if (snapshot.empty) {
+    res.send('no items');
+  } 
+
+  let data = []; 
+
+  snapshot.forEach(doc => { 
+    
+    let item = {}; 
+
+    item = doc.data();    
+    item.id = doc.id; 
+    
+    let d = new Date(doc.data().created_on._seconds);
+    d = d.toString();
+    item.created_on = d;   
+
+    data.push(item);
+    
+  });  
+ 
+  res.render('showitem.ejs', {data:data});
+
+});
+
+
+
+
+
+
 app.get('/direction',function(req,res){    
     res.render('direction.ejs');
     
@@ -1185,6 +1240,9 @@ function handleQuickReply(sender_psid, received_message) {
         case "check-donate-order":  
             current_question = "q5";
             reg_Questions(current_question, sender_psid);
+        break;
+        case "trade-point":         
+            tradePoint(sender_psid);
         break;
         case "off":         
             showMenu(sender_psid);
@@ -1401,6 +1459,11 @@ const showMenu = async(sender_psid) => {
                 "content_type":"text",
                 "title":"Order Now",
                 "payload":"ordernow",             
+              },
+              {
+                "content_type":"text",
+                "title":"Trade My Points",
+                "payload":"trade-point",             
               },
               {
                 "content_type":"text",
@@ -1691,6 +1754,34 @@ let response1 = {"text": "Sir, You have to pay all of the amount of total so tha
           });
       });
  }    
+
+
+const tradePoint =(sender_psid) => {
+  let response = {
+      "attachment": {
+        "type": "template",
+        "payload": {
+          "template_type": "generic",
+          "elements": [{
+            "title": "You can trade your loyal points with our things.",
+            "image_url":"https://pbs.twimg.com/profile_images/347580504/cnmelogo.jpg",                       
+            "buttons": [              
+              {
+                "type": "web_url",
+                "title": "Trade Now",
+                "url":APP_URL+"showitem/",
+                "webview_height_ratio": "full",
+                "messenger_extensions": true,          
+              },
+              
+            ],
+          }]
+        }
+      }
+    }  
+  callSend(sender_psid, response);
+}
+
 
  const admin = (sender_psid) =>{
   let response;
