@@ -1262,10 +1262,10 @@ app.post('/itemordersave', function(req, res){
       
         customer[user_id].cart = [];
         console.log('TEMP POINTS:', temp_points);
-        console.log('TEMP POINTS:', points);
+        
         console.log('CUSTOMER: ', customer[user_id]);       
         
-
+        let points = req.body.points;
         let update_data = {points: points };
 
         console.log('update_data: ', update_data);
