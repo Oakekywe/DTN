@@ -1227,8 +1227,8 @@ app.post('/itempointdiscount', function(req, res){
         console.log("AFTER>>>>>>", sub_total);
         console.log("AFTER>>>>>>", points);
         console.log("AFTER>>>>>>", customer[user_id].cart);
-        console.log("AFTER>>>>>>", items);
-        res.render('itemorder.ejs', {cart:customer[user_id].cart, points:points, sub_total:sub_total, user:customer[user_id], cart_total:cart_total, items:item_list, today:today});    
+        
+        res.render('itemorder.ejs', {cart:customer[user_id].cart, points:points, sub_total:sub_total, user:customer[user_id], cart_total:cart_total, today:today});    
     }
     else{
       customer[user_id].cart = [];

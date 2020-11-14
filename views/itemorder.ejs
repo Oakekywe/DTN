@@ -53,10 +53,10 @@
 
 				<h3>Items</h3>
 					<table class="table table-dark table-striped" cellspacing="1" cellpadding="5" border="1">
-					<% cart.forEach(function(item){ %>
+					<% cart.forEach(function(cart){ %>
 					<tr>
 						<td>
-							<%= item.name %> * <%= item.qty %>
+							<%= cart.name %> * <%= cart.qty %>
 						</td>
 					</tr>
 					<% }); %>
@@ -76,7 +76,7 @@
 					<input class="form-control" type="text" name="phone" value="<%= user.phone %>" required/>	<br/>
 					<textarea class="form-control" name="address" rows="3" cols="23" required><%= user.address %></textarea><br/>
 
-					<input  type="hidden" name="items" value="<%= items %>">
+					<input  type="hidden" name="items" value="<%= cart %>">
 					<input type="hidden" name="sub_total" value="<%= sub_total %>" />
 					
 					<input type="hidden" name="total" value="<%= cart_total %>" />
