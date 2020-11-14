@@ -1231,6 +1231,7 @@ app.post('/itempointdiscount', function(req, res){
         res.render('itemorder.ejs', {cart:customer[user_id].cart, points:points, sub_total:sub_total, user:customer[user_id], cart_total:cart_total, items:item_list, today:today});    
     }
     else{
+      customer[user_id].cart = [];
         console.log("BEFORE>>>>>>");
         console.log("BEFORE>>>>>>", temp_points);
         console.log("BEFORE>>>>>>", cart_total);
