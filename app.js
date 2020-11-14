@@ -1241,38 +1241,32 @@ app.post('/itempointdiscount', function(req, res){
 });
 
 
-app.get('/itemorder', function(req, res){
-  console.log("APP.GET_ITEMORDER ROUTE");
-});
-/*
-app.post('/order', function(req, res){
+
+
+app.post('/itemordersave', function(req, res){
     let today = new Date();
     let data = {
       name: req.body.name,
       phone: req.body.phone,
       address: req.body.address,
-      items: req.body.items,
-      sub_total: parseInt(req.body.sub_total),
-      discount: parseInt(req.body.discount),
+      items: req.body.items,      
       total: parseInt(req.body.total),
-      orderdate: req.body.date,
-      payment_type: req.body.payment_type,
+      
       ref: generateRandom(6),
       created_on: today,
       status: "pending",
-      comment:"Your order is pending",      
+      comment:"",      
     }
 
-    db.collection('orders').add(data).then((success)=>{
+    db.collection('traderecord').add(data).then((success)=>{
       
         customer[user_id].cart = [];
         console.log('TEMP POINTS:', temp_points);
-        console.log('CUSTOMER: ', customer[user_id]);
+        console.log('TEMP POINTS:', points);
+        console.log('CUSTOMER: ', customer[user_id]);       
+        
 
-        //get 10% from sub total and add to remaining points;
-        let newpoints = temp_points + data.sub_total * 0.1;  
-
-        let update_data = {points: newpoints };
+        let update_data = {points: points };
 
         console.log('update_data: ', update_data);
 
@@ -1280,7 +1274,7 @@ app.post('/order', function(req, res){
               console.log('POINT UPDATE:');
 
 
-              let text = "Thank you. Your order has been received. Your order reference number is: "+data.ref;      
+              let text = "Thank you for your trading. Your trade number is: "+data.ref;      
               let response = {"text": text};
               
               callSend(user_id, response);       
@@ -1289,13 +1283,13 @@ app.post('/order', function(req, res){
              console.log('Error', err);
           });   
 
-        return waveQR(user_id);  
+         
       }).catch((err)=>{
          console.log('Error', err);
       });
 });
 
-*/
+
 
 
 app.get('/direction',function(req,res){    

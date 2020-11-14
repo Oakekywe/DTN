@@ -62,28 +62,28 @@
 					<% }); %>
 				</table>	
 		
-				<p><strong>Sub Total:</strong> <%= sub_total %><p>
 				
-				<p><strong>Total:</strong> <%= cart_total %><p><hr>
-          <p>You have <%= points %> point(s)</p>
+				
+				<p><strong>Total point that you used:</strong> <%= cart_total %><p>
+          <p>You have <%= points %> point(s)</p><hr>
 			</div>
 
 
 
 			<div class="card-body">			
-				<form id="form" action="../itemorder" method="post">	
+				<form id="form" action="../itemordersave" method="post">	
 				    <input class="form-control" type="text" name="name" value="<%= user.name %>" required/>	<br/>
 					<input class="form-control" type="text" name="phone" value="<%= user.phone %>" required/>	<br/>
-					<textarea class="form-control" name="address" rows="3" cols="23" required><%= user.address %></textarea><br/>
+					<textarea class="form-control" name="address" rows="" cols="" required><%= user.address %></textarea><br/>
 
-					<input  type="hidden" name="items" value="<%= cart %>">
-					<input type="hidden" name="sub_total" value="<%= sub_total %>" />
+					<input  type="hidden" name="items" value="<%= cart.name %> * <%= cart.qty %>">
+					<input  type="hidden" name="points" value="<%= points %>">
 					
 					<input type="hidden" name="total" value="<%= cart_total %>" />
 
 					
 
-					<input class="btn btn-dark" type="submit" name="submit" value="Order"/>
+					<input class="btn btn-dark" type="submit" name="submit" value="Submit"/>
 				</form>
 			</div>
 		</div>
