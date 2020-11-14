@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Update Trade Record</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+    <!--<link href="style.css" rel="stylesheet">-->
+ </head>
+
+<nav class="navbar navbar-expand-md navbar-light bg-dark">
+      <h1 style="font-family: Times New Roman; font-size: 50px; color: white;">
+          DTN Dessert Shop Admin Page
+      </h1>
+    <div class="container-fluid">
+      
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item active">
+          <a class="nav-link h4 text-muted" href="/admin/home"> Home</a>        
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link h4 text-muted" href="/admin/members"> See Members</a>        
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle h4 text-muted" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Order
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item h4" href="/admin/orders"> See Orders</a>  
+            <a class="dropdown-item h4" href="/admin/donate_orders"> See Orders for donation</a>           
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle h4 text-muted" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Food
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item h4" href="/admin/foods"> See Foods</a> 
+            <a class="dropdown-item h4" href="/admin/addfood"> Add Foods</a>          
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link h4 text-muted" href="/admin/logout"> Logout</a>        
+        </li>
+
+
+      </ul>
+    
+  </div>  
+  </div>
+</nav>
+
+<body>
+<div class="container bg-light">
+  <div class="card mt-4"> 
+    <div class="card-body">
+    
+        <h1 class="my-4">Trade Ref: <%=data.ref %></h1>
+
+        <form id="form" method="post" action="../update_traderecord">
+        <div>
+          <label for="ref">Reference</label><br>
+          <input class="form-control" type="text" name="ref" value="<%= data.ref %>">    
+        </div>
+
+        <div>
+          <label for="name">Name</label><br>
+          <input class="form-control" type="text" name="name" value="<%= data.name %>">    
+        </div>
+
+        <div>
+          <label for="phone">Phone</label><br>
+          <input class="form-control" type="text" name="phone" value="<%= data.phone %>">    
+        </div>
+
+        <div>
+          <label for="address">Address</label><br>
+          <input class="form-control" type="text" name="address" value="<%= data.address %>">    
+        </div>
+
+        <div>
+          <label for="item_name">Item Name</label><br>
+          <input class="form-control" type="text" name="item_name" value="<%= data.item_name %>">    
+        </div>
+
+        <div>
+          <label for="item_qty">Item Quantity</label><br>
+          <input class="form-control" type="text" name="item_qty" value="<%= data.item_qty %>">    
+        </div>
+
+        <div>
+          <label for="total">Total</label><br>
+          <input class="form-control" type="text" name="total" value="<%= data.total %>">    
+        </div>
+        
+        <div class="form-group">
+          <label for="status">Status:</label>
+          <select class="form-control" name="status" id="status">    
+          <option value="pending" 
+          <%if(data.status == "pending"){%>
+              <%="selected"%>
+          <%}%>
+          >Pending</option>
+          <option value="accept"
+          <%if(data.status == "Accept"){%>
+              <%="selected"%>
+          <%}%>
+          >Accept</option>           
+          <option value="delivering"
+          <%if(data.status == "delivering"){%>
+              <%="selected"%>
+          <%}%>
+          >Delivering</option> 
+          <option class="text-danger" value="reject"
+          <%if(data.status == "reject"){%>
+              <%="selected"%>
+          <%}%>
+          >Reject</option> 
+        </select>   
+        </div>
+
+
+        <div class="form-group">
+          <label for="name">Comment</label><br>
+          <textarea class="form-control" name="comment" rows="" cols=""></textarea>      
+        </div>   
+        <input type="hidden" name="doc_id" value="<%= data.doc_id %>">
+        
+        <input class="btn btn-dark" type="submit" value="Submit"> 
+        </form>
+      
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Trade Record</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+    <link href="style.css" rel="stylesheet">
+    
+    <style>
+      table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+      }
+      td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+      }
+      tr:nth-child(even) {
+        background-color: #dddddd;
+      }
+      h1{
+        font-family: Times New Roman;
+      }
+    </style>
+</head>
+
+<nav class="navbar navbar-expand-md navbar-light bg-dark">
+  <h1 style="font-size: 50px; color: white;">
+      DTN Dessert Shop Admin Page
+</h1>
+  <div class="container-fluid">
+    
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  <div class="collapse navbar-collapse" id="navbarResponsive">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item active">
+        <a class="nav-link h4 text-muted" href="/admin/home"> Home</a>        
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link h4 text-muted" href="/admin/members"> See Members</a>        
+      </li>
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle h4 text-muted" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Order
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item h4" href="/admin/orders"> See Orders</a>  
+          <a class="dropdown-item h4" href="/admin/donate_orders"> See Orders for donation</a>           
+      </li>
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle h4 text-muted" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Food
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item h4" href="/admin/foods"> See Foods</a> 
+          <a class="dropdown-item h4" href="/admin/addfood"> Add Foods</a>          
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link h4 text-muted" href="/admin/logout"> Logout</a>        
+      </li>
+
+
+    </ul>
+    
+  </div>  
+  </div>
+</nav>
+
+ <body>
+   
+      <div class="card-body">
+        <h1>Trade Records </h1>
+
+          <table>
+            <tr>
+            
+            <th>Reference</th>
+            <th>Customer Name</th>
+            <th>Phone</th>       
+            <th>Address</th>
+            <th>Item Name</th>  
+            <th>Item Quantity</th>             
+            <th>Total Points</th>
+            <th>Status</th>
+            <th>Comment</th>            
+            <th>Action</th>
+          </tr>
+
+          <% data.forEach(function(trade){ %>
+             <tr>
+              
+               <td><%= trade.ref %></td>
+               <td><%= trade.name %></td>
+               <td><%= trade.phone %></td>
+               <td><%= trade.address %></td>
+               <td><%= trade.item_name %></td>
+               <td><%= trade.item_qty %></td>               
+               <td><%= trade.total %></td>
+               <td><%= trade.status %></td>
+               <td><%= trade.comment %></td>
+               <td><a class="btn btn-outline-dark" href="update_traderecord/<%= trade.doc_id %>">Edit</a>  
+                <a class="btn btn-outline-dark" href="delete_traderecord/<%= trade.doc_id %>">Delete</td> 
+              </tr>
+          <% }); %>          
+
+          </table>           
+      </div>   
+  </body>
+
+</html>
