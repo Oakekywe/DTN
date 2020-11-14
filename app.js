@@ -1224,7 +1224,7 @@ app.post('/itempointdiscount', function(req, res){
       let sub_total;
       let points;
       points = temp_points - cart_total;
-        console.log("AFTER>>>>>>", sub_total);
+        
         console.log("AFTER>>>>>>", points);
         console.log("AFTER>>>>>>", customer[user_id].cart);
         
@@ -1249,7 +1249,7 @@ app.post('/itemordersave', function(req, res){
       name: req.body.name,
       phone: req.body.phone,
       address: req.body.address,
-      items: req.body.item_name * req.body.item_qty,      
+      items: req.body.item_name +"*"+ req.body.item_qty,      
       total: parseInt(req.body.total),      
       ref: generateRandom(6),
       created_on: today,
