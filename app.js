@@ -1245,7 +1245,7 @@ app.post('/itempointdiscount', function(req, res){
 
 app.post('/itemordersave', function(req, res){
     let today = new Date();
-    let items = req.body.item_name "*" req.body.item_qty;
+    let items = req.body.item_name * req.body.item_qty;
     let data = {
       name: req.body.name,
       phone: req.body.phone,
