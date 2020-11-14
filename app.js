@@ -527,6 +527,98 @@ app.post('/admin/update_item',upload.single('file'), function(req,res){
           };
 });
 
+app.get('/admin/traderecords', async(req,res)=>{
+  sess = req.session;
+  
+  if(sess.login){
+
+  const tradeRef = db.collection('traderecords').orderBy('created_on', 'desc');
+  const snapshot = await tradeRef.get();
+
+      if (snapshot.empty) {
+        res.send('There is no trade records.');
+      } else{
+
+          let data = []; 
+
+      snapshot.forEach(doc => {
+        let trade = {};
+        
+        trade = doc.data();
+        trade.doc_id = doc.id;
+        
+        let d = new Date(doc.data().created_on._seconds);
+        d = d.toString();
+        trade.created_on = d;    
+
+        data.push(trade);
+        
+      });
+
+      res.render('traderecords.ejs', {data:data});
+
+      }
+  }
+    else{
+      res.send('You need permission to view this page. <a href="/admin/login">Login Here</a>');
+    }
+});
+
+app.get('/admin/update_traderecord/:doc_id', async function(req,res){
+  sess = req.session;
+  
+  if(sess.login){
+  let doc_id = req.params.doc_id; 
+  
+  const tradeRef = db.collection('traderecords').doc(doc_id);
+  const doc = await tradeRef.get();
+  if (!doc.exists) {
+    console.log('No such document!');
+  } else {
+    
+    let data = doc.data();
+    data.doc_id = doc.id;
+    
+    res.render('update_traderecord.ejs', {data:data});
+  } 
+  }
+    else{
+      res.send('You need permission to view this page. <a href="/admin/login">Login Here</a>');
+    }
+
+});
+
+app.post('/admin/update_traderecord', function(req,res){   
+
+  let data = {
+    ref:req.body.ref,
+    name:req.body.name,
+    phone:req.body.phone,
+    address:req.body.address,
+    item_name:req.body.item_name,
+    item_qty:req.body.item_qty,
+    total:req.body.total,
+    status:req.body.status,
+    comment:req.body.comment,
+  }
+
+  db.collection('traderecords').doc(req.body.doc_id)
+  .update(data).then(()=>{
+      res.redirect('/admin/traderecords');
+  }).catch((err)=>console.log('ERROR:', error)); 
+ 
+});
+
+app.get('/admin/delete_traderecord/:doc_id', function(req,res){
+  
+  let doc_id = req.params.doc_id; 
+
+    db.collection("traderecords").doc(doc_id).delete().then(()=>{
+        res.redirect('/admin/traderecords');
+        
+    }).catch((err)=>console.log('ERROR:', error));   
+
+});
 
 ///////////////adminorder////////////////////
 app.get('/admin/orders', async(req,res)=>{
