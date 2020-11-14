@@ -1220,41 +1220,30 @@ app.get('/emptycart', function(req, res){
 app.post('/itempointdiscount', function(req, res){
 
     if(temp_points >= cart_total){
-        console.log("AFTER>>>>>>");
-        console.log("AFTER>>>>>>", temp_points);
-        console.log("AFTER>>>>>>", cart_total);
-        
+      let today = new Date();
+      let sub_total;
+      let points;
+      points = temp_points - cart_total;
+        console.log("AFTER>>>>>>", sub_total);
+        console.log("AFTER>>>>>>", points);
+        console.log("AFTER>>>>>>", customer[user_id].cart);
+        console.log("AFTER>>>>>>", items);
+        res.render('itemorder.ejs', {cart:customer[user_id].cart, points:points, sub_total:sub_total, user:customer[user_id], cart_total:cart_total, items:item_list, today:today});    
     }
     else{
         console.log("BEFORE>>>>>>");
         console.log("BEFORE>>>>>>", temp_points);
         console.log("BEFORE>>>>>>", cart_total);
-        
+        res.send('Sorry, you dont have sufficient points to trade it. Try later <a href="../showitem">Items</a>');
     } 
       
 });
 
-/*
-app.get('/order', function(req, res){
-  let today = new Date();
-    let sub_total;
-  
-    if(!customer[user_id].cart){
-        customer[user_id].cart = [];
-    }
-    if(customer[user_id].cart.length < 1){
-        res.send('your cart is empty. back to shop <a href="../shop">shop</a>');
-    }else{   
-        sub_total = 0;
-        customer[user_id].cart.forEach((item) => sub_total += item.total);   
 
-        let item_list = "";
-        customer[user_id].cart.forEach((item) => item_list += item.name+'*'+item.qty);  
-        
-        res.render('order.ejs', {cart:customer[user_id].cart, sub_total:sub_total, user:customer[user_id], cart_total:cart_total, discount:cart_discount, items:item_list, today:today});    
-    }
+app.get('/itemorder', function(req, res){
+  console.log("APP.GET_ITEMORDER ROUTE");
 });
-
+/*
 app.post('/order', function(req, res){
     let today = new Date();
     let data = {

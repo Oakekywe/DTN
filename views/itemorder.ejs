@@ -41,7 +41,7 @@
     <div class="row">   
       <div class="col-lg-2">
 
-        <h1 class="my-4"><b>Order</b></h1>
+        <h1 class="my-4"><b>Confirmation</b></h1>
         <div class="list-group">
           <a href="../cart" class="list-group-item bg-dark text-white"><b>Back To Cart</b></a>
           
@@ -63,30 +63,27 @@
 				</table>	
 		
 				<p><strong>Sub Total:</strong> <%= sub_total %><p>
-				<p><strong>Discount:</strong> - <%= discount %><p>
+				
 				<p><strong>Total:</strong> <%= cart_total %><p><hr>
+          <p>You have <%= points %> point(s)</p>
 			</div>
 
+
+
 			<div class="card-body">			
-				<form id="form" action="../order" method="post">	
+				<form id="form" action="../itemorder" method="post">	
 				    <input class="form-control" type="text" name="name" value="<%= user.name %>" required/>	<br/>
 					<input class="form-control" type="text" name="phone" value="<%= user.phone %>" required/>	<br/>
 					<textarea class="form-control" name="address" rows="3" cols="23" required><%= user.address %></textarea><br/>
 
 					<input  type="hidden" name="items" value="<%= items %>">
 					<input type="hidden" name="sub_total" value="<%= sub_total %>" />
-					<input type="hidden" name="discount" value="<%= discount %>" />
+					
 					<input type="hidden" name="total" value="<%= cart_total %>" />
 
-					<p>
-					<label for="start">Please place your order <strong>2 days advance</strong><br>Order date: </label>
-					<input type="date" name="date" value="date" min="<%= today %>" max="">	<br/><hr>
-					</p>
+					
 
-					<p>
-					<input class="radio" type="radio" name="payment_type" value="pre-paid" required/> Half Pre-paid
-					</p>
-					<input class="btn btn-dark" type="submit" name="submit" value="Submit"/>
+					<input class="btn btn-dark" type="submit" name="submit" value="Order"/>
 				</form>
 			</div>
 		</div>
