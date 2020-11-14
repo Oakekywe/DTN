@@ -1244,23 +1244,19 @@ app.post('/itempointdiscount', function(req, res){
 
 
 app.post('/itemordersave', function(req, res){
-    let today = new Date();
-    let items = req.body.item_name * req.body.item_qty;
+    let today = new Date();    
     let data = {
       name: req.body.name,
       phone: req.body.phone,
       address: req.body.address,
-      items: items,
-            
+      item_name: req.body.item_name,
+      item_qty: req.body.item_qty,
       total: parseInt(req.body.total),      
       ref: generateRandom(6),
       created_on: today,
       status: "pending",
       comment:"",      
     }
-    console.log('TESTINGTESTING;', items);
-console.log('TESTINGTESTING;', req.body.item_name);
-console.log('TESTINGTESTING;', req.body.item_qty);
     db.collection('traderecords').add(data).then((success)=>{
       
         customer[user_id].cart = [];
