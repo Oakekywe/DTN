@@ -1109,7 +1109,7 @@ app.post('/order', function(req, res){
 app.get('/showitem', async function(req,res){
 
   customer[user_id].id = user_id;
-  customer[user_id].cart = [];
+  
   const memberRef = db.collection('members').doc(user_id);
   const member = await memberRef.get();
   if (!member.exists) {
@@ -1250,15 +1250,16 @@ app.post('/itemordersave', function(req, res){
       name: req.body.name,
       phone: req.body.phone,
       address: req.body.address,
-      item_name: req.body.item_name,
-      item_qty: req.body.item_qty,      
+      items: req.body.item_name "*" req.body.item_qty,
+            
       total: parseInt(req.body.total),      
       ref: generateRandom(6),
       created_on: today,
       status: "pending",
       comment:"",      
     }
-
+console.log('TESTINGTESTING;', req.body.item_name);
+console.log('TESTINGTESTING;', req.body.item_qty);
     db.collection('traderecords').add(data).then((success)=>{
       
         customer[user_id].cart = [];

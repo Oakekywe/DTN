@@ -75,8 +75,13 @@
 				  <input class="form-control" type="text" name="name" value="<%= user.name %>" required/>	<br/>
 					<input class="form-control" type="text" name="phone" value="<%= user.phone %>" required/>	<br/>
 					<textarea class="form-control" name="address" rows="" cols="" required><%= user.address %></textarea><br/>
+
+          <% cart.forEach(function(cart){ %>
+
           <input  type="hidden" name="item_name" value="<%= cart.name %>">
 					<input  type="hidden" name="item_qty" value="<%= cart.qty %>">
+
+          <% }); %>
 					<input  type="hidden" name="points" value="<%= points %>">
 					
 					<input type="hidden" name="total" value="<%= cart_total %>" />
