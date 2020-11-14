@@ -1249,29 +1249,28 @@ app.post('/itemordersave', function(req, res){
       name: req.body.name,
       phone: req.body.phone,
       address: req.body.address,
-      items: req.body.items,      
-      total: parseInt(req.body.total),
-      
+      items: req.body.item_name * req.body.item_qty,      
+      total: parseInt(req.body.total),      
       ref: generateRandom(6),
       created_on: today,
       status: "pending",
       comment:"",      
     }
 
-    db.collection('traderecord').add(data).then((success)=>{
+    db.collection('traderecords').add(data).then((success)=>{
       
         customer[user_id].cart = [];
         console.log('TEMP POINTS:', temp_points);
         
-        console.log('CUSTOMER: ', customer[user_id]);       
+        console.log('BEFORE_CUSTOMER: ', customer[user_id]);       
         
-        let points = req.body.points;
+        let points = parseInt(req.body.points);
         let update_data = {points: points };
 
         console.log('update_data: ', update_data);
 
         db.collection('members').doc(user_id).update(update_data).then((success)=>{
-              console.log('POINT UPDATE:');
+              console.log('POINT UPDATE:', customer[user_id]);
 
 
               let text = "Thank you for your trading. Your trade number is: "+data.ref;      

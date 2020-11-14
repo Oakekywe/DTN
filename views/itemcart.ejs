@@ -75,21 +75,16 @@
 			<p><strong>Total points:</strong> <%= cart_total %></p>	
 			<p>You have <%= points %> point(s)</p>
 
-			<% if (points == 0 || cart_total == 0) { %>
-				<form action="../itempointdiscount" method="post">				
-					<input type="submit" name="submit" class="btn btn-secondary" value="confirm" disabled/>
-				</form>
-
-			<%} else { %>
+			
 				<form action="../itempointdiscount" method="post">		
 					<input type="hidden" name="points" value ="<%= points %>" />
-					<input class="btn btn-outline-primary" type="submit" name="submit" value="confirm"/>
+					<input class="btn btn-outline-primary" type="submit" name="submit" value="Confirm"/>
 				</form>
 			
-			<% } %>
+		
 			
 
-			<br><p><a class="btn btn-dark" href="../order">Confirm</a></p>
+			<p><a class="btn btn-dark" href="../showitem">Cancel</a></p>
 		</div>
 		</div>
 		</div>

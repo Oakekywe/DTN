@@ -72,11 +72,11 @@
 
 			<div class="card-body">			
 				<form id="form" action="../itemordersave" method="post">	
-				    <input class="form-control" type="text" name="name" value="<%= user.name %>" required/>	<br/>
+				  <input class="form-control" type="text" name="name" value="<%= user.name %>" required/>	<br/>
 					<input class="form-control" type="text" name="phone" value="<%= user.phone %>" required/>	<br/>
 					<textarea class="form-control" name="address" rows="" cols="" required><%= user.address %></textarea><br/>
-
-					<input  type="hidden" name="items" value="<%= cart.name * cart.qty %>">
+          <input  type="hidden" name="item_name" value="<%= cart.name %>">
+					<input  type="hidden" name="item_qty" value="<%= cart.qty %>">
 					<input  type="hidden" name="points" value="<%= points %>">
 					
 					<input type="hidden" name="total" value="<%= cart_total %>" />
