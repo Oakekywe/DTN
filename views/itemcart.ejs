@@ -43,7 +43,7 @@
         <h1 class="my-4"><b>Item Cart</b></h1>
         <div class="list-group">
           <a href="../showitem" class="list-group-item bg-dark text-white"><b>Back To Shop</b></a>
-          <a href="../emptycart" class="list-group-item text-dark"><b>Empty cart</b></a>
+          <a href="../removeemptycart" class="list-group-item text-dark"><b>Remove Item</b></a>
         </div>
       </div>      
 	
@@ -51,8 +51,7 @@
 		<div class="card mt-4">
 			<div class="card-body">
 			<table class="table table-dark table-striped" cellspacing="1" cellpadding="5" border="1">
-			<tr>
-				
+			<tr>				
 				<th>Name</th>
 				<th>Qty</th>   
 				<th>Point</th>
@@ -60,13 +59,11 @@
 			</tr>
 
 			<% cart.forEach(function(item){ %>
-			<tr>
-				
+			<tr>				
 				<td><%= item.name %></td>
 				<td><%= item.qty %></td>
 				<td><%= item.point %></td>
-				<td><%= item.total %></td>
-				
+				<td><%= item.total %></td>				
 			</tr>
 			<% }); %>
 			</table>
@@ -78,12 +75,9 @@
 				<form action="../itempointdiscount" method="post">		
 					<input type="hidden" name="points" value ="<%= points %>" />
 					<input class="btn btn-outline-primary" type="submit" name="submit" value="Confirm"/>
-				</form>
-			
-		
-			
+				</form>		
 
-			<br><p><a class="btn btn-dark" href="../showitem">Cancel</a></p>
+			
 		</div>
 		</div>
 		</div>

@@ -972,8 +972,6 @@ app.get('/cart', function(req, res){
     }
 });
 
-
-
 app.get('/emptycart', function(req, res){  
     customer[user_id].cart = [];
     customer[user_id].use_point = false;
@@ -1019,9 +1017,7 @@ app.post('/pointdiscount', function(req, res){
              temp_points -= sub_total;
                        
           }
-
-        }
-                
+        }                
 
         console.log('AFTER');
         console.log('sub total:'+sub_total);
@@ -1105,7 +1101,7 @@ app.post('/order', function(req, res){
 });
 
 
-
+////////////////StartTradeRoute///////////////////
 app.get('/showitem', async function(req,res){
 
   customer[user_id].id = user_id;
@@ -1155,7 +1151,6 @@ app.get('/showitem', async function(req,res){
 });
 
 
-//////////////testing///////////////
 app.post('/itemcart', function(req, res){
     
     if(!customer[user_id].cart){
@@ -1208,40 +1203,31 @@ app.get('/itemcart', function(req, res){
 });
 
 
-
-app.get('/emptycart', function(req, res){  
-    customer[user_id].cart = [];
-    customer[user_id].use_point = false;
-    //customer[user_id].points = 400;
-    cart_discount = 0;
-    res.redirect('../cart');    
+app.get('/removeemptycart', function(req, res){  
+    customer[user_id].cart = [];    
+    
+    res.redirect('../showitem');    
 });
 
 app.post('/itempointdiscount', function(req, res){
 
     if(temp_points >= cart_total){
-      let today = new Date();
-      let sub_total;
+      let today = new Date();      
       let points;
       points = temp_points - cart_total;
         
         console.log("AFTER>>>>>>", points);
-        console.log("AFTER>>>>>>", customer[user_id].cart);
-        
-        res.render('itemorder.ejs', {cart:customer[user_id].cart, points:points, sub_total:sub_total, user:customer[user_id], cart_total:cart_total, today:today});    
+        console.log("AFTER>>>>>>", customer[user_id].cart);        
+        res.render('itemorder.ejs', {cart:customer[user_id].cart, points:points, user:customer[user_id], cart_total:cart_total, today:today});    
     }
     else{
-      customer[user_id].cart = [];
-        console.log("BEFORE>>>>>>");
-        console.log("BEFORE>>>>>>", temp_points);
-        console.log("BEFORE>>>>>>", cart_total);
+        customer[user_id].cart = [];
+        
+        console.log("BEFORE>>>>>>", temp_points);        
         res.send('Sorry, you dont have sufficient points to trade it. Try later <a href="../showitem">Items</a>');
     } 
       
 });
-
-
-
 
 app.post('/itemordersave', function(req, res){
     let today = new Date();    
@@ -1260,9 +1246,6 @@ app.post('/itemordersave', function(req, res){
     db.collection('traderecords').add(data).then((success)=>{
       
         customer[user_id].cart = [];
-        console.log('TEMP POINTS:', temp_points);
-        
-        console.log('BEFORE_CUSTOMER: ', customer[user_id]);       
         
         let points = parseInt(req.body.points);
         let update_data = {points: points };
@@ -1270,8 +1253,8 @@ app.post('/itemordersave', function(req, res){
         console.log('update_data: ', update_data);
 
         db.collection('members').doc(user_id).update(update_data).then((success)=>{
-              console.log('POINT UPDATE:', customer[user_id]);
 
+              console.log('POINT UPDATE:', customer[user_id]);
 
               let text = "Thank you for your trading. Your trade number is: "+data.ref;      
               let response = {"text": text};
@@ -1281,14 +1264,11 @@ app.post('/itemordersave', function(req, res){
           }).catch((err)=>{
              console.log('Error', err);
           });   
-
          
       }).catch((err)=>{
          console.log('Error', err);
       });
 });
-
-
 
 
 app.get('/direction',function(req,res){    
