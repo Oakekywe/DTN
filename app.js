@@ -33,7 +33,8 @@ const reg_questions = {
   "q2": "What is your Phone number?",
   "q3": "What is your currently address?",
   "q4": "What is your order reference number?",
-  "q5": "What is your donation order reference number?"
+  "q5": "What is your donation order reference number?",
+  "q6": "What is your trade number?"
 }
 let sess;
 
@@ -1450,7 +1451,14 @@ function handleQuickReply(sender_psid, received_message) {
         break;
         case "off":         
             showMenu(sender_psid);
+        break;
+        case "check-trade":  
+            current_question = "q6";
+            reg_Questions(current_question, sender_psid);
         break; 
+        case "check-my-points":         
+            checkmypoint(sender_psid);
+        break;
 
                 
                    
@@ -1499,6 +1507,10 @@ const handleMessage = (sender_psid, received_message) => {
      let donate_ref = received_message.text;     
      current_question = '';     
      checkDonateRef(sender_psid, donate_ref);
+  }else if(current_question == 'q6'){
+     let trade_ref = received_message.text;     
+     current_question = '';     
+     checkTrade(sender_psid, trade_ref);
   }
   else {
       
@@ -1513,8 +1525,7 @@ const handleMessage = (sender_psid, received_message) => {
       
       case "start":
           startReply(sender_psid);
-        break;           
-      
+        break;      
       case "admin":
         admin(sender_psid);
         break;        
@@ -1524,13 +1535,12 @@ const handleMessage = (sender_psid, received_message) => {
       }             
       
     }
-
 }
 
 /*********************************************
 Function to handle when user send attachment
 **********************************************/
-
+/*
 const handleAttachments = (sender_psid, attachments) => {
   
   console.log('ATTACHMENT', attachments);
@@ -1565,7 +1575,7 @@ const handleAttachments = (sender_psid, attachments) => {
     }
     callSend(sender_psid, response);
 }
-
+*/
 
 /*********************************************
 Function to handle when user click button
@@ -1666,14 +1676,25 @@ const showMenu = async(sender_psid) => {
               },
               {
                 "content_type":"text",
+                "title":"My Order",
+                "payload":"check-order",             
+              },
+              {
+                "content_type":"text",
                 "title":"Trade My Points",
                 "payload":"trade-point",             
               },
               {
                 "content_type":"text",
-                "title":"My Order",
-                "payload":"check-order",             
+                "title":"My trade thing",
+                "payload":"check-trade",             
+              },
+              {
+                "content_type":"text",
+                "title":"Check My Points",
+                "payload":"check-my-points",             
               }
+              
 
       ]
     };
@@ -1692,12 +1713,14 @@ const reg_Questions = (current_question, sender_psid) => {
   }else if(current_question == 'q3'){
     let response = {"text": reg_questions.q3};
     callSend(sender_psid, response);
-  }
-  else if(current_question == 'q4'){
+  }else if(current_question == 'q4'){
     let response = {"text": reg_questions.q4};
     callSend(sender_psid, response);
   }else if(current_question == 'q5'){
     let response = {"text": reg_questions.q5};
+    callSend(sender_psid, response);
+  }else if(current_question == 'q6'){
+    let response = {"text": reg_questions.q6};
     callSend(sender_psid, response);
   }
 }
@@ -1828,7 +1851,7 @@ const showOrder = async(sender_psid, order_ref) => {
 
 
           let response1 = { "text": `Your order ${order.ref} is ${order.status}.` };
-          let response2 = { "text": `Seller message: ${order.comment}.` };
+          let response2 = { "text": `Admin message: ${order.comment}.` };
           let response3 = { "text": `You have remaining ${cust_points} point(s)` };
             callSend(sender_psid, response1).then(()=>{
               return callSend(sender_psid, response2).then(()=>{
@@ -1837,6 +1860,67 @@ const showOrder = async(sender_psid, order_ref) => {
           });
 
     }   
+
+}
+
+const checkTrade = async(sender_psid, trade_ref) => {
+
+    let cust_points = 0;
+
+    const tradesRef = db.collection('traderecords').where("ref", "==", trade_ref).limit(1);
+    const snapshot = await tradesRef.get();
+
+    const memberRef = db.collection('members').doc(user_id);
+    const member = await memberRef.get();
+    if (!member.exists) {
+      cust_points = 0;           
+    } else {                
+        cust_points  = member.data().points;          
+    } 
+
+
+    if (snapshot.empty) {
+      let response = { "text": "Incorrect trade number." };
+      callSend(sender_psid, response).then(()=>{
+        return registerReply(sender_psid);
+      });
+    }else{
+          let trade = {}
+
+              snapshot.forEach(doc => {      
+              trade.ref = doc.data().ref;
+              trade.status = doc.data().status;
+              trade.comment = doc.data().comment;  
+          });
+
+
+          let response1 = { "text": `Your order ${trade.ref} is ${trade.status}.` };
+          let response2 = { "text": `Admin message: ${trade.comment}.` };
+          let response3 = { "text": `You have remaining ${cust_points} point(s).` };
+            callSend(sender_psid, response1).then(()=>{
+              return callSend(sender_psid, response2).then(()=>{
+                return callSend(sender_psid, response3)
+              });
+          });
+
+    }   
+
+}
+
+const checkmypoint = async(sender_psid) => {
+
+    let cust_points = 0;    
+
+    const memberRef = db.collection('members').doc(user_id);
+    const member = await memberRef.get();
+    if (!member.exists) {
+      cust_points = 0;           
+    } else {    
+        let cust_name = doc.data().name;             
+        cust_points  = member.data().points;  
+        let response = { "text": `Dear ${cust_name}, you have remaining ${cust_points} point(s). Thank you.` };  
+        callSend(sender_psid, response);     
+    }       
 
 }
 
