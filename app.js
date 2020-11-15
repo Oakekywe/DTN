@@ -1686,7 +1686,7 @@ const showMenu = async(sender_psid) => {
               },
               {
                 "content_type":"text",
-                "title":"My trade thing",
+                "title":"My Trade Thing",
                 "payload":"check-trade",             
               },
               {
@@ -1890,16 +1890,19 @@ const checkTrade = async(sender_psid, trade_ref) => {
               snapshot.forEach(doc => {      
               trade.ref = doc.data().ref;
               trade.status = doc.data().status;
-              trade.comment = doc.data().comment;  
+              trade.comment = doc.data().comment; 
+              trade.item = doc.data().item_name; 
           });
 
-
-          let response1 = { "text": `Your order ${trade.ref} is ${trade.status}.` };
-          let response2 = { "text": `Admin message: ${trade.comment}.` };
-          let response3 = { "text": `You have remaining ${cust_points} point(s).` };
+          let response1 = { "text": `Your trade things: ${trade.item}.` };    
+          let response2 = { "text": `Your trade number ${trade.ref} is ${trade.status}.` };
+          let response3 = { "text": `Admin message: ${trade.comment}.` };
+          let response4 = { "text": `You have remaining ${cust_points} point(s).` };
             callSend(sender_psid, response1).then(()=>{
               return callSend(sender_psid, response2).then(()=>{
-                return callSend(sender_psid, response3)
+                return callSend(sender_psid, response3).then(()=>{
+                  return callSend(sender_psid, response4)
+                  });
               });
           });
 
@@ -1916,7 +1919,7 @@ const checkmypoint = async(sender_psid) => {
     if (!member.exists) {
       cust_points = 0;           
     } else {    
-        let cust_name = doc.data().name;             
+        let cust_name = member.data().name;             
         cust_points  = member.data().points;  
         let response = { "text": `Dear ${cust_name}, you have remaining ${cust_points} point(s). Thank you.` };  
         callSend(sender_psid, response);     
