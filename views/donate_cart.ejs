@@ -68,12 +68,14 @@
 						<td><%= item.total %></td>
 						
 					</tr>
-					<% }); %>
+					
 					</table>
-					<p><strong>Service:</strong> <%= service %></p>	
-					<p><strong>Total:</strong> <%= cart_total %></p>
+					<p><strong>Subtotal:</strong> <%= item.total %> kyats</p>
+					<% }); %>
+					<p><strong>Service:</strong> <%= service %> kyats</p>	
+					<p><strong>Total:</strong> <%= cart_total %> kyats</p>
 
-					<p><a class="btn btn-dark" href="../donate_order">Confirm</a></p>	
+					<p><a class="btn btn-dark" href="../donate_order">Submit</a></p>	
 
 			</div>
 		</div>

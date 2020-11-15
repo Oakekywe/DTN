@@ -62,12 +62,12 @@
 						<% }); %>
 					</table>		
 	
-				<p><strong>Total:</strong> <%= cart_total %><p>
+				<p><strong>Total:</strong> <%= cart_total %> kyats<p>
 			</div>
 
 			<div class="card-body">
 			<form id="form" action="../donate_order" method="post">	
-			    Name: <input class="form-control" type="text" name="name" required/><br>
+			  Name: <input class="form-control" type="text" name="name" required/><br>
 				Phone: <input class="form-control" type="text" name="phone" required/><br>
 				Email: <input class="form-control" type="email" name="email" required/><br>
 				Place you want to donate: <b>Yangon Only</b> <textarea class="form-control" name="address" rows="3" cols="23"></textarea><br>
@@ -81,9 +81,9 @@
 				</p>
 
 				<p>
-				<input class="radio" type="radio" name="payment_type" value="full pre-paid" required/>Full Pre-paid
+				<input class="radio" type="radio" name="payment_type" value="full pre-paid" required/> Full Pre-paid
 				</p>
-				<input class="btn btn-dark" type="submit" name="submit" value="Order"/>
+				<input class="btn btn-dark" type="submit" name="submit" value="Submit"/>
 			</form>
 			</div>
 		</div>
