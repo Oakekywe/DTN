@@ -1961,7 +1961,7 @@ const startReply = (sender_psid) => {
                   },{
                     "title": "Our Information",
                     "subtitle": "If you want to know about us, click the see more.",
-                    "image_url":"https://scontent.frgn5-2.fna.fbcdn.net/v/t1.0-9/121366527_1857338684428545_538891396508578240_n.jpg?_nc_cat=101&_nc_sid=730e14&_nc_eui2=AeEUnmGsNgF-NPsIwXEiLflDdKtZrHzzbqZ0q1msfPNuph0OaOHTDsxFbal6gfOBwG_cfVxr6uupOKO1TUN15esk&_nc_ohc=YERXUyNyNTUAX_qEs7P&_nc_ht=scontent.frgn5-2.fna&oh=3e97dcd954d0d4a943254dbf6d9529f8&oe=5FAD3C5C",                       
+                    "image_url":"https://firebasestorage.googleapis.com/v0/b/dtn1-a2b4c.appspot.com/o/moreinfo.jpg?alt=media&token=0a37ace2-c3b6-4c31-9c78-c4024d284e2a",                       
                     "buttons": [
                         {
                           "type": "web_url",
