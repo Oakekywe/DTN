@@ -898,7 +898,7 @@ app.get('/donate_cart', function(req, res){
 
         cart_total = sub_total + service
 
-        res.render('donate_cart.ejs', {cart:customer[user_id].cart, subtotal: subtotal, service:service, user:customer[user_id], cart_total:cart_total});    
+        res.render('donate_cart.ejs', {cart:customer[user_id].cart, sub_total: sub_total, service:service, user:customer[user_id], cart_total:cart_total});    
     }
 });
 
@@ -945,7 +945,7 @@ app.post('/donate_order', function(req, res){
     }
 
     db.collection('donation_orders').add(data).then((success)=>{
-        
+      customer[user_id].cart = [];
       let text = "Thank you for your ordering to donate. We'll confirm your donation soon. "
       text += "Your reference number is: "+data.ref;      
       let response = {"text": text};
