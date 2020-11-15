@@ -70,14 +70,14 @@
 			  Name: <input class="form-control" type="text" name="name" required/><br>
 				Phone: <input class="form-control" type="text" name="phone" required/><br>
 				Email: <input class="form-control" type="email" name="email" required/><br>
-				Place you want to donate: <b>Yangon Only</b> <textarea class="form-control" name="address" rows="3" cols="23"></textarea><br>
+				Place you want to donate: <b>Yangon Only</b> <textarea class="form-control" name="address" rows="" cols="" required></textarea><br>
 
 				<input  type="hidden" name="items" value="<%= items %>">
 				<input type="hidden" name="total" value="<%= cart_total %>" />
 
 				<p>
 				<label for="start">Date you want to donate <strong>2 days advance</strong><br>Date: </label>
-				<input type="date" name="date" value="date" min="<%= today %>" max="">	<br/>
+				<input type="date" name="date" value="date" min="<%= today %>" max="" required>	<br/>
 				</p>
 
 				<p>
