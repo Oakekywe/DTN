@@ -1334,7 +1334,7 @@ app.post('/itemordersave', function(req, res){
       ref: generateRandom(6),
       created_on: today,
       status: "pending",
-      comment:"",      
+      comment:"It is pending now. We'll check soon.",      
     }
     db.collection('traderecords').add(data).then((success)=>{
       
