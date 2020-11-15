@@ -898,7 +898,7 @@ app.get('/donate_cart', function(req, res){
 
         cart_total = sub_total + service
 
-        res.render('donate_cart.ejs', {cart:customer[user_id].cart, service:service, user:customer[user_id], cart_total:cart_total});    
+        res.render('donate_cart.ejs', {cart:customer[user_id].cart, subtotal: subtotal, service:service, user:customer[user_id], cart_total:cart_total});    
     }
 });
 
