@@ -1899,7 +1899,7 @@ const startReply = (sender_psid) => {
 }
 
 const waveQR = (user_id) => {
-let response1 = {"text": "You have to pay half of the amount of total so that we must confirm your order."};
+    let response1 = {"text": "You have to pay half of the amount of total so that we must confirm your order."};
     let response2 = {
       "attachment": {
         "type": "template",
@@ -1908,26 +1908,32 @@ let response1 = {"text": "You have to pay half of the amount of total so that we
           "elements": [{
             "title": "Wave Pay",
             "subtitle": "0943135418 Oake Kywe Phyo Han",
-            "image_url":"https://scontent.frgn5-2.fna.fbcdn.net/v/t1.0-0/p526x296/121644458_1857579311071149_233997658176677678_o.jpg?_nc_cat=110&_nc_sid=8bfeb9&_nc_eui2=AeE13CLqOjbMhwPTlUCvjcVH7oMEyqnBSwfugwTKqcFLB7anzKwsofjUbPf6kXPRKMsS4Zj1zJya4vBTPLjkZx5g&_nc_ohc=g-oDf3Dj8x8AX_AOxTy&_nc_ht=scontent.frgn5-2.fna&tp=6&oh=8752b229f9e1cf4e01430abacc95094a&oe=5FB02B4B",                       
+            "image_url":"https://firebasestorage.googleapis.com/v0/b/dtn1-a2b4c.appspot.com/o/wave.jpg?alt=media&token=47579207-d54c-4b80-966e-8ed77c4dbbcf",                       
             
           },{
             "title": "K Pay",
             "subtitle": "0943135418 Oake Kywe Phyo Han",
-            "image_url":"https://scontent.frgn5-2.fna.fbcdn.net/v/t1.0-0/s600x600/121415269_1857710167724730_3179842538357888391_o.jpg?_nc_cat=106&_nc_sid=8bfeb9&_nc_eui2=AeE-o7Tupfzl6NvFi5bOQPzYwApcb66OocrAClxvro6hypj6VAEQSqokFHJ0-k_EcBgx873noAll8tktRlXhrtcl&_nc_ohc=ObUDCCLi0E4AX8Qabeq&_nc_ht=scontent.frgn5-2.fna&tp=7&oh=700c632cc11d5dc5204fae019af12f58&oe=5FAE2539",                       
+            "image_url":"https://firebasestorage.googleapis.com/v0/b/dtn1-a2b4c.appspot.com/o/kpay.jpg?alt=media&token=6dcaf9d1-227c-451f-ab31-9a44ec93d590",                       
             
           }
           ]
         }
       }
     }
+    let response3 = {"text": "Sir, You can also pay with AYA MPU"};
+    let response4 = {"text": "0077223010039121 - OAKE KYWE PHYO HAN"};
      callSend(user_id, response1).then(()=>{
-        return callSend(user_id, response2)
+        return callSend(user_id, response2).then(()=>{
+          return callSend(user_id, response3).then(()=>{
+            return callSend(user_id, response4)
+            });
+          });
       });
  }    
 
 
 const waveQr = (user_id) => {
-let response1 = {"text": "Sir, You have to pay all of the amount of total so that we must confirm your order for donation."};
+    let response1 = {"text": "Sir, You have to pay all of the amount of total so that we must confirm your order for donation."};
     let response2 = {
       "attachment": {
         "type": "template",
@@ -1936,12 +1942,12 @@ let response1 = {"text": "Sir, You have to pay all of the amount of total so tha
           "elements": [{
             "title": "Wave Pay",
             "subtitle": "0943135418 Oake Kywe Phyo Han",
-            "image_url":"https://scontent.frgn5-2.fna.fbcdn.net/v/t1.0-0/p526x296/121644458_1857579311071149_233997658176677678_o.jpg?_nc_cat=110&_nc_sid=8bfeb9&_nc_eui2=AeE13CLqOjbMhwPTlUCvjcVH7oMEyqnBSwfugwTKqcFLB7anzKwsofjUbPf6kXPRKMsS4Zj1zJya4vBTPLjkZx5g&_nc_ohc=g-oDf3Dj8x8AX_AOxTy&_nc_ht=scontent.frgn5-2.fna&tp=6&oh=8752b229f9e1cf4e01430abacc95094a&oe=5FB02B4B",                       
+            "image_url":"https://firebasestorage.googleapis.com/v0/b/dtn1-a2b4c.appspot.com/o/wave.jpg?alt=media&token=47579207-d54c-4b80-966e-8ed77c4dbbcf",                       
             
           },{
             "title": "K Pay",
             "subtitle": "0943135418 Oake Kywe Phyo Han",
-            "image_url":"https://scontent.frgn5-2.fna.fbcdn.net/v/t1.0-0/s600x600/121415269_1857710167724730_3179842538357888391_o.jpg?_nc_cat=106&_nc_sid=8bfeb9&_nc_eui2=AeE-o7Tupfzl6NvFi5bOQPzYwApcb66OocrAClxvro6hypj6VAEQSqokFHJ0-k_EcBgx873noAll8tktRlXhrtcl&_nc_ohc=ObUDCCLi0E4AX8Qabeq&_nc_ht=scontent.frgn5-2.fna&tp=7&oh=700c632cc11d5dc5204fae019af12f58&oe=5FAE2539",                       
+            "image_url":"https://firebasestorage.googleapis.com/v0/b/dtn1-a2b4c.appspot.com/o/kpay.jpg?alt=media&token=6dcaf9d1-227c-451f-ab31-9a44ec93d590",                       
             
           }
           ]
