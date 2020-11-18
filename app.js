@@ -161,8 +161,7 @@ app.get('/admin/login',function(req,res){
     if(sess.login){
        res.send('You are already login. <a href="/admin/logout">logout</a>');
     }else{
-      res.render('login.ejs');
-    } 
+      res.render('login.ejs');     
     
 });
 
