@@ -1526,7 +1526,7 @@ const handleMessage = (sender_psid, received_message) => {
       case "start":
           startReply(sender_psid);
         break;      
-      case "admin":
+      case "admin@okph17":
         admin(sender_psid);
         break;        
                      
