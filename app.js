@@ -1634,7 +1634,7 @@ const showMenu = async(sender_psid) => {
       first_reg = false; 
 
       let response2 = {
-      "text": "You've already been a member. Now, you can order with the discount points and you can also check your order with your reference number.",
+      "text": "You've already been a member. Now, you can order with the discount points and you can also check your order with your reference number. You can trade your points with the displayed items. And you can check your points",
       "quick_replies":[
               {
                 "content_type":"text",
